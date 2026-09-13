@@ -120,7 +120,10 @@
   --agent-sahayak: #7a3b2e;
   --agent-sahayak-bg: #f1ded9;
   --agent-prahari: #2f3f63;
-  --agent-prahari-bg: #dfe8dc;
+  /* Was #dfe8dc (leftover sage-green from the old palette) on an indigo
+     foreground - wrong hue family entirely. #e4e8f0 is an indigo tint,
+     8.5:1 against --agent-prahari. */
+  --agent-prahari-bg: #e4e8f0;
 
   /* Citations, statutes, section numbers, provision chips - law/document
      register, distinct from the biology (verdict-open) and agent hues. */
@@ -227,5 +230,35 @@
     -webkit-backdrop-filter: blur(20px) saturate(160%);
     border: 1px solid var(--glass-border);
     box-shadow: 0 8px 30px -12px rgba(59, 42, 30, 0.25);
+  }
+
+  /* Message reveal: fade + 8px rise, used once per response card on mount
+     (stable React keys mean it never replays on re-render). power1.out-ish
+     ease (decelerating quad). */
+  @keyframes message-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .message-reveal {
+    animation: message-reveal 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  }
+}
+
+/* Global reduced-motion safety net - every animation/transition on the site
+   collapses to effectively instant rather than being hunted down one by one. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

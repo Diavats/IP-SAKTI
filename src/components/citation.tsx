@@ -1,6 +1,28 @@
-export function Citation({ children }: { children: React.ReactNode }) {
+export function Citation({
+  children,
+  onClick,
+}: {
+  children: React.ReactNode;
+  onClick?: () => void;
+}) {
+  const className =
+    "inline-flex items-center gap-1 rounded-sm bg-statute-bg px-1.5 py-0.5 font-mono text-xs text-statute";
+
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        onClick={onClick}
+        className={`${className} transition-colors hover:bg-statute hover:text-statute-bg`}
+      >
+        <span aria-hidden>§</span>
+        {children}
+      </button>
+    );
+  }
+
   return (
-    <span className="inline-flex items-center gap-1 rounded-sm bg-statute-bg px-1.5 py-0.5 font-mono text-xs text-statute">
+    <span className={className}>
       <span aria-hidden>§</span>
       {children}
     </span>
