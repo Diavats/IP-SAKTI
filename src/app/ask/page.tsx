@@ -7,9 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Citation } from "@/components/citation";
 import { AgentBanner } from "@/components/ask/agent-banner";
+import { DepthIndicator } from "@/components/ask/depth-indicator";
 import { EvalReveal } from "@/components/ask/eval-reveal";
 import { LivePanel, type LivePanelState } from "@/components/ask/live-panel";
 import { SessionReportDialog } from "@/components/ask/session-report-dialog";
+import { VerificationLine } from "@/components/ask/verification-line";
 import type { QueryDepth, QueryResponse } from "@/lib/types";
 
 const suggestions = [
@@ -89,12 +91,8 @@ export default function AskPage() {
   }
 
   return (
-    <div className="grid flex-1 grid-cols-1 gap-6 lg:grid-cols-[340px_1fr]">
-      <div className="order-2 lg:order-1 lg:sticky lg:top-8 lg:h-[calc(100vh-8rem)]">
-        <LivePanel state={panel} />
-      </div>
-
-      <div className="order-1 flex flex-col gap-6 lg:order-2">
+    <div className="mx-auto flex w-full max-w-[1120px] flex-1 flex-col gap-6 lg:flex-row lg:items-start lg:justify-center">
+      <div className="flex w-full min-w-0 flex-col gap-6 lg:max-w-[760px]">
         <div className="flex items-start justify-between gap-4">
           <div>
             <h1 className="font-heading text-3xl font-semibold">Ask</h1>
@@ -109,13 +107,13 @@ export default function AskPage() {
         {thread.length === 0 && (
           <div className="flex flex-col gap-2">
             <p className="text-xs text-muted-foreground">Try one of these:</p>
-            <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {suggestions.map((s) => (
                 <button
                   key={s}
                   type="button"
                   onClick={() => void runQuery(s, "quick")}
-                  className="rounded-xl border border-border bg-card px-3 py-2 text-left text-sm hover:bg-secondary"
+                  className="rounded-xl border border-border bg-card px-3 py-2.5 text-left text-sm break-words hover:bg-secondary"
                 >
                   {s}
                 </button>
@@ -157,6 +155,10 @@ export default function AskPage() {
           </div>
         </form>
       </div>
+
+      <div className="w-full lg:sticky lg:top-8 lg:w-80 lg:shrink-0">
+        <LivePanel state={panel} />
+      </div>
     </div>
   );
 }
@@ -171,7 +173,10 @@ function ResponseCard({
   if (response.abstained) {
     return (
       <div className="flex flex-col gap-3 rounded-2xl border border-border bg-secondary/50 p-5">
-        <p className="text-sm font-medium">{response.query}</p>
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-sm font-medium">{response.query}</p>
+          <DepthIndicator depth={response.depth} />
+        </div>
         <div className="flex items-start gap-3">
           <ShieldCheck className="mt-0.5 size-5 shrink-0 text-primary" />
           <div className="flex flex-col gap-1">
@@ -182,22 +187,27 @@ function ResponseCard({
             <p className="text-xs text-muted-foreground">{response.abstainReason}</p>
           </div>
         </div>
+        <VerificationLine passed={false} />
       </div>
     );
   }
 
   return (
     <div className="glass flex flex-col gap-3 rounded-2xl p-5">
-      <p className="text-sm font-medium">{response.query}</p>
+      <div className="flex items-center justify-between gap-3">
+        <p className="text-sm font-medium">{response.query}</p>
+        <DepthIndicator depth={response.depth} />
+      </div>
       <AgentBanner agents={response.agents} reason={response.agentReason} />
       <p className="text-sm">{response.answer}</p>
       {response.citations.length > 0 && (
-        <div className="flex flex-wrap gap-x-4 gap-y-1">
+        <div className="flex flex-wrap gap-x-2 gap-y-1">
           {response.citations.map((c) => (
             <Citation key={c.label}>{c.label}</Citation>
           ))}
         </div>
       )}
+      <VerificationLine passed />
       <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
         <span className="font-mono">Corpus {response.corpusVersion}</span>
       </div>

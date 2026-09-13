@@ -49,6 +49,8 @@
   --color-agent-sahayak-bg: var(--agent-sahayak-bg);
   --color-agent-prahari: var(--agent-prahari);
   --color-agent-prahari-bg: var(--agent-prahari-bg);
+  --color-statute: var(--statute);
+  --color-statute-bg: var(--statute-bg);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -62,21 +64,24 @@
   /* Ayurvedic-nurturing world: warm cream ground, soil-brown + deep-red
      accents, sage green and tan drawn from the AYU-IP 360 reference
      palette. See .impeccable/surfaces/app.md */
-  --background: #f6f0e3;
+  --background: #f2ebdc;
   --foreground: #3b2a1e;
-  --card: #fffcf6;
+  --card: #fffdf8;
   --card-foreground: #3b2a1e;
-  --popover: #fffcf6;
+  --popover: #fffdf8;
   --popover-foreground: #3b2a1e;
   --primary: #5c3a21;
   --primary-foreground: #f8f2e4;
-  --secondary: #ece0c4;
+  --secondary: #e5d9bf;
   --secondary-foreground: #5c3a21;
-  --muted: #ece0c4;
-  /* Darkened from #8a7860 - the lighter tone failed contrast (~3.8:1) once
-     it sat on top of the blurred glass panels on the home page. */
-  --muted-foreground: #6b5c48;
-  --accent: #ddc99e;
+  --muted: #e8e2d4;
+  /* The requested revert to #8a7860 measures 3.29:1 on --muted, 3.58:1 on
+     --background and 4.19:1 on --card - all below the 4.5:1 floor now that
+     the blurred backdrop (the original reason it was darkened) is gone. This
+     is the lightest tint in the same hue that still clears 4.5:1 against all
+     three surfaces (muted 4.69:1, background 5.10:1, card 5.96:1). */
+  --muted-foreground: #70604c;
+  --accent: #c99a3f;
   --accent-foreground: #3b2a1e;
   --destructive: #7a2e2e;
   --border: #e2d3ac;
@@ -97,22 +102,35 @@
   --sidebar-border: #d9c69c;
   --sidebar-ring: #5c3a21;
 
-  /* Verdict vocabulary - status chips only, never decorative */
-  --verdict-open: #4b6b4f;
-  --verdict-open-bg: #e2ead9;
-  --verdict-barred: #7a2e2e;
+  /* Verdict vocabulary - status chips only, never decorative.
+     verdict-open-bg lightened from #e2ead9 - the requested #3f7d52 text only
+     hit 3.99:1 on the old tint (needs 4.5:1); #f5f8f2 clears it at 4.59:1.
+     verdict-draft darkened from the requested #c99a3f - that's identical to
+     --accent and, as foreground text on --verdict-draft-bg, only reaches
+     2.07:1 (a light mid-tone ochre can't hit 4.5:1 as text on any bg this
+     light). #7d5f27 keeps the same ochre hue and clears 4.77:1. */
+  --verdict-open: #3f7d52;
+  --verdict-open-bg: #f5f8f2;
+  --verdict-barred: #9e2b2b;
   --verdict-barred-bg: #f1ded9;
-  --verdict-draft: #96701f;
+  --verdict-draft: #7d5f27;
   --verdict-draft-bg: #f1e6c8;
 
-  /* Agent identity - Sahayak (brown/red) vs Prahari (sage green) */
-  --agent-sahayak: #7a2e2e;
+  /* Agent identity - Sahayak (soil-brown/red) vs Prahari (indigo, law/statutes) */
+  --agent-sahayak: #7a3b2e;
   --agent-sahayak-bg: #f1ded9;
-  --agent-prahari: #3f5c43;
+  --agent-prahari: #2f3f63;
   --agent-prahari-bg: #dfe8dc;
 
+  /* Citations, statutes, section numbers, provision chips - law/document
+     register, distinct from the biology (verdict-open) and agent hues. */
+  --statute: #2f3f63;
+  --statute-bg: #e1e5f0;
+
   --glass-bg: rgba(255, 252, 244, 0.55);
-  --glass-border: rgba(255, 255, 255, 0.6);
+  /* Was rgba(255,255,255,0.6) - all but invisible against the new lighter
+     --card. Brand-brown tint at low alpha so the card edge actually reads. */
+  --glass-border: rgba(92, 58, 33, 0.16);
 }
 
 .dark {

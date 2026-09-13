@@ -13,8 +13,11 @@ export type LivePanelState =
 export function LivePanel({ state }: { state: LivePanelState }) {
   if (state.kind === "idle") {
     return (
-      <div className="glass flex h-full flex-col justify-center rounded-2xl px-6 py-10 text-center">
-        <p className="text-sm text-muted-foreground">
+      <div className="glass flex min-h-[220px] flex-col justify-center rounded-2xl px-6 py-10 text-center">
+        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+          Formulation Dossier
+        </p>
+        <p className="mt-2 text-sm text-muted-foreground">
           Ask a question and Sahayak&apos;s dossier — or Prahari&apos;s search — assembles
           here in real time.
         </p>
@@ -24,7 +27,7 @@ export function LivePanel({ state }: { state: LivePanelState }) {
 
   if (state.kind === "sahayak") {
     return (
-      <div className="glass flex h-full flex-col gap-4 rounded-2xl px-5 py-5">
+      <div className="glass flex flex-col gap-4 rounded-2xl px-5 py-5">
         <div className="flex items-center gap-2">
           <span className="size-2 rounded-full bg-agent-sahayak" />
           <h2 className="text-sm font-semibold text-agent-sahayak">
@@ -63,7 +66,7 @@ export function LivePanel({ state }: { state: LivePanelState }) {
   }
 
   return (
-    <div className="glass flex h-full flex-col gap-4 rounded-2xl px-5 py-5">
+    <div className="glass flex flex-col gap-4 rounded-2xl px-5 py-5">
       <div className="flex items-center gap-2">
         <span className="size-2 rounded-full bg-agent-prahari" />
         <h2 className="text-sm font-semibold text-agent-prahari">Prahari — live search</h2>

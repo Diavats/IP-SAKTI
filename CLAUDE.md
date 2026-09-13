@@ -43,7 +43,7 @@ From `SAMHITA-PLAN.md` §5 ("Tech stack" table) and the models table:
 
 ## 4. Design System & Skills
 
-- Use the `impeccable` skill for **all** UI work.
+- Use the `ui-ux-pro-max` skill for **all** UI work.
 - Before making UI changes, read `.impeccable/hook.cache.json` and stay consistent with prior findings. It currently records edits to `docs/samhita-lanes.html` with three unresolved low-contrast findings (text colors `#7c8a85`, `#a3b0ab`, `#e4ebe7` on white — all below 4.5:1) — don't reintroduce those contrast ratios in new UI.
 - Use the Figma MCP server for design context when building or syncing UI.
 - Use the Playwright MCP server to verify UI behavior after each feature is built (not just unit tests).

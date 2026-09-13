@@ -1,27 +1,6 @@
 import { getEvalMetrics, getRetrievalBakeOff } from "@/lib/api";
 import { MockLabel } from "@/components/citation";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-
-function Meter({ value }: { value: number }) {
-  return (
-    <div className="flex items-center gap-2">
-      <span className="font-mono text-sm tabular-nums">{Math.round(value * 100)}%</span>
-      <div className="h-1.5 w-24 overflow-hidden rounded-sm bg-muted">
-        <div
-          className="h-full bg-primary"
-          style={{ width: `${Math.round(value * 100)}%` }}
-        />
-      </div>
-    </div>
-  );
-}
+import { RetrievalChart } from "@/components/evals/retrieval-chart";
 
 export default async function EvalsPage() {
   const [metrics, bakeOff] = await Promise.all([getEvalMetrics(), getRetrievalBakeOff()]);
@@ -39,62 +18,50 @@ export default async function EvalsPage() {
         <MockLabel>Illustrative values for this build</MockLabel>
       </div>
 
-      <div className="overflow-x-auto rounded-sm border border-border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Axis</TableHead>
-              <TableHead>Measured</TableHead>
-              <TableHead>Method</TableHead>
-              <TableHead>Sample</TableHead>
-              <TableHead>Measured on</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {metrics.map((m) => (
-              <TableRow key={m.axis}>
-                <TableCell className="text-sm font-medium">{m.label}</TableCell>
-                <TableCell>
-                  <Meter value={m.value} />
-                </TableCell>
-                <TableCell className="max-w-80 whitespace-normal text-sm text-muted-foreground">
-                  {m.method}
-                </TableCell>
-                <TableCell className="font-mono text-xs text-muted-foreground">
-                  n={m.sampleSize}
-                </TableCell>
-                <TableCell className="font-mono text-xs text-muted-foreground">
-                  {m.measuredOn}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {metrics.map((m) => (
+          <div
+            key={m.axis}
+            className="flex flex-col gap-2 rounded-2xl border border-border bg-card p-5"
+          >
+            <p className="text-xs font-medium text-muted-foreground">{m.label}</p>
+            <p className="font-mono text-4xl font-semibold tabular-nums text-foreground">
+              {Math.round(m.value * 100)}%
+            </p>
+            <p className="text-xs text-muted-foreground">{m.method}</p>
+            <div className="mt-2 flex items-center gap-3 border-t border-border/60 pt-2 font-mono text-[11px] text-muted-foreground">
+              <span>n={m.sampleSize}</span>
+              <span>{m.measuredOn}</span>
+            </div>
+          </div>
+        ))}
       </div>
 
       <section className="flex flex-col gap-3">
         <h2 className="text-sm font-medium text-muted-foreground">
           Retrieval bake-off (supporting metric)
         </h2>
-        <div className="overflow-x-auto rounded-sm border border-border">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Method</TableHead>
-                <TableHead>nDCG@10</TableHead>
-                <TableHead>Recall@20</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
+        <div className="rounded-2xl border border-border bg-card p-5">
+          <RetrievalChart rows={bakeOff} />
+          <table className="sr-only">
+            <caption>Retrieval bake-off: nDCG@10 and Recall@20 by method</caption>
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>nDCG@10</th>
+                <th>Recall@20</th>
+              </tr>
+            </thead>
+            <tbody>
               {bakeOff.map((row) => (
-                <TableRow key={row.method}>
-                  <TableCell className="text-sm">{row.method}</TableCell>
-                  <TableCell className="font-mono text-sm">{row.ndcg10.toFixed(2)}</TableCell>
-                  <TableCell className="font-mono text-sm">{row.recall20.toFixed(2)}</TableCell>
-                </TableRow>
+                <tr key={row.method}>
+                  <td>{row.method}</td>
+                  <td>{row.ndcg10.toFixed(2)}</td>
+                  <td>{row.recall20.toFixed(2)}</td>
+                </tr>
               ))}
-            </TableBody>
-          </Table>
+            </tbody>
+          </table>
         </div>
       </section>
     </div>

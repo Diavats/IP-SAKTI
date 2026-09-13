@@ -14,6 +14,8 @@ const dossierImages: Record<string, string> = {
   "dos-001": "/images/formulation-ashwagandha.jpg",
   "dos-002": "/images/formulation-brahmi.jpg",
   "dos-003": "/images/formulation-turmeric.jpg",
+  "dos-004": "/images/formulation-guggul.jpg",
+  "dos-005": "/images/formulation-amla.jpg",
 };
 
 // Counts how many of the 7 IP regimes are still "open" (pursuable) for a
@@ -43,19 +45,21 @@ export default async function DashboardPage() {
     // one side. `absolute inset-0` can't do that: it's always sized to fit
     // its positioned parent, never bigger.
     <div className="relative flex flex-col gap-12">
-      {/* Soft blurred forest backdrop - purely decorative, sits behind every
-          glass panel on this page. `pointer-events-none` so it never eats
-          clicks, `-z-10` so it always stays behind real content. */}
-      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden>
-        <div
-          className="absolute inset-0 scale-110 bg-cover bg-center blur-xl"
-          style={{ backgroundImage: "url(/images/bg-forest.jpg)" }}
-        />
-        {/* Light wash so the page still reads as "mostly white", per the
-            brief - the forest shows through the glass panels, not the whole
-            page. */}
-        <div className="absolute inset-0 bg-background/45" />
-      </div>
+      {/* Two soft radial washes (ochre top-left, indigo top-right) over the
+          cream ground - replaces the blurred forest photo backdrop. `fixed`
+          so it's sized to the viewport, not this page's scroll height;
+          `pointer-events-none` so it never eats clicks, `-z-10` so it stays
+          behind real content. */}
+      <div
+        className="pointer-events-none fixed inset-0 -z-10"
+        aria-hidden
+        style={{
+          background:
+            "radial-gradient(60% 50% at 15% 0%, #c99a3f22, transparent 70%)," +
+            "radial-gradient(50% 45% at 85% 20%, #2f3f6318, transparent 70%)," +
+            "var(--background)",
+        }}
+      />
 
       {/* Hero: the product name, centered, separate from the small sidebar
           wordmark - this is the one place it gets real visual weight. */}

@@ -1,6 +1,7 @@
 export function Citation({ children }: { children: React.ReactNode }) {
   return (
-    <span className="font-mono text-xs text-muted-foreground before:mr-1 before:content-['§']">
+    <span className="inline-flex items-center gap-1 rounded-sm bg-statute-bg px-1.5 py-0.5 font-mono text-xs text-statute">
+      <span aria-hidden>§</span>
       {children}
     </span>
   );
