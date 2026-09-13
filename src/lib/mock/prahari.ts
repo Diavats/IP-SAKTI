@@ -1,0 +1,115 @@
+// MOCK DATA — stands in for the Prahari pipeline's output: a Friday
+// Patent Office Journal sweep, species resolution, NLI claim matching,
+// and window computation. Replace with real calls to services/brain.
+import type { Form7ADossier, PrahariAlert } from "@/lib/types";
+
+export const prahariAlerts: PrahariAlert[] = [
+  {
+    id: "alert-1001",
+    applicationNo: "US2026/0184331 A1",
+    title: "Topical composition comprising Curcuma longa and Azadirachta indica extracts for dermal use",
+    ipc: "A61K36/00",
+    applicant: "Verdant Biosciences Inc.",
+    applicantCountry: "United States",
+    publishedOn: "2026-08-14",
+    earliestGrant: "2027-02-14",
+    daysRemaining: 41,
+    urgencyScore: 88,
+    riskScore: 76,
+    matchedFormulationId: "dos-003",
+    matchedSpecies: ["Curcuma longa", "Azadirachta indica"],
+    status: "reviewing",
+  },
+  {
+    id: "alert-1002",
+    applicationNo: "EP4218765 A1",
+    title: "Herbal extract combination for cognitive support comprising Bacopa monnieri",
+    ipc: "A61K36/28",
+    applicant: "NordicaHerb GmbH",
+    applicantCountry: "Germany",
+    publishedOn: "2026-07-30",
+    earliestGrant: "2027-01-30",
+    daysRemaining: 26,
+    urgencyScore: 94,
+    riskScore: 81,
+    matchedFormulationId: "dos-002",
+    matchedSpecies: ["Bacopa monnieri"],
+    status: "drafted",
+  },
+  {
+    id: "alert-1003",
+    applicationNo: "US2026/0201872 A1",
+    title: "Method for preparing a triphala-based metabolic supplement",
+    ipc: "A61K36/45",
+    applicant: "Cascade Nutraceuticals LLC",
+    applicantCountry: "United States",
+    publishedOn: "2026-09-05",
+    earliestGrant: "2027-03-05",
+    daysRemaining: 63,
+    urgencyScore: 52,
+    riskScore: 58,
+    matchedFormulationId: "dos-005",
+    matchedSpecies: ["Terminalia chebula", "Terminalia bellirica", "Phyllanthus emblica"],
+    status: "new",
+  },
+  {
+    id: "alert-1004",
+    applicationNo: "WO2026/154332 A1",
+    title: "Withania somnifera root extract composition and method of use for stress reduction",
+    ipc: "A61K36/185",
+    applicant: "Solstice Wellness Corp.",
+    applicantCountry: "United States",
+    publishedOn: "2026-06-19",
+    earliestGrant: "2026-12-19",
+    daysRemaining: 6,
+    urgencyScore: 99,
+    riskScore: 70,
+    matchedFormulationId: "dos-001",
+    matchedSpecies: ["Withania somnifera"],
+    status: "filed",
+  },
+  {
+    id: "alert-1005",
+    applicationNo: "JP2026-098234 A",
+    title: "Skin care composition containing plant extract of genus Commiphora",
+    ipc: "A61K36/23",
+    applicant: "Sakura Cosmetics K.K.",
+    applicantCountry: "Japan",
+    publishedOn: "2026-09-10",
+    earliestGrant: "2027-03-10",
+    daysRemaining: 68,
+    urgencyScore: 34,
+    riskScore: 45,
+    matchedFormulationId: "dos-004",
+    matchedSpecies: ["Commiphora wightii"],
+    status: "new",
+  },
+];
+
+export const form7ADossiers: Record<string, Form7ADossier> = {
+  "alert-1002": {
+    alertId: "alert-1002",
+    generatedOn: "2026-09-11",
+    citations: [
+      "Ayurvedic Formulary of India, Part I, Formulation 88",
+      "Ayurvedic Pharmacopoeia of India, Part I, Vol. III — Bacopa monnieri monograph",
+      "Charaka Samhita, Chikitsa Sthana 10/24",
+    ],
+    summary:
+      "Prior art potentially relevant to this application: Bacopa monnieri's use for cognitive/memory support is documented in the Ayurvedic Formulary of India (pre-dating the application by centuries) and in the Pharmacopoeia's dravya monograph. This submission provides that documentation for examination; it does not accuse the applicant of misappropriation.",
+    draftText:
+      "FORM 7A — REPRESENTATION FOR OPPOSITION TO GRANT OF PATENT\n(under Rule 55 of the Patents Rules 2003, in respect of Section 25(1))\n\nApplication opposed: EP4218765 A1\n\nGrounds: The claimed use of Bacopa monnieri extract for cognitive support is anticipated by publicly available Ayurvedic literature — specifically the Ayurvedic Formulary of India, Part I (Formulation 88) and the Charaka Samhita, Chikitsa Sthana 10/24 — both predating the priority date. This representation submits the attached passages as prior art potentially relevant to examination of novelty and inventive step under the corresponding provisions.\n\n[Draft — for human review before filing. No submission occurs automatically.]",
+  },
+  "alert-1004": {
+    alertId: "alert-1004",
+    generatedOn: "2026-09-08",
+    citations: [
+      "Ayurvedic Formulary of India, Part I, Formulation 112",
+      "Ayurvedic Pharmacopoeia of India, Part I, Vol. I — Withania somnifera monograph",
+    ],
+    summary:
+      "Prior art potentially relevant to this application: Withania somnifera root extract for stress/vitality support is a classical, widely published use. Filed as a third-party observation for the examiner's consideration.",
+    draftText:
+      "THIRD-PARTY OBSERVATION (PCT / WO2026-154332 A1)\n\nThe claimed composition and method of use substantially overlap with classical Ayurvedic preparations of Withania somnifera root, documented in the Ayurvedic Formulary of India (Formulation 112) and the Ayurvedic Pharmacopoeia of India monograph. Submitted as prior art potentially relevant to examination; not an allegation against the applicant.\n\n[Draft — filed 2026-09-09 after human review.]",
+  },
+};

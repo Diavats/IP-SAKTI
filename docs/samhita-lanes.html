@@ -1,0 +1,601 @@
+<title>Samhitā Build Lanes</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --ground:#F6F8F6;
+    --panel:#FFFFFF;
+    --sunk:#EDF1EE;
+    --ink:#11181A;
+    --ink-2:#495653;
+    --ink-3:#5E6A66;
+    --rule:#D8E0DB;
+    --rule-2:#BDC8C2;
+    --verd:#1F6E5C;
+    --verd-soft:#E2F0EB;
+    --crimson:#9E2B2B;
+    --crimson-soft:#F6E4E2;
+    --gold:#70560B;
+    --gold-soft:#F5EEDA;
+    --focus:#1F6E5C;
+    --serif:'Spectral',Georgia,'Times New Roman',serif;
+    --sans:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#0D1214;
+      --panel:#141B1D;
+      --sunk:#101719;
+      --ink:#E4EBE7;
+      --ink-2:#A3B0AB;
+      --ink-3:#7C8A85;
+      --rule:#243033;
+      --rule-2:#33413F;
+      --verd:#5FB79E;
+      --verd-soft:#132825;
+      --crimson:#D98A82;
+      --crimson-soft:#2A1817;
+      --gold:#C6A44E;
+      --gold-soft:#241E10;
+      --focus:#5FB79E;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0D1214;
+    --panel:#141B1D;
+    --sunk:#101719;
+    --ink:#E4EBE7;
+    --ink-2:#A3B0AB;
+    --ink-3:#7C8A85;
+    --rule:#243033;
+    --rule-2:#33413F;
+    --verd:#5FB79E;
+    --verd-soft:#132825;
+    --crimson:#D98A82;
+    --crimson-soft:#2A1817;
+    --gold:#C6A44E;
+    --gold-soft:#241E10;
+    --focus:#5FB79E;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    background:var(--ground);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1000px;margin:0 auto;padding:0 24px 80px}
+
+  /* ---------- masthead ---------- */
+  header.mast{padding:44px 0 26px;border-bottom:1px solid var(--rule-2)}
+  .eyebrow{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-3);margin:0 0 14px;
+  }
+  h1{
+    font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,46px);
+    line-height:1.08;margin:0 0 10px;letter-spacing:-.015em;text-wrap:balance;
+  }
+  h1 .dev{font-weight:400;color:var(--ink-3);font-size:.62em;letter-spacing:0}
+  .standfirst{font-size:17px;color:var(--ink-2);max-width:62ch;margin:0}
+
+  .facts{display:flex;flex-wrap:wrap;gap:0;margin-top:26px;border-top:1px solid var(--rule)}
+  .fact{flex:1 1 150px;padding:13px 18px 13px 0;border-right:1px solid var(--rule)}
+  .fact:last-child{border-right:0}
+  .fact dt{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin:0 0 3px}
+  .fact dd{margin:0;font-size:15px;font-weight:500;font-variant-numeric:tabular-nums}
+
+  /* ---------- tabs ---------- */
+  nav.lanes{
+    position:sticky;top:0;z-index:20;background:var(--ground);
+    border-bottom:1px solid var(--rule-2);padding:10px 0;
+    display:flex;gap:4px;overflow-x:auto;
+  }
+  nav.lanes button{
+    font-family:var(--sans);font-size:14px;font-weight:500;color:var(--ink-2);
+    background:transparent;border:1px solid transparent;border-radius:2px;
+    padding:7px 14px;cursor:pointer;white-space:nowrap;
+    transition:color .15s,background .15s,border-color .15s;
+  }
+  nav.lanes button:hover{color:var(--ink);background:var(--sunk)}
+  nav.lanes button[aria-selected="true"]{
+    color:var(--verd);background:var(--verd-soft);border-color:var(--verd);
+  }
+  nav.lanes button:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+  nav.lanes .owner{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-left:7px}
+  nav.lanes button[aria-selected="true"] .owner{color:var(--verd)}
+
+  /* ---------- panels ---------- */
+  .panel[hidden]{display:none}
+  .panel{padding-top:34px;animation:rise .22s ease-out}
+  @keyframes rise{from{opacity:.4;transform:translateY(3px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.panel{animation:none}}
+
+  h2{font-family:var(--serif);font-weight:600;font-size:27px;line-height:1.2;margin:0 0 8px;letter-spacing:-.01em;text-wrap:balance}
+  h3{font-family:var(--sans);font-weight:600;font-size:16px;margin:0 0 6px;letter-spacing:-.005em}
+  .lede{font-size:16.5px;color:var(--ink-2);max-width:64ch;margin:0 0 30px}
+  p{max-width:66ch}
+  section+section{margin-top:34px}
+  .sechead{
+    font-family:var(--mono);font-size:12.5px;letter-spacing:.01em;
+    color:var(--ink-3);padding-bottom:7px;border-bottom:1px solid var(--rule);margin:0 0 18px;
+  }
+
+  /* week-numbered task rows — numbering encodes real sequence */
+  .task{display:grid;grid-template-columns:52px 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--rule)}
+  .wk{
+    font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.03em;
+    color:var(--verd);padding-top:2px;
+  }
+  .wk.late{color:var(--ink-3)}
+  .task p{margin:4px 0 0;font-size:14.5px;color:var(--ink-2);max-width:60ch}
+  .task code{font-family:var(--mono);font-size:12.5px;background:var(--sunk);padding:1px 5px;border-radius:2px;color:var(--ink)}
+
+  /* status chips */
+  .chip{
+    display:inline-block;font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;
+    text-transform:uppercase;padding:2px 7px;border-radius:2px;vertical-align:1px;
+  }
+  .chip.ok{background:var(--verd-soft);color:var(--verd)}
+  .chip.warn{background:var(--gold-soft);color:var(--gold)}
+  .chip.no{background:var(--crimson-soft);color:var(--crimson)}
+
+  /* rules / callouts */
+  .rulebox{background:var(--sunk);border:1px solid var(--rule);padding:16px 20px;margin:22px 0}
+  .rulebox h3{margin-bottom:5px;color:var(--crimson)}
+  .rulebox.pos h3{color:var(--verd)}
+  .rulebox p{margin:0;font-size:14.5px;color:var(--ink-2)}
+  .rulebox p+p{margin-top:8px}
+
+  /* data table */
+  .scroll{overflow-x:auto;margin:0 0 10px}
+  table{border-collapse:collapse;width:100%;min-width:660px;font-size:14px}
+  th{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;
+    color:var(--ink-3);text-align:left;font-weight:400;padding:0 14px 8px 0;border-bottom:1px solid var(--rule-2);
+  }
+  td{padding:11px 14px 11px 0;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink-2)}
+  td:first-child{color:var(--ink);font-weight:500}
+  td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+  .src{font-family:var(--mono);font-size:12px;color:var(--ink-3);display:block;margin-top:2px}
+
+  ul.plain{margin:0;padding-left:18px}
+  ul.plain li{margin-bottom:7px;font-size:14.5px;color:var(--ink-2);max-width:62ch}
+  ul.plain li strong{color:var(--ink);font-weight:500}
+
+  .footnote{margin-top:44px;padding-top:18px;border-top:1px solid var(--rule);font-size:13px;color:var(--ink-3);max-width:64ch}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <p class="eyebrow">SIH 2026 · PS 26045</p>
+  <h1>Samhitā <span class="dev">संहिता</span></h1>
+  <p class="standfirst">For the Ministry of AYUSH and the All India Institute of Ayurveda. One knowledge graph, two agents: an IP Protection Map for Ayurvedic formulations, and an unprompted sentinel watching global patent filings on India's behalf.</p>
+  <dl class="facts">
+    <div class="fact"><dt>Budget</dt><dd>₹0 · free tiers</dd></div>
+    <div class="fact"><dt>Build window</dt><dd>4 weeks</dd></div>
+    <div class="fact"><dt>Eng. capacity</dt><dd>≈196 hrs</dd></div>
+    <div class="fact"><dt>Corpus</dt><dd>≈11,500 chunks</dd></div>
+    <div class="fact"><dt>Footprint</dt><dd>≈110 MB</dd></div>
+  </dl>
+</header>
+
+<nav class="lanes" role="tablist" aria-label="Build lanes">
+  <button role="tab" aria-selected="true" aria-controls="p-over" id="t-over">Overview</button>
+  <button role="tab" aria-selected="false" aria-controls="p-data" id="t-data">Data sources</button>
+  <button role="tab" aria-selected="false" aria-controls="p-dia" id="t-dia">Prahari + Evals<span class="owner">DIA</span></button>
+  <button role="tab" aria-selected="false" aria-controls="p-dev" id="t-dev">Sahayak + Graph<span class="owner">DEVANSH</span></button>
+  <button role="tab" aria-selected="false" aria-controls="p-sai" id="t-sai">Data + Security<span class="owner">SAIMA</span></button>
+  <button role="tab" aria-selected="false" aria-controls="p-him" id="t-him">Research<span class="owner">HIMANSHI</span></button>
+</nav>
+
+<!-- ============ OVERVIEW ============ -->
+<div class="panel" id="p-over" role="tabpanel" aria-labelledby="t-over">
+  <h2>What we are building</h2>
+  <p class="lede">The problem statement names two pain points, not one — Ayurvedic innovation is <em>under-protected</em>, and Indian traditional knowledge is <em>exposed to misappropriation abroad</em>. Our two agents map onto those two clauses exactly. Most teams will read only the first.</p>
+
+  <section>
+    <p class="sechead">How the two agents are orchestrated</p>
+    <h3>One agentic RAG shell, two agents inside it</h3>
+    <p>Not two products bolted together. An Orchestrator reads intent, then a <strong>Depth Controller</strong> decides how hard to work &mdash; so a one-second question never costs twelve seconds of agent loop.</p>
+    <div style="margin-top:10px">
+      <div class="task"><span class="wk">QUICK</span><div><h3>Classifier + one retrieval pass</h3><p>The default. &ldquo;Is this patentable?&rdquo;</p></div></div>
+      <div class="task"><span class="wk">GUIDED</span><div><h3>+ graph traversal + profile engine</h3><p>&ldquo;Show me the full IP map.&rdquo;</p></div></div>
+      <div class="task"><span class="wk">DEEP</span><div><h3>+ external tools, multi-hop search</h3><p>&ldquo;Find similar filings globally.&rdquo; On demand only.</p></div></div>
+    </div>
+    <p style="margin-top:14px"><strong>Depth is decided automatically, never asked upfront.</strong> We answer at QUICK and offer escalation under the answer. Asking how deep to go adds a step to every query including the trivial ones, and most people cannot say what depth they want before seeing an answer.</p>
+    <div class="rulebox pos">
+      <h3>Verification is its own node, not a line in the prompt</h3>
+      <p>Most teams write &ldquo;cite your sources&rdquo; into the prompt, which means the model grades its own homework. We pull it out as a separate deterministic step &mdash; <strong>NLI entailment</strong> of each generated sentence against the span it cites. That is what makes the citation guarantee real rather than aspirational.</p>
+    </div>
+    <p style="margin-top:14px">Prahari is the exception to all of this: a <strong>second entry point</strong>, fired by a scheduler, never by a query.</p>
+  </section>
+
+  <section>
+    <p class="sechead">Agent 1 · Sahayak सहायक</p>
+    <h3>The IP Protection Map</h3>
+    <p>The unit of interaction is a <strong>Formulation Dossier</strong>, not a question. The agent returns the protectable surface across all seven IP regimes, each marked open or barred with the citation that decides it.</p>
+    <p>An MSME believes “I can’t patent it, so I have nothing.” The truth is they have five other doors. That reframe is the product.</p>
+    <div class="rulebox pos">
+      <h3>The line the demo ends on</h3>
+      <p>“Patent is barred by Section 3(p). But you have five open doors, and here is the order to file them in.”</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="sechead">Agent 2 · Prahari प्रहरी</p>
+    <h3>The unprompted sentinel</h3>
+    <p>Registering a formulation silently registers its species to a watchlist. The user never supplies a patent number — if they had to, this would be a ChatGPT prompt with extra steps.</p>
+    <div class="rulebox pos">
+      <h3>We watch at publication, not at grant</h3>
+      <p>An application is published under <strong>Section 11A</strong> at 18 months. From that moment until grant, <strong>Section 25(1)</strong> lets <em>any person</em> file a pre-grant opposition &mdash; Form 7A, Rule 55. And <strong>no patent may be granted before six months from publication</strong>, so every alert carries a computable deadline.</p>
+      <p>Before grant, stopping a bad patent costs a form. After grant it costs a lawsuit. Turmeric took India years and crores precisely because nobody was watching at publication.</p>
+    </div>
+    <ul class="plain">
+      <li><strong>Acts unprompted.</strong> No query initiates it.</li>
+      <li><strong>Holds state and diffs against it.</strong> “New since last run” is the system’s decision, not the user’s.</li>
+      <li><strong>Decides what deserves attention.</strong> Most hits are noise; a scorer picks the few worth a human’s time.</li>
+      <li><strong>Produces an artefact, not a reply.</strong> A prior-art dossier assembled from evidence the user never supplied.</li>
+    </ul>
+    <p style="margin-top:14px">A <strong>national watchlist</strong> of ~50 top dravya runs with zero users, giving AIIA a standing dashboard. That is what makes it a ministry instrument rather than a user tool.</p>
+  </section>
+
+  <section>
+    <p class="sechead">Non-negotiables</p>
+    <div class="rulebox">
+      <h3>Never accuse anyone</h3>
+      <p>A third-party observation does not accuse — it <strong>submits prior art that may be relevant to examination</strong>. That is the legally correct framing and it is also our liability shield.</p>
+      <p>User-facing output says “prior art potentially relevant to this application.” The words <em>biopiracy</em>, <em>misappropriation</em>, <em>stolen</em> and <em>theft</em> never appear in the UI. Human review is mandatory before anything leaves the system. No auto-filing, ever.</p>
+    </div>
+    <div class="rulebox">
+      <h3>No target metrics on any slide</h3>
+      <p>Measured values only. A measured 0.71 with an error analysis beats a claimed 0.90 without one — and it is the only version that survives Q&amp;A.</p>
+    </div>
+    <div class="rulebox">
+      <h3>Every citation verified before it reaches a slide</h3>
+      <p>The product’s premise is that it never fabricates authority. The team holds itself to the same standard. Every section number is checked against India Code by Himanshi first.</p>
+    </div>
+  </section>
+
+  <section>
+    <p class="sechead">Schedule · differentiator first</p>
+    <p>Prahari is built in <strong>week 2, not week 3</strong>. Deliberate and counterintuitive: if we run out of time we want to be missing breadth, not missing the thing that wins.</p>
+    <div class="task"><span class="wk">W1</span><div><h3>Foundation and grounded retrieval</h3><p>Cut-line: it answers IP questions with citations, and we can measure it.</p></div></div>
+    <div class="task"><span class="wk">W2</span><div><h3>Prahari thin slice</h3><p>Cut-line: it finds a real published application, computes the days remaining before it can be granted, and drafts a real Form 7A. Manual trigger acceptable. <strong>The USP, secured.</strong></p></div></div>
+    <div class="task"><span class="wk">W3</span><div><h3>The advisory product</h3><p>Cut-line: the complete problem-statement answer.</p></div></div>
+    <div class="task"><span class="wk">W4</span><div><h3>Automation, language, hardening</h3><p>Scheduler, calibration, Hindi, offline demo mode, buffer.</p></div></div>
+  </section>
+
+  <section>
+    <p class="sechead">Demo · frozen to three moments</p>
+    <ul class="plain">
+      <li><strong>One.</strong> Formulation in → IP Protection Map → “patent barred, five doors open.”</li>
+      <li><strong>Two.</strong> This week&rsquo;s Journal alert &rarr; the Form 7A draft, with the window countdown.</li>
+      <li><strong>Three.</strong> The <code style="font-family:var(--mono);font-size:13px">/evals</code> page.</li>
+    </ul>
+    <p style="margin-top:14px">Everything else is a slide, not a click. Teams lose by trying to show everything and landing nothing.</p>
+  </section>
+</div>
+
+<!-- ============ DATA ============ -->
+<div class="panel" id="p-data" role="tabpanel" aria-labelledby="t-data" hidden>
+  <h2>Data sources</h2>
+  <p class="lede">Nothing is listed here that we do not actually ingest. Cleanliness is stated honestly — <em>unverified</em> means unverified, not “probably fine”.</p>
+
+  <section>
+    <p class="sechead">Using</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Source</th><th>For</th><th>Clean?</th><th>Volume</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>India Code mirror<span class="src">indiacode.ecourtsindia.com</span></td>
+            <td>National statutory corpus — primary retrieval</td>
+            <td><span class="chip ok">Clean</span><br>JSON / Markdown / Akoma Ntoso, no auth key. Verified live: 836 central acts, 77,072 sections</td>
+            <td class="num">15 acts →<br>≈10,000 chunks</td>
+          </tr>
+          <tr>
+            <td>India Code official<span class="src">indiacode.nic.in</span></td>
+            <td>Citation of record — every citation links here</td>
+            <td>Human-browsing portal, no API</td>
+            <td class="num">0 · URLs only</td>
+          </tr>
+          <tr>
+            <td>WIPO Lex</td>
+            <td>TRIPS, CBD, Nagoya, GRATK 2024, PCT, Madrid, Hague, Budapest</td>
+            <td><span class="chip ok">Clean</span><br>Well-structured articles</td>
+            <td class="num">8 texts →<br>≈1,200 chunks</td>
+          </tr>
+          <tr>
+            <td>Ayurvedic Formulary of India, Pt I<span class="src">archive.org/details/b32232184</span></td>
+            <td>Classical ground truth <em>and</em> prior-art surrogate. Seeds the graph</td>
+            <td><span class="chip warn">Semi-clean</span><br>546 pp, pre-OCR’d text (1.2 MB, Tesseract san+eng). English good, Devanagari poor. <strong>CC BY 4.0</strong></td>
+            <td class="num">≈120 formulations<br><span style="color:var(--ink-3)">600 if ahead</span></td>
+          </tr>
+          <tr>
+            <td>Patent Office Journal<span class="src">ipindia.nic.in &middot; weekly PDF</span></td>
+            <td><strong>Prahari&rsquo;s primary stream.</strong> Every application published under Section 11A</td>
+            <td><span class="chip warn">Semi-clean</span><br>Every Friday under Section 145. Consistent fields: application no., filing date, title, IPC, applicant, abstract, claim count. Large PDF, needs a parser</td>
+            <td class="num">&asymp;8 recent issues<br><span style="color:var(--ink-3)">weekly thereafter</span></td>
+          </tr>
+          <tr>
+            <td>Draft AYUSH patent guidelines<span class="src">IP Office &middot; 5 Feb 2025</span></td>
+            <td>Grounds the patent verdict and Examiner View</td>
+            <td><span class="chip no">Draft status</span><br>Clean single PDF, but issued as <strong>draft</strong>. Labelled draft in the UI until Himanshi confirms otherwise</td>
+            <td class="num">1 doc &rarr; &asymp;60 chunks</td>
+          </tr>
+          <tr>
+            <td>Ayurvedic Pharmacopoeia of India<span class="src">pcimh.gov.in · Archive fallback</span></td>
+            <td>Dravya monographs → graph nodes with Latin binomials</td>
+            <td><span class="chip no">Unverified</span><br>cdn.ayush.gov.in did not resolve 2026-09-10. Day-1 task</td>
+            <td class="num">≈100 monographs</td>
+          </tr>
+          <tr>
+            <td>Google Patents Public Data <span class="chip warn">Stretch</span><span class="src">BigQuery &middot; patents-public-data</span></td>
+            <td>Prahari’s patent corpus. CPC <code>A61K36/*</code>, non-Indian applicants</td>
+            <td><span class="chip ok">Clean</span><br>Sandbox free, no credit card. <strong>60-day table retention — export immediately</strong></td>
+            <td class="num">≈5,000 records<br><span style="color:var(--ink-3)">abstract + claim 1</span></td>
+          </tr>
+          <tr>
+            <td>POWO / IPNI + GBIF</td>
+            <td>Botanical synonym resolution — patents use obsolete binomials</td>
+            <td><span class="chip ok">Clean</span> JSON APIs</td>
+            <td class="num">50–200 lookups<br><span style="color:var(--ink-3)">cached</span></td>
+          </tr>
+          <tr>
+            <td>BhashaBench-Ayur<span class="src">hf · bharatgenai/BhashaBench-Ayur</span></td>
+            <td><strong>External benchmark. Evaluation only, never training</strong></td>
+            <td><span class="chip ok">Clean</span><br>14,963 validated exam questions, en + hi</td>
+            <td class="num">≈300 sampled</td>
+          </tr>
+          <tr>
+            <td>FSSAI Ayurveda Aahar Regs 2022</td>
+            <td>Food branch of the classifier</td>
+            <td><span class="chip ok">Clean</span> single regulation</td>
+            <td class="num">≈200 chunks</td>
+          </tr>
+          <tr>
+            <td>NBA / ABS materials<span class="src">nbaindia.org</span></td>
+            <td>ABS obligation profile fields</td>
+            <td><span class="chip warn">Messy PDFs</span><br><strong>Not ingested as corpus</strong> — hand-curated</td>
+            <td class="num">≈30 profile rows</td>
+          </tr>
+          <tr>
+            <td>GI Registry</td>
+            <td>GI eligibility for the cultivator view</td>
+            <td><span class="chip warn">PDF journals</span> no API</td>
+            <td class="num">≈20 GIs<br><span style="color:var(--ink-3)">hand-curated</span></td>
+          </tr>
+          <tr>
+            <td>Landmark case law</td>
+            <td>Grounding Sec 3(p) / 3(e) Examiner View</td>
+            <td>Manual selection</td>
+            <td class="num">6 cases</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="sechead">Not using — and why</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Source</th><th>Reason</th></tr></thead>
+        <tbody>
+          <tr><td>TKDL <span class="chip no">Blocked</span></td><td>NDA-gated, no API, no bulk export. <strong>Cannot be used by anyone</strong> — including teams who will claim they did. We ship a <code>PriorArtSource</code> adapter with a stubbed <code>TKDLAdapter</code> that CSIR can wire up behind the same interface.</td></tr>
+          <tr><td>IP India InPASS / TM / designs</td><td>No official API; scrape-only and fragile. Nothing on the demo path needs live IP India data. Documented as a post-SIH connector.</td></tr>
+          <tr><td>Indian Kanoon full corpus</td><td>Token-gated and far larger than needed. Six hand-picked cases give the same grounding at 1% of the effort.</td></tr>
+          <tr><td>e-Charak / FRLHT plants DB</td><td>Registration-gated, and POWO + GBIF already cover the taxonomy we need.</td></tr>
+          <tr><td>EPO OPS · PatentsView · Lens · PATENTSCOPE</td><td>Redundant with BigQuery at 5,000 records. Documented as the scale-out path, not built.</td></tr>
+          <tr><td>AyurParam-2.9B</td><td>A domain fine-tuned LLM — orthogonal to a retrieval-grounded system, and hosting needs GPU we do not have. Noted as a future comparison baseline.</td></tr>
+          <tr><td>Devanagari OCR of ślokas</td><td>Two-week project on its own, and Sanskrit OCR on colonial-era scans is genuinely poor. <strong>The Formulary already carries the citation</strong> — we render “Sharangadhara Samhita, Madhyama Khanda 7/40–43” without OCR’ing a single Devanagari character.</td></tr>
+          <tr><td>Paid registry subscriptions</td><td>₹0 budget. We build the consent ledger and permission flow and demo it against a <strong>mock</strong> connector, and say so plainly. A working consent mechanism with no paid source behind it is honest; a fake integration is not.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="sechead">Footprint</p>
+    <div class="scroll">
+      <table style="min-width:420px">
+        <thead><tr><th>Item</th><th>Count</th><th>Storage</th></tr></thead>
+        <tbody>
+          <tr><td>Text chunks</td><td class="num">≈11,500</td><td class="num">≈40 MB</td></tr>
+          <tr><td>Embeddings <span class="src">bge-m3 · 1024-dim · fp32</span></td><td class="num">≈11,500</td><td class="num">≈47 MB</td></tr>
+          <tr><td>Patent records</td><td class="num">≈5,000</td><td class="num">≈20 MB</td></tr>
+          <tr><td>Graph nodes / edges</td><td class="num">≈150 / 600</td><td class="num">negligible</td></tr>
+          <tr><td><strong>Total</strong></td><td class="num"></td><td class="num"><strong>≈110 MB</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:12px">Supabase free tier allows 500 MB. <strong>We use roughly a fifth of it.</strong> This is deliberately a small database — the plan reads large only if you confuse listing sources with needing them.</p>
+  </section>
+</div>
+
+<!-- ============ DIA ============ -->
+<div class="panel" id="p-dia" role="tabpanel" aria-labelledby="t-dia" hidden>
+  <h2>Prahari + Evaluation</h2>
+  <p class="lede">40% of the AI/ML work by volume, 100% of the resume-bearing artifacts: the calibration model, the evaluation methodology, and the claim-matching logic.</p>
+
+  <section>
+    <p class="sechead">Prahari · the sentinel</p>
+    <div class="task"><span class="wk">W2</span><div><h3>Patent Office Journal parser</h3><p>Fetch and parse the weekly Journal PDF from <code>ipindia.nic.in</code>, published every Friday under Section 145. Filter on <strong>IPC</strong> <code>A61K36/*</code> &mdash; the Journal carries IPC, not CPC. Pull ~8 recent issues for the demo. <strong>Confirm the IPC field appears as expected before building on it.</strong></p></div></div>
+    <div class="task"><span class="wk">W2</span><div><h3>Species resolution</h3><p>Expand claimed binomials through POWO/IPNI and GBIF into synonym sets, cached locally. Naive string matching misses obsolete names — this step is why the matching works.</p></div></div>
+    <div class="task"><span class="wk">W2</span><div><h3>Claim-vs-prior-art entailment</h3><p><code>mDeBERTa-v3-xnli</code> scores each independent claim against candidate Formulary passages. <em>Does the Formulary already teach this?</em> Same model later powers citation-faithfulness scoring and Examiner View — one model, three jobs.</p></div></div>
+    <div class="task"><span class="wk">W2</span><div><h3>Opposition-window computation</h3><p><code>earliest_grant = published_on + 6 months</code>, then <code>days_remaining</code>. Rank alerts by <strong>urgency &times; risk</strong>, not risk alone &mdash; a closing window outranks a marginally better match. Unit-test against hand-checked entries, including one already granted and one early-published via Form 9.</p></div></div>
+    <div class="task"><span class="wk">W2</span><div><h3>Form 7A generator</h3><p>A <strong>Section 25(1) representation under Rule 55</strong>, carrying Formulary citations in the form <code>Sharangadhara Samhita, Madhyama Khanda 7/40&ndash;43</code>. For human review &mdash; never auto-filed.</p></div></div>
+    <div class="task"><span class="wk late">W4</span><div><h3>Scheduler, push, national watchlist</h3><p>Friday cron sweep, diff against seen application numbers, Supabase realtime notification. National watchlist of ~50 dravya so it works with zero users.</p></div></div>
+    <div class="task"><span class="wk late">W4</span><div><h3>Foreign stream <span class="chip warn">stretch</span></h3><p>Only if week 2 finished early. Google Patents BigQuery, CPC <code>A61K36/*</code>, non-Indian applicants &rarr; third-party observations under EPC Art. 115 / US 37 CFR 1.290 / PCT via ePCT.</p></div></div>
+  </section>
+
+  <section>
+    <p class="sechead">Evaluation · built by agents from your spec</p>
+    <p>This lane is the most precisely specifiable component in the project, which makes it the best candidate for Claude Code agents to build. Write the spec; review the diffs. It should not consume your hours directly — that is how we remove you as a single point of failure on the differentiators.</p>
+    <div class="task"><span class="wk">W1</span><div><h3>Minimal harness</h3><p>50 questions, faithfulness + accuracy. Enough to steer week 1 development.</p></div></div>
+    <div class="task"><span class="wk late">W4</span><div><h3>Span-anchored gold set</h3><p><strong>Generate backwards from the source.</strong> Start from a statute chunk, generate the question it answers. The ground-truth span is then guaranteed by construction — which yields a <em>retrieval</em> gold set for free, so nDCG@10 and recall@20 become computable without anyone labelling relevance. Hand-written questions give an answer set only.</p></div></div>
+    <div class="task"><span class="wk late">W4</span><div><h3>Judge calibration</h3><p>Cohen’s κ against ≥50 human-labelled answers <strong>before</strong> the LLM judge is trusted for any reported number. An uncalibrated judge is a vibe with a number attached.</p></div></div>
+    <div class="task"><span class="wk late">W4</span><div><h3>Calibrated abstention gate</h3><p>Logistic / GBM over retrieval features — max cosine, reranker score, NLI entailment, source tier — predicting citation-faithfulness. Powers the problem statement’s required confidence indicator with a model instead of a heuristic. Yields a reliability curve and <strong>ECE</strong>.</p></div></div>
+  </section>
+
+  <section>
+    <p class="sechead">Reported metrics · the PS's own four axes</p>
+    <ul class="plain">
+      <li><strong>Answer accuracy</strong> — gold set + BhashaBench-Ayur, LLM judge with κ reported</li>
+      <li><strong>Citation correctness</strong> — per-sentence NLI entailment against the cited span; separately, does the cited section exist and say what was claimed</li>
+      <li><strong>Safe abstention</strong> — precision on the out-of-scope subset, plus ECE</li>
+      <li><strong>Multilingual quality</strong> — per-language delta vs. English</li>
+    </ul>
+    <div class="rulebox">
+      <h3>Not fine-tuning a reranker</h3>
+      <p>It costs 5–6 days, may lose to off-the-shelf <code>bge-reranker-v2-m3</code> — turning the headline into a negative result — and is invisible to judges. Measuring retrieval properly is the stronger signal at one-fifth the cost.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ============ DEVANSH ============ -->
+<div class="panel" id="p-dev" role="tabpanel" aria-labelledby="t-dev" hidden>
+  <h2>Sahayak + Knowledge Graph</h2>
+  <p class="lede">60% of the AI/ML work. You own the advisory agent end to end — corpus through to the IP Protection Map — so there are almost no handoffs in the critical path.</p>
+
+  <section>
+    <p class="sechead">The query path</p>
+    <div class="task"><span class="wk">W1</span><div><h3>Orchestrator + Depth Controller</h3><p>Extract intent and entities, then triage to QUICK / GUIDED / DEEP. <strong>Auto-triage &mdash; never ask the user upfront.</strong> Escalation affordances render under the answer instead. A QUICK query that triggers DEEP is a cost bug, not just a latency bug, so this gets its own routing-accuracy test.</p></div></div>
+    <div class="task"><span class="wk">W1</span><div><h3>Verification Agent</h3><p>A <strong>separate deterministic node</strong>, not a line in the prompt. NLI entailment of each generated sentence against the span it cites, plus the guardrail rails. Its output decides <em>Confidence OK</em> vs <em>abstain to human</em>. Note: <strong>NLI</strong>, not NLU &mdash; different thing, and a technical judge will notice.</p></div></div>
+
+    <p class="sechead" style="margin-top:34px">Retrieval foundation</p>
+    <div class="task"><span class="wk">W1</span><div><h3>Corpus ingestion</h3><p>Pull ~15 acts from the India Code mirror via its JSON API. Chunk, embed with <code>bge-m3</code>, store in pgvector against Saima’s <code>corpus_version</code> table. Every chunk keeps its official <code>indiacode.nic.in</code> URL as the citation of record.</p></div></div>
+    <div class="task"><span class="wk">W1</span><div><h3>Hybrid retrieval + rerank</h3><p>BM25 + dense, then <code>bge-reranker-v2-m3</code>. Run the three-way bake-off so the numbers exist from day one.</p></div></div>
+    <div class="task"><span class="wk">W1</span><div><h3>Grounded generation</h3><p>Mandatory citations, enforced by the NeMo Guardrails output rail — <strong>uncited legal claims are blocked, not warned about</strong>. Every answer carries its <strong>corpus version stamp</strong>, which is what later lets us flag stale answers. Jurisdiction toggle keeps India and treaty answers visibly separate.</p></div></div>
+  </section>
+
+  <section>
+    <p class="sechead">Knowledge graph</p>
+    <div class="task"><span class="wk">W2</span><div><h3>AFI Part I extraction</h3><p>Parse the archive.org OCR text into ≈120 formulations. Use the metadata and transliterated names — <strong>not</strong> the Devanagari, which OCR’d poorly. Each formulation keeps its source-text citation.</p></div></div>
+    <div class="task"><span class="wk">W2</span><div><h3>Schema and edges</h3><p><code>nodes(id, type, props jsonb)</code> and <code>edges(src, dst, type, props, confidence, provenance)</code>, traversed with recursive CTEs. <strong>Every edge carries provenance and confidence — nothing enters the graph without a citable source.</strong> Same rule the product enforces on its own answers.</p></div></div>
+    <div class="task"><span class="wk">W3</span><div><h3>Graph query API</h3><p>Feeds both the Cytoscape viz and the specificity that upgrades answers: <em>“contains Withania somnifera → 3 ABS obligations → 2 GI conflicts → 41 global filings.”</em></p></div></div>
+  </section>
+
+  <section>
+    <p class="sechead">The advisory product</p>
+    <div class="task"><span class="wk">W3</span><div><h3>Formulation classifier</h3><p>Six classes, logistic head over <code>bge-m3</code> embeddings, labels bootstrapped from AFI plus rules. ~6 hrs. Load-bearing — it is the routing decision the whole system hangs on, and it produces a confusion matrix and macro-F1.</p></div></div>
+    <div class="task"><span class="wk">W3</span><div><h3>Regulatory-profile engine</h3><p>Rules as typed, cited, versioned YAML. The runtime match is a <strong>pure function</strong> — deterministic, unit-testable, no LLM variance, no hallucinated requirement. The LLM only explains the gap in plain language.</p><p>Same schema serves national obligations <em>and</em> international market access. One engine, two jobs — less code, not more. Adding a market is a data file, not a code change.</p></div></div>
+    <div class="task"><span class="wk">W3</span><div><h3>IP Protection Map</h3><p>All seven regimes with open/barred verdicts and the deciding citation. Patent usually barred under Sec 3(p), or Sec 3(e) for polyherbals — <strong>mere admixture is the provision that actually kills these applications, and nobody discusses it.</strong></p></div></div>
+    <div class="task"><span class="wk">W3</span><div><h3>Examiner View + cultivator view</h3><p>Examiner View fires <strong>automatically, and only when the patent verdict is &ldquo;may be open&rdquo;</strong> &mdash; a risky verdict owes the user an explanation of why an examiner might disagree, and because it runs on the minority case it costs nothing on the common path. Grounded in the IP Office&rsquo;s own draft AYUSH guidelines, which require synergy <em>greater than the sum of the components</em> to survive Sec 3(e). Cultivator view answers &ldquo;I grow X in district Y&rdquo; &rarr; GI eligibility, ABS posture, PPV&amp;FR route.</p></div></div>
+  </section>
+</div>
+
+<!-- ============ SAIMA ============ -->
+<div class="panel" id="p-sai" role="tabpanel" aria-labelledby="t-sai" hidden>
+  <h2>Data + Security</h2>
+  <p class="lede">Not a side job. The problem statement explicitly demands DPDP alignment, audit, privacy and “recognised AI-application standards” — this lane answers four separate PS requirements and produces two slides nobody else will have.</p>
+
+  <section>
+    <p class="sechead">Schema · week 1</p>
+    <ul class="plain">
+      <li><code>formulation_dossier</code> — the twin, and also Prahari’s subscription mechanism</li>
+      <li><code>corpus_version</code> — content hash, <code>effective_from</code>, <code>effective_to</code>, <code>source_url</code>, <code>fetched_at</code></li>
+      <li><code>nodes</code> / <code>edges</code> — the knowledge graph, with provenance and confidence columns</li>
+      <li><code>regulatory_profiles</code> — typed rules with <code>verified_by</code> and <code>verified_on</code></li>
+      <li><code>audit_log</code> — append-only</li>
+      <li><code>consent_grant</code> / <code>consent_access</code> — the consent ledger</li>
+      <li><code>watchlist</code> / <code>seen_publications</code> — Prahari state</li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="sechead">The four PS requirements you own</p>
+    <div class="task"><span class="wk">W1</span><div><h3>Row-level security</h3><p>On every table. Dossiers private by default. This is the difference between a demo and something a ministry could actually deploy.</p></div></div>
+    <div class="task"><span class="wk">W1</span><div><h3>Append-only audit log</h3><p>Query, retrieval set, model version, corpus version, answer. <strong>Any answer must be reconstructible after the fact</strong> — that is what makes the system auditable rather than merely logged.</p></div></div>
+    <div class="task"><span class="wk">W3</span><div><h3>Consent ledger</h3><p>The PS requires that a user’s <em>paid</em> subscriptions be touched only with explicit, logged permission. Model it properly: grant, scope, expiry, revocation, per-access log entry.</p><p>We have no budget for a real paid source, so it is demoed against a <strong>mock connector</strong> — and we say so. A working consent mechanism with nothing behind it is honest; a fake integration is not. <strong>Almost no team will implement this line literally.</strong></p></div></div>
+    <div class="task"><span class="wk late">W4</span><div><h3>NIST AI RMF mapping</h3><p>One page mapping our guardrails, eval harness, audit log and abstention design onto the NIST AI Risk Management Framework. The PS says “recognised AI-application standards” — this answers it verbatim, in about two hours, and virtually nobody will do it.</p></div></div>
+  </section>
+
+  <section>
+    <p class="sechead">DPDP posture</p>
+    <ul class="plain">
+      <li>Data minimisation and purpose limitation, stated per table</li>
+      <li>Retention windows with an actual expiry job, not a policy document</li>
+      <li>Export and erasure endpoints that work</li>
+      <li>Abstention escalations logged — including who they were routed to</li>
+    </ul>
+  </section>
+</div>
+
+<!-- ============ HIMANSHI ============ -->
+<div class="panel" id="p-him" role="tabpanel" aria-labelledby="t-him" hidden>
+  <h2>Research</h2>
+  <p class="lede">Three deliverables, each a checklist rather than an open-ended search. Verification, not authoring — which is a far easier task and the one that actually gets finished.</p>
+
+  <section>
+    <p class="sechead">Deliverable 1 · source verification · day 1</p>
+    <p>One row per source. For each: does the URL resolve, what format is behind it, what licence applies, and how many items are there. Do not summarise the content — just confirm access.</p>
+    <div class="task"><span class="wk">D1</span><div><h3>Highest priority — blocking</h3><p>The Ayurvedic Pharmacopoeia of India. <code>cdn.ayush.gov.in</code> did not resolve on 10 Sept. Try <code>pcimh.gov.in</code>, then Internet Archive. <strong>Report which volumes you can actually download.</strong> If none, we proceed on the Formulary alone — but we need to know on day 1, not week 3.</p></div></div>
+    <div class="task"><span class="wk">D1</span><div><h3>Are the AYUSH patent guidelines final?</h3><p>The IP Office issued <em>Draft Guidelines for processing patent applications of AYUSH systems</em> on 5 Feb 2025, comments closed 28 Feb 2025. <strong>Find out whether a final version has since been published.</strong> Until you confirm, we must label them &ldquo;draft guidance&rdquo; everywhere &mdash; presenting draft guidance as settled law would break the product&rsquo;s own premise.</p></div></div>
+    <div class="task"><span class="wk">D1</span><div><h3>Patent Office Journal &mdash; is it downloadable?</h3><p>Published every Friday on <code>ipindia.nic.in</code>. Download two recent issues. Confirm: does each entry carry an <strong>IPC code</strong>, an applicant name and a publication date, and is the layout the same between the two weeks? Dia&rsquo;s parser depends on the answer.</p></div></div>
+    <div class="task"><span class="wk">D1</span><div><h3>Bhashini registration</h3><p>Register on the ULCA portal and generate an API key. Registration latency is a tracked risk — start it before anything else.</p></div></div>
+    <div class="task"><span class="wk">D1</span><div><h3>Confirm the statute list</h3><p>For each of ~15 acts, confirm it exists in the India Code mirror and note its identifier. Patents Act 1970 and the 2024 Rules; Biological Diversity Act 2002 as amended 2023 and the 2024 Rules; GI, Trade Marks, Designs, Copyright, PPV&amp;FR; Drugs and Cosmetics Act 1940 and Rules 1945; DMR (Objectionable Advertisements) Act 1954; FSS Act 2006.</p></div></div>
+  </section>
+
+  <section>
+    <p class="sechead">Deliverable 2 · regulatory profile fields</p>
+    <p>Fill a fixed template — the fields are given, you find the values and the citation for each. <strong>US and EU only.</strong> Every field needs the specific article or rule it came from.</p>
+    <ul class="plain">
+      <li>Registration route · evidence years required · dossier components</li>
+      <li>Clinical trials required (yes/no) · permitted claims · prohibited claims</li>
+      <li>Competent authority · form identifier and URL · required attachments</li>
+      <li><strong>Citation for every single field.</strong> A field without a citation is left blank, not guessed.</li>
+    </ul>
+    <p style="margin-top:12px">Also ~30 ABS rows from NBA materials, and ~20 Ayurveda-relevant entries from the GI Registry.</p>
+  </section>
+
+  <section>
+    <p class="sechead">Deliverable 3 · gold-set verification</p>
+    <p>You are <strong>not</strong> writing 200 questions. The system generates them from statute text; you verify a stratified sample of about 60 and mark each correct or incorrect.</p>
+    <div class="rulebox pos">
+      <h3>Why a sample is enough</h3>
+      <p>The sample’s error rate becomes the reported quality bound on the whole set. That is statistically legitimate, it is what a careful team would actually do, and it is one-third of the work of checking all 200.</p>
+    </div>
+    <p>For each item: does the cited section exist, and does it actually say what the answer claims? Those are two separate checks and both matter — a real section cited for something it does not say is the failure mode we most need to catch.</p>
+  </section>
+
+  <section>
+    <p class="sechead">The standing rule</p>
+    <div class="rulebox">
+      <h3>Nothing unverified reaches a slide</h3>
+      <p>The product’s entire premise is that it never fabricates authority. Every section number, rule number and treaty article the team uses is checked against India Code by you first. If we get one wrong in front of AIIA judges — who know this law — the citation-grounding claim collapses on the spot.</p>
+    </div>
+  </section>
+</div>
+
+<p class="footnote">Every statutory reference on this page is a pointer for verification against India Code, not an authority. Dia holds the full specification; each lane above is complete on its own.</p>
+
+</div>
+
+<script>
+(function(){
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('nav.lanes button'));
+  function select(tab){
+    tabs.forEach(function(t){
+      var on = t === tab;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+    tab.focus();
+  }
+  tabs.forEach(function(tab, i){
+    tab.addEventListener('click', function(){ select(tab); });
+    tab.addEventListener('keydown', function(e){
+      var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if(!d) return;
+      e.preventDefault();
+      select(tabs[(i + d + tabs.length) % tabs.length]);
+    });
+  });
+})();
+</script>

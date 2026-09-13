@@ -1,0 +1,213 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-heading: var(--font-serif);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-verdict-open: var(--verdict-open);
+  --color-verdict-open-bg: var(--verdict-open-bg);
+  --color-verdict-barred: var(--verdict-barred);
+  --color-verdict-barred-bg: var(--verdict-barred-bg);
+  --color-verdict-draft: var(--verdict-draft);
+  --color-verdict-draft-bg: var(--verdict-draft-bg);
+  --color-agent-sahayak: var(--agent-sahayak);
+  --color-agent-sahayak-bg: var(--agent-sahayak-bg);
+  --color-agent-prahari: var(--agent-prahari);
+  --color-agent-prahari-bg: var(--agent-prahari-bg);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  /* Ayurvedic-nurturing world: warm cream ground, soil-brown + deep-red
+     accents, sage green and tan drawn from the AYU-IP 360 reference
+     palette. See .impeccable/surfaces/app.md */
+  --background: #f6f0e3;
+  --foreground: #3b2a1e;
+  --card: #fffcf6;
+  --card-foreground: #3b2a1e;
+  --popover: #fffcf6;
+  --popover-foreground: #3b2a1e;
+  --primary: #5c3a21;
+  --primary-foreground: #f8f2e4;
+  --secondary: #ece0c4;
+  --secondary-foreground: #5c3a21;
+  --muted: #ece0c4;
+  /* Darkened from #8a7860 - the lighter tone failed contrast (~3.8:1) once
+     it sat on top of the blurred glass panels on the home page. */
+  --muted-foreground: #6b5c48;
+  --accent: #ddc99e;
+  --accent-foreground: #3b2a1e;
+  --destructive: #7a2e2e;
+  --border: #e2d3ac;
+  --input: #e2d3ac;
+  --ring: #5c3a21;
+  --chart-1: #5c3a21;
+  --chart-2: #4b6b4f;
+  --chart-3: #7a2e2e;
+  --chart-4: #b98a2b;
+  --chart-5: #8a7860;
+  --radius: 0.75rem;
+  --sidebar: #ece0c4;
+  --sidebar-foreground: #3b2a1e;
+  --sidebar-primary: #5c3a21;
+  --sidebar-primary-foreground: #f8f2e4;
+  --sidebar-accent: #e2d3ac;
+  --sidebar-accent-foreground: #5c3a21;
+  --sidebar-border: #d9c69c;
+  --sidebar-ring: #5c3a21;
+
+  /* Verdict vocabulary - status chips only, never decorative */
+  --verdict-open: #4b6b4f;
+  --verdict-open-bg: #e2ead9;
+  --verdict-barred: #7a2e2e;
+  --verdict-barred-bg: #f1ded9;
+  --verdict-draft: #96701f;
+  --verdict-draft-bg: #f1e6c8;
+
+  /* Agent identity - Sahayak (brown/red) vs Prahari (sage green) */
+  --agent-sahayak: #7a2e2e;
+  --agent-sahayak-bg: #f1ded9;
+  --agent-prahari: #3f5c43;
+  --agent-prahari-bg: #dfe8dc;
+
+  --glass-bg: rgba(255, 252, 244, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.6);
+}
+
+.dark {
+  --background: #211810;
+  --foreground: #f1e7d6;
+  --card: #2c2117;
+  --card-foreground: #f1e7d6;
+  --popover: #2c2117;
+  --popover-foreground: #f1e7d6;
+  --primary: #d9a875;
+  --primary-foreground: #211810;
+  --secondary: #372a1d;
+  --secondary-foreground: #f1e7d6;
+  --muted: #372a1d;
+  --muted-foreground: #bfa98c;
+  --accent: #4a3a28;
+  --accent-foreground: #f1e7d6;
+  --destructive: #c9645f;
+  --border: #40311f;
+  --input: #40311f;
+  --ring: #d9a875;
+  --chart-1: #d9a875;
+  --chart-2: #82b790;
+  --chart-3: #c9645f;
+  --chart-4: #d9b15c;
+  --chart-5: #bfa98c;
+  --sidebar: #2c2117;
+  --sidebar-foreground: #f1e7d6;
+  --sidebar-primary: #d9a875;
+  --sidebar-primary-foreground: #211810;
+  --sidebar-accent: #40311f;
+  --sidebar-accent-foreground: #f1e7d6;
+  --sidebar-border: #40311f;
+  --sidebar-ring: #d9a875;
+
+  --verdict-open: #82b790;
+  --verdict-open-bg: #1c2620;
+  --verdict-barred: #d98b77;
+  --verdict-barred-bg: #33221c;
+  --verdict-draft: #d9b15c;
+  --verdict-draft-bg: #322a18;
+
+  --agent-sahayak: #d98b77;
+  --agent-sahayak-bg: #33221c;
+  --agent-prahari: #82b790;
+  --agent-prahari-bg: #1c2620;
+
+  --glass-bg: rgba(44, 33, 23, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.12);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+  }
+  ::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--background);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--muted-foreground);
+  }
+}
+
+@layer components {
+  /* Frosted glass treatment for key surfaces only (chat panel, dossier
+     overview, live-progress panels) - never on dense data tables. */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 30px -12px rgba(59, 42, 30, 0.25);
+  }
+}
