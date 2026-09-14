@@ -2,45 +2,18 @@
 
 import * as React from "react";
 import Link from "next/link";
-import {
-  AlertTriangle,
-  ArrowRight,
-  Mic,
-  Paperclip,
-  Send,
-  ShieldCheck,
-} from "lucide-react";
-import { getDossiers, getPrahariAlerts, previewQuerySteps, submitQuery } from "@/lib/api";
+import { useRouter, useSearchParams } from "next/navigation";
+import { AlertTriangle, ArrowRight, MessageSquareText } from "lucide-react";
+import { getDossiers, getPrahariAlerts } from "@/lib/api";
 import { ipVerdictsByDossier } from "@/lib/mock/dossiers";
 import { classificationLabels, statusLabels } from "@/lib/labels";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { Citation } from "@/components/citation";
-import { AgentBanner } from "@/components/ask/agent-banner";
-import { DepthIndicator } from "@/components/ask/depth-indicator";
-import { EvalReveal } from "@/components/ask/eval-reveal";
-import { LivePanel, type LivePanelState } from "@/components/ask/live-panel";
-import { SourcePane } from "@/components/ask/source-pane";
-import { VerificationLine } from "@/components/ask/verification-line";
+import { ChatPanel, type ChatMode } from "@/components/ask/chat-panel";
 import { GraphBackdrop } from "@/components/graph-backdrop";
 import { RingStat } from "@/components/ring-stat";
 import { MortarPestleIcon } from "@/components/mortar-pestle-icon";
 import { cn } from "@/lib/utils";
-import type {
-  FormulationDossier,
-  PrahariAlert,
-  QueryCitation,
-  QueryDepth,
-  QueryResponse,
-} from "@/lib/types";
-
-const suggestions = [
-  "Can I patent my polyherbal formulation containing Ashwagandha, Guduchi and Turmeric?",
-  "What is Prahari currently watching?",
-  "Is a geographical indication open for wild-collected guggul from Rajasthan?",
-  "Can I sell this formulation in Nepal?",
-];
+import type { FormulationDossier, PrahariAlert } from "@/lib/types";
 
 // Real (non-fabricated) stock photography stand-in for herb/ingredient
 // imagery. Only dossiers with a matching photo get one - the rest fall back
@@ -80,19 +53,19 @@ function PageBackdrop() {
   );
 }
 
-// No end-of-session evaluation report here (Stage 2 had one): answer
-// accuracy can't be measured on a five-question session with no ground
-// truth to score against. Per-answer verification (VerificationLine,
-// EvalReveal) still runs on every response - system-level measurement lives
-// only on /evals, against the gold set.
-export default function AskPage() {
-  const [query, setQuery] = React.useState("");
-  const [pending, setPending] = React.useState(false);
-  const [thread, setThread] = React.useState<QueryResponse[]>([]);
-  const [panel, setPanel] = React.useState<LivePanelState>({ kind: "idle" });
-  const [selectedCitation, setSelectedCitation] = React.useState<QueryCitation | null>(null);
-  const [escalated, setEscalated] = React.useState<Set<string>>(new Set());
-  const revealTimer = React.useRef<ReturnType<typeof setInterval> | null>(null);
+function HomeRoute() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const dossierParam = searchParams.get("d");
+  const chatParam = searchParams.get("chat");
+  const isOpen = Boolean(dossierParam) || chatParam === "1";
+  const mode: ChatMode = dossierParam ? "dossier" : "general";
+
+  // Tracks whether *this session* pushed the entry that's currently open, so
+  // dismiss can pop it with router.back() (matching the browser back button)
+  // instead of leaving the app when someone lands on a shared ?chat=1 link
+  // with no prior "/" entry to go back to.
+  const openedByUsRef = React.useRef(false);
 
   const [dossiers, setDossiers] = React.useState<FormulationDossier[] | null>(null);
   const [alerts, setAlerts] = React.useState<PrahariAlert[] | null>(null);
@@ -100,320 +73,57 @@ export default function AskPage() {
   React.useEffect(() => {
     getDossiers().then(setDossiers);
     getPrahariAlerts().then(setAlerts);
-    return () => {
-      if (revealTimer.current) clearInterval(revealTimer.current);
-    };
   }, []);
 
-  const hasConversation = pending || thread.length > 0;
+  function openGeneral() {
+    openedByUsRef.current = true;
+    router.push("/?chat=1", { scroll: false });
+  }
 
-  async function runQuery(text: string, depth: QueryDepth) {
-    if (!text.trim()) return;
-    setPending(true);
+  function openDossier(id: string) {
+    openedByUsRef.current = true;
+    router.push(`/?d=${id}`, { scroll: false });
+  }
 
-    const preview = previewQuerySteps(text, depth);
-    if (revealTimer.current) clearInterval(revealTimer.current);
-
-    if (preview.abstained) {
-      setPanel({ kind: "idle" });
-    } else if (preview.agents.includes("prahari")) {
-      const steps = preview.prahariSteps;
-      let revealed = 0;
-      setPanel({ kind: "prahari", steps, revealed: 0, done: false });
-      revealTimer.current = setInterval(() => {
-        revealed += 1;
-        setPanel((prev) =>
-          prev.kind === "prahari"
-            ? { ...prev, revealed, done: revealed >= steps.length }
-            : prev
-        );
-        if (revealed >= steps.length && revealTimer.current) {
-          clearInterval(revealTimer.current);
-        }
-      }, 350);
+  function closePanel() {
+    if (openedByUsRef.current) {
+      openedByUsRef.current = false;
+      router.back();
     } else {
-      const steps = preview.assemblySteps;
-      let revealed = 0;
-      setPanel({ kind: "sahayak", steps, revealed: 0, done: false });
-      revealTimer.current = setInterval(() => {
-        revealed += 1;
-        setPanel((prev) =>
-          prev.kind === "sahayak"
-            ? { ...prev, revealed, done: revealed >= steps.length }
-            : prev
-        );
-        if (revealed >= steps.length && revealTimer.current) {
-          clearInterval(revealTimer.current);
-        }
-      }, 350);
+      router.push("/", { scroll: false });
     }
-
-    try {
-      const response = await submitQuery(text, depth);
-      setThread((prev) => [...prev, response]);
-    } finally {
-      setPending(false);
-    }
-  }
-
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    const text = query;
-    setQuery("");
-    void runQuery(text, "quick");
-  }
-
-  function handleEscalate(responseId: string) {
-    setEscalated((prev) => new Set(prev).add(responseId));
   }
 
   return (
     <div className="relative flex flex-1 flex-col gap-8">
       <PageBackdrop />
 
-      {!hasConversation && (
-        <EmptyStateOverview dossiers={dossiers} alerts={alerts} />
-      )}
-
       <div
+        aria-hidden={isOpen || undefined}
+        inert={isOpen}
         className={cn(
-          "mx-auto flex w-full flex-1 flex-col gap-6",
-          hasConversation
-            ? "max-w-[1180px] lg:flex-row lg:items-start lg:justify-center"
-            : "max-w-3xl"
+          "transition-opacity duration-300 ease-out",
+          isOpen && "pointer-events-none opacity-40"
         )}
       >
-        <div className={cn("flex min-w-0 flex-col gap-6", hasConversation && "lg:max-w-[760px]")}>
-          {!hasConversation && (
-            <div className="flex flex-col gap-2">
-              <h2 className="font-heading text-xl font-semibold">Ask Sahayak or Prahari</h2>
-              <p className="text-sm text-muted-foreground">
-                The Orchestrator picks who engages and at what depth, Quick by default. Try
-                one of these:
-              </p>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                {suggestions.map((s) => (
-                  <button
-                    key={s}
-                    type="button"
-                    onClick={() => void runQuery(s, "quick")}
-                    className="rounded-xl border border-border bg-card px-3 py-2.5 text-left text-sm break-words hover:bg-secondary"
-                  >
-                    {s}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {hasConversation && (
-            <div className="flex flex-col gap-4">
-              {thread.map((response, i) => (
-                <ResponseCard
-                  key={response.id}
-                  response={response}
-                  index={i}
-                  escalatedToHuman={escalated.has(response.id)}
-                  onEscalate={(depth) => void runQuery(response.query, depth)}
-                  onEscalateToHuman={() => handleEscalate(response.id)}
-                  onOpenCitation={setSelectedCitation}
-                />
-              ))}
-              {pending && (
-                <p className="text-sm text-muted-foreground">Retrieving and verifying…</p>
-              )}
-            </div>
-          )}
-
-          <Composer
-            query={query}
-            setQuery={setQuery}
-            onSubmit={handleSubmit}
-            pending={pending}
-          />
-        </div>
-
-        {hasConversation && (
-          <div className="flex w-full flex-col gap-4 lg:sticky lg:top-8 lg:w-[380px] lg:shrink-0">
-            {pending && <LivePanel state={panel} />}
-            <SourcePane citation={selectedCitation} onClose={() => setSelectedCitation(null)} />
-          </div>
-        )}
+        <Dashboard
+          dossiers={dossiers}
+          alerts={alerts}
+          onAskGeneral={openGeneral}
+          onAskDossier={openDossier}
+        />
       </div>
+
+      <ChatPanel open={isOpen} mode={mode} dossierId={dossierParam} onClose={closePanel} />
     </div>
   );
 }
 
-function Composer({
-  query,
-  setQuery,
-  onSubmit,
-  pending,
-}: {
-  query: string;
-  setQuery: (v: string) => void;
-  onSubmit: (e: React.FormEvent) => void;
-  pending: boolean;
-}) {
+export default function Page() {
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-2 border-t border-border pt-4">
-      <Textarea
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Ask about a formulation, a jurisdiction, or Prahari's watchlist…"
-        rows={2}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" && !e.shiftKey) {
-            e.preventDefault();
-            onSubmit(e);
-          }
-        }}
-      />
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-1.5">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                aria-disabled="true"
-                aria-label="Voice input (not available in this build)"
-                onClick={(e) => e.preventDefault()}
-              >
-                <Mic className="size-4" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Voice input — not available in this build</TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                aria-disabled="true"
-                aria-label="Attach a document (not available in this build)"
-                onClick={(e) => e.preventDefault()}
-              >
-                <Paperclip className="size-4" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Attach a document — not available in this build</TooltipContent>
-          </Tooltip>
-          <div className="flex items-center gap-1 pl-1">
-            {["PDF", "DOCX", "Image"].map((t) => (
-              <span
-                key={t}
-                className="rounded-full border border-dashed border-border px-2 py-0.5 text-[10px] text-muted-foreground"
-              >
-                {t}
-              </span>
-            ))}
-          </div>
-        </div>
-        <Button type="submit" disabled={pending || !query.trim()}>
-          <Send className="size-4" /> Ask
-        </Button>
-      </div>
-    </form>
-  );
-}
-
-function ResponseCard({
-  response,
-  index,
-  escalatedToHuman,
-  onEscalate,
-  onEscalateToHuman,
-  onOpenCitation,
-}: {
-  response: QueryResponse;
-  index: number;
-  escalatedToHuman: boolean;
-  onEscalate: (depth: QueryDepth) => void;
-  onEscalateToHuman: () => void;
-  onOpenCitation: (c: QueryCitation) => void;
-}) {
-  // A stable key + mount-only animation means this never replays for
-  // earlier cards when the thread re-renders for a new message.
-  const revealStyle = { animationDelay: `${Math.min(index, 4) * 40}ms` };
-
-  if (response.abstained) {
-    return (
-      <div
-        className="message-reveal flex flex-col gap-3 rounded-2xl border border-border bg-secondary/50 p-5"
-        style={revealStyle}
-      >
-        <div className="flex items-center justify-between gap-3">
-          <p className="text-sm font-medium">{response.query}</p>
-          <DepthIndicator depth={response.depth} />
-        </div>
-
-        <div className="flex items-start gap-3 rounded-xl border border-verdict-draft/40 bg-verdict-draft-bg px-4 py-3">
-          <ShieldCheck className="mt-0.5 size-5 shrink-0 text-verdict-draft" />
-          <div className="flex flex-col gap-1">
-            <p className="text-sm font-semibold text-verdict-draft">
-              Data limited for this jurisdiction — human review recommended
-            </p>
-            <p className="text-xs text-muted-foreground">{response.abstainReason}</p>
-          </div>
-        </div>
-
-        <p className="text-sm text-foreground">{response.answer}</p>
-
-        <div className="flex items-center gap-3">
-          <Button
-            size="sm"
-            variant="outline"
-            disabled={escalatedToHuman}
-            onClick={onEscalateToHuman}
-          >
-            {escalatedToHuman ? "Escalated to human review" : "Escalate to human review"}
-          </Button>
-        </div>
-
-        <VerificationLine passed={false} />
-      </div>
-    );
-  }
-
-  return (
-    <div className="message-reveal glass flex flex-col gap-3 rounded-2xl p-5" style={revealStyle}>
-      <div className="flex items-center justify-between gap-3">
-        <p className="text-sm font-medium">{response.query}</p>
-        <DepthIndicator depth={response.depth} />
-      </div>
-      <AgentBanner agents={response.agents} reason={response.agentReason} />
-      <p className="text-sm">{response.answer}</p>
-      {response.citations.length > 0 && (
-        <div className="flex flex-wrap gap-x-2 gap-y-1">
-          {response.citations.map((c) => (
-            <Citation key={c.label} onClick={() => onOpenCitation(c)}>
-              {c.label}
-            </Citation>
-          ))}
-        </div>
-      )}
-      <VerificationLine passed />
-      <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-        <span className="font-mono">Corpus {response.corpusVersion}</span>
-      </div>
-      {response.escalations.length > 0 && (
-        <div className="flex flex-wrap gap-2 border-t border-border/60 pt-3">
-          {response.escalations.map((e) => (
-            <Button key={e.label} size="sm" variant="outline" onClick={() => onEscalate(e.depth)}>
-              {e.label}
-            </Button>
-          ))}
-        </div>
-      )}
-      <EvalReveal
-        evalScore={response.evalScore}
-        confidence={response.confidence}
-        method={response.evalMethod}
-      />
-    </div>
+    <React.Suspense fallback={null}>
+      <HomeRoute />
+    </React.Suspense>
   );
 }
 
@@ -438,14 +148,19 @@ function UrgencyBar({ pct }: { pct: number }) {
   );
 }
 
-// The old Overview dashboard - now the empty state shown before the first
-// message in a session, collapsing away as soon as one is sent.
-function EmptyStateOverview({
+// The portfolio dashboard - always mounted behind the chat panel, dimmed and
+// inert while it's open. Every entry point (the hero button, every dossier
+// card) opens the same panel, just scoped differently.
+function Dashboard({
   dossiers,
   alerts,
+  onAskGeneral,
+  onAskDossier,
 }: {
   dossiers: FormulationDossier[] | null;
   alerts: PrahariAlert[] | null;
+  onAskGeneral: () => void;
+  onAskDossier: (id: string) => void;
 }) {
   if (!dossiers || !alerts) {
     return <p className="text-sm text-muted-foreground">Loading portfolio…</p>;
@@ -458,13 +173,16 @@ function EmptyStateOverview({
 
   return (
     <div className="flex flex-col gap-12">
-      <div className="flex flex-col items-center gap-2 pt-2 text-center">
+      <div className="flex flex-col items-center gap-4 pt-2 text-center">
         <h1 className="font-heading text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
           SAMHITĀ <span className="text-muted-foreground">संहिता</span>
         </h1>
         <p className="max-w-xl text-base text-muted-foreground">
           Every formulation&apos;s protection status, across all seven Indian IP regimes.
         </p>
+        <Button size="lg" onClick={onAskGeneral} className="mt-2">
+          <MessageSquareText className="size-4" /> Ask Sahayak
+        </Button>
       </div>
 
       <section className="glass mx-auto flex w-full max-w-4xl flex-col gap-6 rounded-3xl px-6 py-7 sm:px-10">
@@ -510,10 +228,11 @@ function EmptyStateOverview({
             const open = openCount(dossier.id);
             const img = dossierImages[dossier.id];
             return (
-              <Link
+              <button
                 key={dossier.id}
-                href={`/dossiers/${dossier.id}`}
-                className="glass group flex flex-col overflow-hidden rounded-2xl transition-transform hover:-translate-y-0.5"
+                type="button"
+                onClick={() => onAskDossier(dossier.id)}
+                className="group glass relative flex flex-col overflow-hidden rounded-2xl text-left transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 <div className="relative h-32 w-full shrink-0 overflow-hidden bg-gradient-to-br from-agent-prahari-bg to-secondary">
                   {img ? (
@@ -528,6 +247,9 @@ function EmptyStateOverview({
                       <MortarPestleIcon className="size-10 opacity-60" />
                     </div>
                   )}
+                  <span className="pointer-events-none absolute right-3 top-3 z-10 flex items-center gap-1 rounded-full bg-primary px-2.5 py-1 text-[11px] font-medium text-primary-foreground opacity-0 shadow-md transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
+                    Ask about this <ArrowRight className="size-3" />
+                  </span>
                 </div>
                 <div className="flex flex-1 items-start justify-between gap-3 px-4 py-4">
                   <div className="flex min-w-0 flex-col gap-1.5">
@@ -551,7 +273,7 @@ function EmptyStateOverview({
                     className="shrink-0"
                   />
                 </div>
-              </Link>
+              </button>
             );
           })}
         </div>

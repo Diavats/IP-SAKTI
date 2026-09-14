@@ -248,6 +248,65 @@
   .message-reveal {
     animation: message-reveal 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   }
+
+  /* Chat panel slide-in (home route chat overlay). Direction-specific
+     durations (300ms in / 250ms out per spec) live on each data-state rule
+     rather than the animation shorthand alone, since a single transition
+     can't hold two durations - whichever state is being entered governs. */
+  @keyframes chat-panel-slide-in {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  @keyframes chat-panel-slide-out {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+  @keyframes chat-panel-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes chat-panel-fade-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  .chat-panel-content {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  .chat-panel-content[data-state="open"] {
+    animation: chat-panel-slide-in 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  }
+  .chat-panel-content[data-state="closed"] {
+    animation: chat-panel-slide-out 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .chat-panel-content[data-state="open"] {
+      animation-name: chat-panel-fade-in;
+    }
+    .chat-panel-content[data-state="closed"] {
+      animation-name: chat-panel-fade-out;
+    }
+  }
 }
 
 /* Global reduced-motion safety net - every animation/transition on the site
