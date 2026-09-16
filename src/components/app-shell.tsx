@@ -8,7 +8,6 @@ import { navItems, settingsItem } from "@/components/nav-config";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { MortarPestleIcon } from "@/components/mortar-pestle-icon";
 import { TopBar } from "@/components/top-bar";
 import { getPrahariAlerts } from "@/lib/api";
 import { cn } from "@/lib/utils";
@@ -19,12 +18,13 @@ const ITEM_GAP = 2;
 function Wordmark() {
   return (
     <div className="flex items-center gap-2.5 px-5 py-5">
-      <MortarPestleIcon className="size-8 shrink-0" />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/images/logo-mono.png" alt="" className="size-8 shrink-0 object-contain" />
       <div className="flex flex-col gap-0.5">
         <span className="font-heading text-lg font-semibold tracking-tight text-sidebar-foreground">
-          SAMHITĀ <span className="text-muted-foreground">संहिता</span>
+          SAMHITĀ <span className="text-sidebar-foreground/70">संहिता</span>
         </span>
-        <span className="text-xs text-muted-foreground">IP-Sakti Sahayak</span>
+        <span className="text-xs text-sidebar-foreground/70">IP-Sakti Sahayak</span>
       </div>
     </div>
   );
@@ -76,7 +76,10 @@ function NavList({
               <Icon className="size-4 shrink-0" strokeWidth={1.75} />
               <span className="flex-1">{item.label}</span>
               {showBadge && (
-                <Badge variant="destructive" className="h-[18px] px-1.5 text-[10px]">
+                <Badge
+                  variant="destructive"
+                  className="h-[18px] border-transparent bg-destructive px-1.5 text-[10px] text-on-brand"
+                >
                   {urgentPrahariCount}
                 </Badge>
               )}
@@ -123,11 +126,16 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex items-center gap-3 border-b border-border bg-background px-4 py-3">
+        <header className="flex items-center gap-3 border-b border-transparent bg-brand px-4 py-3 text-on-brand">
           <div className="flex items-center gap-3 md:hidden">
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" aria-label="Open navigation">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  aria-label="Open navigation"
+                  className="text-on-brand hover:bg-white/10 hover:text-on-brand"
+                >
                   <Menu className="size-5" />
                 </Button>
               </SheetTrigger>
@@ -137,7 +145,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 <NavList onNavigate={() => setOpen(false)} urgentPrahariCount={urgentPrahariCount} />
               </SheetContent>
             </Sheet>
-            <MortarPestleIcon className="size-6 shrink-0" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/logo-mono.png" alt="" className="size-6 shrink-0 object-contain" />
             <span className="font-heading text-base font-semibold">SAMHITĀ</span>
           </div>
           <TopBar />
@@ -146,8 +155,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         {/* `relative` gives any page a safe anchor for a full-bleed decorative
             background (`absolute inset-0`) without that background ever being
             able to push this box wider than the viewport. */}
-        <main className="relative flex flex-1 flex-col px-4 py-6 md:px-8 md:py-8">
-          <div className="w-full flex-1">{children}</div>
+        <main className="relative flex flex-1 flex-col px-4 pt-6 md:px-8 md:pt-8">
+          <div className="w-full flex-1 pb-6 md:pb-8">{children}</div>
           <SiteFooter />
         </main>
       </div>
@@ -157,18 +166,23 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
 function SiteFooter() {
   return (
-    <footer className="mt-12 flex flex-col gap-2 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-      <p>
-        <span className="font-heading font-semibold text-foreground">SAMHITĀ</span> — About
-        Us: built for SIH 2026, PS 26045 (Ministry of AYUSH / AIIA), mapping Ayurvedic
-        formulations to their protectable IP surface.
-      </p>
-      <p>
-        Reach out to us at{" "}
-        <a href="mailto:xyz@mail.com" className="text-foreground hover:underline">
-          xyz@mail.com
-        </a>
-      </p>
+    <footer className="-mx-4 mt-12 flex flex-col gap-3 bg-brand px-4 py-6 text-xs text-on-brand/80 md:-mx-8 md:px-8">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+          <a href="#" className="text-on-brand hover:underline">
+            About
+          </a>
+          <a href="mailto:team@vedanova.dev" className="text-on-brand hover:underline">
+            Contact
+          </a>
+        </div>
+        <span className="font-mono">Corpus 2026-09-10</span>
+      </div>
+      <p>Information, not legal advice.</p>
+      <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+        <p>Built for SIH 2026 · PS 26045 · Ministry of AYUSH / AIIA</p>
+        <p>Built by Team VedaNova</p>
+      </div>
     </footer>
   );
 }

@@ -5,6 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --color-brand: var(--brand);
+  --color-on-brand: var(--on-brand);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
@@ -61,128 +63,79 @@
 }
 
 :root {
-  /* Ayurvedic-nurturing world: warm cream ground, soil-brown + deep-red
-     accents, sage green and tan drawn from the AYU-IP 360 reference
-     palette. See .impeccable/surfaces/app.md */
-  --background: #f2ebdc;
-  --foreground: #3b2a1e;
-  --card: #fffdf8;
-  --card-foreground: #3b2a1e;
-  --popover: #fffdf8;
-  --popover-foreground: #3b2a1e;
-  --primary: #5c3a21;
-  --primary-foreground: #f8f2e4;
-  --secondary: #e5d9bf;
-  --secondary-foreground: #5c3a21;
-  --muted: #e8e2d4;
-  /* The requested revert to #8a7860 measures 3.29:1 on --muted, 3.58:1 on
-     --background and 4.19:1 on --card - all below the 4.5:1 floor now that
-     the blurred backdrop (the original reason it was darkened) is gone. This
-     is the lightest tint in the same hue that still clears 4.5:1 against all
-     three surfaces (muted 4.69:1, background 5.10:1, card 5.96:1). */
-  --muted-foreground: #70604c;
-  --accent: #c99a3f;
-  --accent-foreground: #3b2a1e;
-  --destructive: #7a2e2e;
-  --border: #e2d3ac;
-  --input: #e2d3ac;
-  --ring: #5c3a21;
-  --chart-1: #5c3a21;
-  --chart-2: #4b6b4f;
-  --chart-3: #7a2e2e;
-  --chart-4: #b98a2b;
-  --chart-5: #8a7860;
+  /* VedaNova brand system. Ten single-job brand colours (--brand, --primary,
+     --statute, --agent-prahari, --accent, --destructive, --background,
+     --card, --foreground, --on-brand) plus derived neutrals/tints computed
+     to clear 4.5:1 wherever they carry text. Dark mode intentionally not
+     implemented: no toggle exists in the app, so a half-built dark theme
+     would only bit-rot. See Stage 5A notes. */
+  --brand: #0f3d2e;
+  --on-brand: #ffffff;
+  --background: #f7f8f7;
+  --foreground: #111827;
+  --card: #ffffff;
+  --card-foreground: #111827;
+  --popover: #ffffff;
+  --popover-foreground: #111827;
+
+  --primary: #10794f;
+  --primary-foreground: #ffffff;
+  --secondary: #e4e9e6;
+  --secondary-foreground: #111827;
+  --muted: #eef1ef;
+  --muted-foreground: #5b6660;
+  --accent: #b45309;
+  --accent-foreground: #ffffff;
+  --destructive: #b42318;
+  --border: #dce3df;
+  --input: #dce3df;
+  --ring: #10794f;
   --radius: 0.75rem;
-  --sidebar: #ece0c4;
-  --sidebar-foreground: #3b2a1e;
-  --sidebar-primary: #5c3a21;
-  --sidebar-primary-foreground: #f8f2e4;
-  --sidebar-accent: #e2d3ac;
-  --sidebar-accent-foreground: #5c3a21;
-  --sidebar-border: #d9c69c;
-  --sidebar-ring: #5c3a21;
 
-  /* Verdict vocabulary - status chips only, never decorative.
-     verdict-open-bg lightened from #e2ead9 - the requested #3f7d52 text only
-     hit 3.99:1 on the old tint (needs 4.5:1); #f5f8f2 clears it at 4.59:1.
-     verdict-draft darkened from the requested #c99a3f - that's identical to
-     --accent and, as foreground text on --verdict-draft-bg, only reaches
-     2.07:1 (a light mid-tone ochre can't hit 4.5:1 as text on any bg this
-     light). #7d5f27 keeps the same ochre hue and clears 4.77:1. */
-  --verdict-open: #3f7d52;
-  --verdict-open-bg: #f5f8f2;
-  --verdict-barred: #9e2b2b;
-  --verdict-barred-bg: #f1ded9;
-  --verdict-draft: #7d5f27;
-  --verdict-draft-bg: #f1e6c8;
+  /* Chart/graph categorical set - same five hues and order everywhere data
+     is encoded by colour (charts, the knowledge-graph visualization). */
+  --chart-1: #10794f;
+  --chart-2: #1d4ed8;
+  --chart-3: #6d28d9;
+  --chart-4: #b45309;
+  --chart-5: #b42318;
 
-  /* Agent identity - Sahayak (soil-brown/red) vs Prahari (indigo, law/statutes) */
-  --agent-sahayak: #7a3b2e;
-  --agent-sahayak-bg: #f1ded9;
-  --agent-prahari: #2f3f63;
-  /* Was #dfe8dc (leftover sage-green from the old palette) on an indigo
-     foreground - wrong hue family entirely. #e4e8f0 is an indigo tint,
-     8.5:1 against --agent-prahari. */
-  --agent-prahari-bg: #e4e8f0;
+  /* Sidebar/header chrome - forest-green brand surface. */
+  --sidebar: #0f3d2e;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #10794f;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #1b4a38;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(255, 255, 255, 0.14);
+  --sidebar-ring: #10794f;
 
-  /* Citations, statutes, section numbers, provision chips - law/document
-     register, distinct from the biology (verdict-open) and agent hues. */
-  --statute: #2f3f63;
-  --statute-bg: #e1e5f0;
+  /* Verdict vocabulary - status chips only, never decorative. Each verdict
+     IS the named brand colour for that meaning (open=primary emerald,
+     barred=destructive red, draft=accent amber), paired with a light tint
+     background verified at 4.5:1+. */
+  --verdict-open: #10794f;
+  --verdict-open-bg: #e9f5ee;
+  --verdict-barred: #b42318;
+  --verdict-barred-bg: #fbe9e7;
+  --verdict-draft: #b45309;
+  --verdict-draft-bg: #fdf5eb;
 
-  --glass-bg: rgba(255, 252, 244, 0.55);
-  /* Was rgba(255,255,255,0.6) - all but invisible against the new lighter
-     --card. Brand-brown tint at low alpha so the card edge actually reads. */
-  --glass-border: rgba(92, 58, 33, 0.16);
-}
+  /* Agent identity - Sahayak (forest/brand green, the primary IP-mapping
+     agent) vs Prahari (violet, the watcher - --agent-prahari is violet's
+     ONLY job across the app). */
+  --agent-sahayak: #0f3d2e;
+  --agent-sahayak-bg: #e7eeea;
+  --agent-prahari: #6d28d9;
+  --agent-prahari-bg: #efe8fb;
 
-.dark {
-  --background: #211810;
-  --foreground: #f1e7d6;
-  --card: #2c2117;
-  --card-foreground: #f1e7d6;
-  --popover: #2c2117;
-  --popover-foreground: #f1e7d6;
-  --primary: #d9a875;
-  --primary-foreground: #211810;
-  --secondary: #372a1d;
-  --secondary-foreground: #f1e7d6;
-  --muted: #372a1d;
-  --muted-foreground: #bfa98c;
-  --accent: #4a3a28;
-  --accent-foreground: #f1e7d6;
-  --destructive: #c9645f;
-  --border: #40311f;
-  --input: #40311f;
-  --ring: #d9a875;
-  --chart-1: #d9a875;
-  --chart-2: #82b790;
-  --chart-3: #c9645f;
-  --chart-4: #d9b15c;
-  --chart-5: #bfa98c;
-  --sidebar: #2c2117;
-  --sidebar-foreground: #f1e7d6;
-  --sidebar-primary: #d9a875;
-  --sidebar-primary-foreground: #211810;
-  --sidebar-accent: #40311f;
-  --sidebar-accent-foreground: #f1e7d6;
-  --sidebar-border: #40311f;
-  --sidebar-ring: #d9a875;
+  /* Citations, statutes, section numbers, provision chips - cobalt's ONLY
+     job in the app. */
+  --statute: #1d4ed8;
+  --statute-bg: #e5ebfb;
 
-  --verdict-open: #82b790;
-  --verdict-open-bg: #1c2620;
-  --verdict-barred: #d98b77;
-  --verdict-barred-bg: #33221c;
-  --verdict-draft: #d9b15c;
-  --verdict-draft-bg: #322a18;
-
-  --agent-sahayak: #d98b77;
-  --agent-sahayak-bg: #33221c;
-  --agent-prahari: #82b790;
-  --agent-prahari-bg: #1c2620;
-
-  --glass-bg: rgba(44, 33, 23, 0.55);
-  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-border: rgba(15, 61, 46, 0.14);
 }
 
 @layer base {
@@ -229,7 +182,7 @@
     backdrop-filter: blur(20px) saturate(160%);
     -webkit-backdrop-filter: blur(20px) saturate(160%);
     border: 1px solid var(--glass-border);
-    box-shadow: 0 8px 30px -12px rgba(59, 42, 30, 0.25);
+    box-shadow: 0 8px 30px -12px rgba(15, 61, 46, 0.2);
   }
 
   /* Message reveal: fade + 8px rise, used once per response card on mount

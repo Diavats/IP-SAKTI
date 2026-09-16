@@ -10,7 +10,7 @@ export function TopBar() {
 
   return (
     <div className="flex flex-1 flex-wrap items-center justify-end gap-3">
-      <span className="font-mono text-[11px] text-muted-foreground">
+      <span className="font-mono text-[11px] text-on-brand/75">
         Corpus 2026-09-10
       </span>
       <Tabs value={jurisdiction} onValueChange={(v) => setJurisdiction(v as "india" | "intl")}>

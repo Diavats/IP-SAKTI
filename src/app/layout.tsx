@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { IBM_Plex_Sans, IBM_Plex_Serif, IBM_Plex_Mono } from "next/font/google";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AppShell } from "@/components/app-shell";
+import { IntroGate } from "@/components/intro-gate";
 import "./globals.css";
 
 const plexSans = IBM_Plex_Sans({
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${plexSans.variable} ${plexSerif.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <IntroGate />
         <TooltipProvider>
           <AppShell>{children}</AppShell>
         </TooltipProvider>

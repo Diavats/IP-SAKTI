@@ -3,11 +3,12 @@
 import * as React from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { AlertTriangle, ArrowRight, MessageSquareText } from "lucide-react";
+import { AlertTriangle, ArrowRight } from "lucide-react";
 import { getDossiers, getPrahariAlerts } from "@/lib/api";
 import { ipVerdictsByDossier } from "@/lib/mock/dossiers";
 import { classificationLabels, statusLabels } from "@/lib/labels";
 import { Button } from "@/components/ui/button";
+import { LiquidMetalButton } from "@/components/ui/liquid-metal-button";
 import { ChatPanel, type ChatMode } from "@/components/ask/chat-panel";
 import { GraphBackdrop } from "@/components/graph-backdrop";
 import { RingStat } from "@/components/ring-stat";
@@ -31,9 +32,9 @@ function openCount(dossierId: string) {
   return verdicts.filter((v) => v.verdict === "open").length;
 }
 
-// Three stronger radial pools (was 9-13% alpha, read as flat tan) plus a
-// faint knowledge-graph echo behind the glass panels - decorative only,
-// re-verified at 4.5:1 for every text token over the strongest gradient area.
+// Soft pools of --brand and --primary at low alpha over --background -
+// decorative only, re-verified at 4.5:1 for every text token over the
+// strongest gradient area.
 function PageBackdrop() {
   return (
     <>
@@ -42,11 +43,18 @@ function PageBackdrop() {
         aria-hidden
         style={{
           background:
-            "radial-gradient(70% 55% at 12% -5%, #c99a3f55, transparent 65%)," +
-            "radial-gradient(55% 50% at 88% 15%, #2f3f6340, transparent 65%)," +
-            "radial-gradient(60% 60% at 50% 105%, #3f7d5230, transparent 70%)," +
+            "radial-gradient(70% 55% at 12% -5%, #0f3d2e1f, transparent 65%)," +
+            "radial-gradient(55% 50% at 88% 15%, #10794f1a, transparent 65%)," +
+            "radial-gradient(60% 60% at 50% 105%, #0f3d2e14, transparent 70%)," +
             "var(--background)",
         }}
+      />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/images/logo.png"
+        alt=""
+        aria-hidden
+        className="pointer-events-none fixed left-1/2 top-24 -z-10 w-[min(90vw,900px)] -translate-x-1/2 opacity-[0.04]"
       />
       <GraphBackdrop />
     </>
@@ -180,9 +188,9 @@ function Dashboard({
         <p className="max-w-xl text-base text-muted-foreground">
           Every formulation&apos;s protection status, across all seven Indian IP regimes.
         </p>
-        <Button size="lg" onClick={onAskGeneral} className="mt-2">
-          <MessageSquareText className="size-4" /> Ask Sahayak
-        </Button>
+        <div className="mt-2">
+          <LiquidMetalButton label="Ask Sahayak" onClick={onAskGeneral} />
+        </div>
       </div>
 
       <section className="glass mx-auto flex w-full max-w-4xl flex-col gap-6 rounded-3xl px-6 py-7 sm:px-10">
