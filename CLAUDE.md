@@ -92,6 +92,91 @@ Also outstanding: `docs/briefs/` is empty, but the plan (§1.2) requires explici
 
 <!-- BEGIN:nextjs-agent-rules -->
 
+
+---
+
+## 9. Decision Log — settled, do not re-litigate
+
+Decisions made after §1-§8 were written. Each was argued and closed; reopening one costs a
+session. If you disagree, say so before acting, don't silently rebuild.
+
+### Branding
+- Product is **SAMHITĀ**. **VedaNova is the team** — the name appears in the footer only
+  ("Built by Team VedaNova"). The VedaNova mark (`public/images/logo.png`, beige background
+  stripped) is the product symbol beside the SAMHITĀ wordmark.
+- Logo watermark appears on the **home hero only**, ~0.04 opacity. Never behind /graph, /evals,
+  /prahari or /dossiers — watermarks under data tables destroy the contrast that Stages 1-3 fixed.
+
+### Palette (Stage 5A) — every colour has exactly one job
+| Token | Hex | Job |
+|---|---|---|
+| `--brand` | `#0F3D2E` | forest green — sidebar, header, footer chrome |
+| `--primary` | `#10794F` | emerald — primary actions, "open" verdicts |
+| `--statute` | `#1D4ED8` | cobalt — statutes, sections, citations ONLY |
+| `--agent-prahari` | `#6D28D9` | violet — Prahari's identity ONLY |
+| `--accent` | `#B45309` | amber — draft, unverified, caution |
+| `--destructive` | `#B42318` | red — barred, urgent windows, abstention |
+| `--background` / `--card` | `#F7F8F7` / `#FFFFFF` | surfaces |
+
+- `--chart-1..5` = emerald, cobalt, violet, amber, red, in that order, so charts and the
+  knowledge graph share one encoding.
+- **No tan or beige anywhere.** The earlier cream/brown system was replaced because
+  `--secondary`, `--muted` and `--accent` had collapsed into one colour.
+- **Dark mode is deliberately unbuilt** — dark tokens mirror light values. The app is only shown
+  in light for screenshots; a half-done dark theme is worse than none.
+- Violet earns its place by naming an *agent*, not by preference. Do not add a colour that has
+  no job.
+
+### Layout — locked, third iteration, stop changing it
+- `/` is the home route: welcome + portfolio (rings, dossier cards, closing opposition windows).
+- Chat is a **state, not a page**. "Ask Sahayak", or any dossier card, slides a full-height panel
+  in from the right. URL reflects it (`/?chat=1`, `/?d=dos-001`) so back-button closes it.
+- Inside the panel: conversation left (max 760px), **one tabbed right pane** — Sources | Dossier.
+  Not three columns; three does not survive 390px.
+- Nav is 5 items + Settings: Ask, Dossiers, Prahari, Knowledge graph, Evals.
+
+### Honesty rules (these are scoring points, do not "improve" them away)
+- The **end-of-session evaluation report was deliberately deleted**. Answer accuracy cannot be
+  measured on a five-question session with no ground truth; a judge asking "measured against
+  what?" would have no answer. Per-answer verification stays; system-level measurement lives only
+  on `/evals` against the gold set.
+- The **"Illustrative values for this build"** badge and the **"measured — not targeted"** line on
+  `/evals` are intentional. Never remove or soften them.
+- The **multilingual eval card must read "Not yet measured · scheduled Week 4"**, greyed. Showing a
+  number for a feature that does not exist is the one thing on the site a judge could catch.
+
+### Prahari — watches at publication, not at grant
+Research settled this: an application publishes under **Section 11A** at 18 months; from then until
+grant, **Section 25(1)** lets *any person* file a pre-grant opposition (Form 7A, Rule 55); and **no
+patent may be granted before six months from publication**, which gives every alert a computable
+deadline. Before grant, stopping a bad patent costs a form; after grant it costs a lawsuit.
+Primary stream is the **Patent Office Journal** (weekly PDF, IPC `A61K36/*`). Google Patents /
+foreign filings are the *stretch* stream, not the primary one.
+
+### The liquid-metal button — accepted with two mandatory guards
+The 21st.dev shader button is used for **"Ask Sahayak" only — exactly one instance in the app**.
+Its label colour must be `#FFFFFF` (the original `#666666` on black is 2.9:1 and fails WCAG), and
+its **idle shader speed must be 0** so it animates on hover/click only. A second shader canvas, or
+a continuously running one, will crawl on demo hardware.
+
+### Working practice
+- One design skill: **ui-ux-pro-max**. `impeccable` is **audit-only**, run after a stage lands,
+  never designing alongside. Do not add 21st.dev components beyond the button above.
+- **Report measured numbers only** — never a target — in the UI, in docs, or on slides.
+- Playwright: localhost carries a persisted Chrome per-origin zoom that corrupts screenshots. Fix
+  once with a CDP device-metrics override (`deviceScaleFactor: 1`), budget **3 calls max**, then
+  stop and report. A previous session burned 26 minutes and 337k tokens on this.
+- Verify at **1600x900 and 390px**. 1600x900 because screenshots go into 16:9 slides.
+
+### Status at this commit
+Stages 1-4 are merged to `main`. **Stage 5A** (palette, logo, intro video gate, shader button,
+footer) is in progress. **Stage 5B** is not started: knowledge-graph node colouring by type,
+`/evals` plain-language copy and jargon tooltips, Prahari urgency encoding (red <30 days / amber
+30-90 / green >90, icon + text never colour alone), and a chat-history rail inside the chat panel.
+
+The intro video (`public/video/`) must play once per session, be dismissible by click/key/Escape,
+and **fail open** — if it errors or has not started in 2s, go straight to home.
+
 # This is NOT the Next.js you know
 
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
