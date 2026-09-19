@@ -1,135 +1,155 @@
 # Brief — Research & Source Verification (Himanshi)
 
-**Owner:** Himanshi · **Status:** critical path · **Blocks:** the SIH idea PPT, and every
-citation in the product after it.
+**Owner:** Himanshi · **Status:** Priority 1 cleared, Priority 2 open
+**Blocks:** nothing on the deck any more. Priority 2 blocks the build.
 
 ---
 
 ## Why this lane exists
 
-SAMHITĀ's entire premise is *"it never fabricates authority."* That premise is only as true as
-this lane. One human converts raw law into verified facts; if that doesn't happen, we ship a
-confident legal advisor with no ground under it — which, for a Ministry of AYUSH tool, is worse
-than shipping nothing.
+SAMHITĀ's premise is that it never fabricates authority. That premise is only as true as this lane.
+One human converts raw law into verified facts, and if that does not happen we ship a confident
+legal advisor with no ground under it.
 
-**Standing rule (from the plan's appendix):** every statutory reference in our documents is a
-*pointer for verification*, not an authority. Nothing reaches a slide or the UI until it has been
-checked here.
+**Standing rule:** every statutory reference in our documents is a pointer for verification, not an
+authority. Nothing reaches a slide or the UI until it has been checked.
+
+---
+
+## Part A — Cleared on 19 Sep 2026 (do not redo)
+
+These were blocking the deck. They were checked so Vansh could start. Sources are **secondary**
+(law-firm commentary, government press releases, industry bodies) unless marked otherwise. Anything
+below that will appear as a **rupee figure or a quoted statute** still needs a primary-source pass,
+flagged in Part B.
+
+### Opposition window (the USP rests on this)
+
+| Fact | Finding | Confidence |
+|---|---|---|
+| Publication of applications | **Section 11A**, 18 months from priority; early publication on request (Form 9) | Confirmed, multiple sources |
+| Six-month bar on grant | **Rule 55(1A)**, Patents Rules. No patent shall be granted before expiry of six months from the date of publication under Section 11A | Confirmed. *This is the provision the countdown cites. Use Rule 55(1A), not Section 11A, for the deadline claim* |
+| Pre-grant opposition | **Section 25(1)**, available to **"any person"**, filed in **Form 7(A)** under **Rule 55** | Confirmed |
+| Post-grant opposition | **Section 25(2)**, 12 months, limited to a **"person interested"** | Confirmed |
+| Journal publication duty | **Section 145** | Confirmed |
+
+### Patent Office Journal structure
+Weekly, every Friday. Per-record fields: application number, date of filing, title, publication
+date, **International Patent Classification**, applicant name and address, inventor, priority
+details. Sectioned into `EARLY PUBLICATION` and `PUBLICATION AFTER 18 MONTHS`, by office
+(Delhi, Mumbai, Kolkata, Chennai). Paper and CD-ROM discontinued from 01/01/2009.
+
+**The IPC field exists and is per-record.** Prahari's filter on `A61K36/*` is viable.
+
+### Prior-art precedent, with costs and durations
+- **Turmeric** (US re-examination): CSIR filed 32 prior-art references in Sanskrit, Urdu and Hindi.
+  Patent withdrawn after roughly a year. Legal cost reported at about **US$10,000**.
+- **Neem** (EPO opposition): revoked by the Opposition Division in **May 2000**, final appellate
+  decision **8 March 2005**. Opposition originally filed in 1995.
+
+Use the contrast: turmeric succeeded quickly because documentary prior art was ready; neem ran
+roughly a decade because the fight happened after grant.
+
+### TKDL scale and reach
+- **418,885 formulations** transcribed as of 25 March 2022, of which **119,269 are Ayurveda**
+  (others: Unani 236,399, Siddha 54,689, Yoga 4,151, Sowa Rigpa 4,377).
+- Roughly **370 patent applications** globally rejected, withdrawn, amended, set aside or abandoned
+  on TKDL evidence.
+- Access is by agreement with **17 patent offices**. An Indian MSME cannot search it.
+- A CSIR study reported EPO filings on Indian traditional medicine down **44% by 2011**.
+
+### AYUSH sector scale
+- Close to **9,000 AYUSH manufacturing units** in India.
+- **44** Ayurvedic drug manufacturing units hold **WHO-GMP (CoPP)** certification from DCGI as of
+  December 2024. That is about **0.5%** of units.
+- AYUSH market **US$43.4 bn** (2024); manufacturing component about **US$24 bn**; services about
+  US$26 bn.
+
+### ABS benefit sharing
+**Biological Diversity (Access and Benefit Sharing) Regulations, 2025**, reported as notified
+**29 April 2025**, replacing the 2014 ABS Guidelines. Slabs on annual gross ex-factory sale price,
+keyed to annual turnover:
+
+| Annual turnover | Share |
+|---|---|
+| Up to ₹5 crore | Exempt |
+| ₹5–50 crore | 0.2% |
+| ₹50–250 crore | 0.4% |
+| Above ₹250 crore | 0.6% |
+| High-value resources (red sanders, sandalwood, agarwood, threatened species) | ≥5% upfront on auction, sale or purchase price |
+
+Digital Sequence Information is expressly in scope.
+
+> **Not cleared for a rupee figure.** Several independent law firms agree on these slabs, which is
+> reassuring but is not authority. See Part B item 1 before any number appears in the product UI.
+
+---
+
+## Part B — Still open
+
+### 1. ABS slabs, gazette verification (highest risk item in the project)
+- [ ] Pull the **gazette notification** of the Biological Diversity (ABS) Regulations 2025 and
+      confirm the date, the slab boundaries, the percentages and the exemption threshold.
+- [ ] Confirm the exemption threshold specifically. Most AYUSH MSMEs fall under it, so
+      "you owe nothing, here is why" is our most common honest answer and it has to be right.
+- [ ] Confirm the **Biological Diversity (Amendment) Act 2023** position for Indian entities:
+      intimation to the State Biodiversity Board against prior NBA approval. Quote the provision.
+- [ ] Note any provision distinguishing codified from non-codified traditional knowledge.
+
+### 2. Verbatim statutory text (needed for the product, not the deck)
+Pull the operative words from India Code so the UI can quote rather than paraphrase.
+- [ ] **Section 3(p)** traditional knowledge exclusion
+- [ ] **Section 3(e)** mere admixture. *This is the one that actually kills polyherbal patents*
+- [ ] **Section 3(d)**
+- [ ] **Section 11A** and **Rule 55(1A)**, verbatim
+- [ ] **Section 25(1)**, confirming the phrase "any person"
+
+### 3. AYUSH patent guidelines, status
+- [ ] Are the **Draft Guidelines for AYUSH patent applications (5 Feb 2025)** still draft, or
+      finalised? Get the current status and any final-version date.
+- [ ] Quote verbatim the two phrases we rely on: an effect **"greater than the sum of its individual
+      components"**, and ratio-optimisation or single-component isolation as **"routine practice"**.
+- [ ] Until finalisation is confirmed, every appearance in deck and UI stays labelled **draft**.
+
+### 4. Trade marks
+- [ ] **Trade Marks Act 1999, Section 9**, absolute grounds. Quote the descriptiveness limb.
+      We want to tell a user that a name like "Ashwagandha Churna" is descriptive and unregistrable
+      as a word mark. Confirm that reading is correct.
+- [ ] Current MSME / startup filing-fee position for a word mark, and the amount.
+      **If the rebate cannot be confirmed, no figure is shown.**
+
+### 5. TKDL scope, citable basis
+- [ ] Confirm in writing, from a citable source, that TKDL covers **codified** texts. We claim
+      community-held and non-codified knowledge sits outside it, and that claim carries weight in
+      the deck, so it needs a reference rather than an assertion.
+
+### 6. Remaining build inputs
+- [ ] **Ayurvedic Pharmacopoeia of India**, working source. `cdn.ayush.gov.in` did not resolve on
+      2026-09-10. AFI Part I alone is sufficient for the graph seed if API is unavailable, we just
+      need to know which.
+- [ ] **Six landmark cases** for the Examiner View: turmeric, neem, Basmati plus three Indian
+      3(p)/3(e) decisions. Citation, holding in two sentences, source.
+- [ ] **US and EU herbal market-access profiles**, the roughly 14 decision-relevant fields each per
+      the regulatory-profile schema (plan §7). For the EU traditional-herbal registration route,
+      confirm Directive 2004/24/EC Art. 16c and the evidence-years requirement.
+- [ ] **GI Registry**: roughly 20 Ayurveda-relevant registered GIs, with registration numbers.
 
 ---
 
 ## How to record a verification
 
-One row per item, in a file or sheet, with these fields. The product's regulatory-profile engine
-uses the same shape (`verified_by`, `verified_on`, `citation`), so this is not throwaway work.
+One row per item. The regulatory-profile engine uses the same shape (`citation`, `verified_by`,
+`verified_on`), so this is not throwaway work.
 
 | Field | Meaning |
 |---|---|
-| `claim` | The exact sentence we want to put on a slide or in the UI |
+| `claim` | The exact sentence we want to put in the UI |
 | `instrument` | Act / Rules / Regulations / Treaty, with year |
 | `provision` | Section, Rule, Article, Form number |
-| `source_url` | **Primary** source — India Code, WIPO Lex, or the gazette. Not a law-firm blog |
+| `source_url` | **Primary** source: India Code, WIPO Lex, or the gazette. Not a law-firm blog |
 | `verbatim` | The operative words, quoted |
 | `status` | `verified` · `differs` · `not found` · `superseded` |
-| `notes` | Anything that changes how we should phrase the claim |
+| `notes` | Anything that changes how we phrase the claim |
 
-`differs` and `superseded` are **valuable results, not failures.** A claim we retract before
-submission costs nothing; one a judge catches costs the round.
-
----
-
-## Priority 1 — blocks the PPT (do these first)
-
-### 1.1 The opposition window (our entire USP rests on this)
-Verify against India Code, Patents Act 1970 and Patents Rules:
-
-- [ ] **Section 11A** — publication of applications. Confirm the 18-month period and the Form 9
-      early-publication route.
-- [ ] **Section 11A(?) / Rules** — confirm the rule that **no patent shall be granted before six
-      months from the date of publication.** Find the exact provision number. *This single fact is
-      the countdown in our product; we must cite it precisely.*
-- [ ] **Section 25(1)** — pre-grant opposition. Confirm it is available to **"any person"** (not
-      "person interested") and quote the phrase.
-- [ ] **Rule 55** — procedure for 25(1) representation. Confirm **Form 7A** is the correct form and
-      that it is still current.
-- [ ] **Section 25(2)** — post-grant opposition, for contrast. Confirm the 12-month period and the
-      **"person interested"** limitation.
-- [ ] **Section 145** — confirm this is the provision requiring publication of the Official Journal.
-
-### 1.2 The patenting bars
-- [ ] **Section 3(p)** — traditional knowledge exclusion. Quote verbatim.
-- [ ] **Section 3(e)** — mere admixture. Quote verbatim. *This is the one that actually kills
-      polyherbal patents, and our Examiner View leans on it.*
-- [ ] **Section 3(d)** — quote verbatim.
-
-### 1.3 ABS — benefit-sharing slabs (highest risk item on the list)
-We intend to show a **rupee figure**. A wrong one in front of an AYUSH officer is unrecoverable.
-
-- [ ] Locate the **Biological Diversity (Access and Benefit Sharing) Regulations, 2025** — reported
-      as notified **29 April 2025**, replacing the 2014 ABS Guidelines. Confirm the date and that it
-      is in force.
-- [ ] Verify the benefit-sharing slabs **against the gazette notification**, not against law-firm
-      summaries. Currently sourced only from secondary commentary, which agreed with itself but is
-      not authority. Reported as:
-      - turnover up to ₹5 crore → **exempt**
-      - ₹5–50 crore → **0.2%** of annual gross ex-factory sale price
-      - ₹50–250 crore → **0.4%**
-      - above ₹250 crore → **0.6%**
-      - high-value resources (red sanders, sandalwood, agarwood, threatened species) → **≥5% upfront**
-        on auction / sale / purchase price
-- [ ] Confirm the **exemption threshold**. *Most AYUSH MSMEs fall under it, so "you owe nothing" is
-      our most common honest answer and it must be right.*
-- [ ] Confirm **Digital Sequence Information (DSI)** is expressly within scope.
-- [ ] Confirm the **Biological Diversity (Amendment) Act, 2023** position for Indian entities —
-      intimation to the State Biodiversity Board vs. prior NBA approval. Quote the provision.
-- [ ] Note any provision distinguishing **codified vs. non-codified** traditional knowledge.
-
-### 1.4 AYUSH patent guidelines — status check
-- [ ] **Draft Guidelines for AYUSH patent applications (IP Office, 5 Feb 2025)** — are they still
-      **draft**, or have they been finalised? Get the current status and the date of any final version.
-- [ ] Quote verbatim the two phrases we rely on: the requirement that a combination show an effect
-      **"greater than the sum of its individual components,"** and the treatment of ratio-optimisation
-      / single-component isolation as **"routine practice."**
-- [ ] **Until finalisation is confirmed, every appearance in the deck and UI must be labelled "draft."**
-
-### 1.5 Trade marks — the absolute-grounds screen
-- [ ] **Trade Marks Act 1999, Section 9** — absolute grounds for refusal. Quote the descriptiveness
-      limb. *We want to tell a user that "Ashwagandha Churna" is descriptive and unregistrable as a
-      word mark — confirm that is a correct reading.*
-- [ ] Confirm current MSME / startup filing-fee position for a word mark (fee rebate, if any, and
-      the amount). **If the rebate cannot be confirmed, we show no figure.**
-
-### 1.6 Market-size figures (or we delete them)
-The deck currently carries two unverified numbers. Either source them or they come out.
-
-- [ ] Count of **licensed AYUSH manufacturing units in India** — Ministry of AYUSH or NMPB
-      publication preferred. Give the figure, the year, and the source.
-- [ ] Any published figure for **IP / regulatory advisory spend** by AYUSH MSMEs. If none exists,
-      say so — we will present the market differently rather than invent a number.
-
----
-
-## Priority 2 — needed for the build, not the PPT
-
-- [ ] **TKDL scope** — confirm in writing that TKDL covers **codified** texts. We claim
-      community-held / non-codified knowledge is outside it; that claim needs a citable basis.
-- [ ] **Ayurvedic Pharmacopoeia of India** — locate a working source. `cdn.ayush.gov.in` did not
-      resolve on 2026-09-10. AFI Part I alone is sufficient if API is unavailable; we just need to
-      know which.
-- [ ] **Six landmark cases** for the Examiner View — turmeric, neem, Basmati, plus three Indian
-      3(p)/3(e) decisions. Citation, holding in two sentences, and the source.
-- [ ] **US and EU herbal market-access profiles** — the ~14 decision-relevant fields each, per the
-      regulatory-profile schema (plan §7). EU traditional-herbal registration route: confirm
-      Directive 2004/24/EC Art. 16c and the evidence-years requirement.
-- [ ] **GI Registry** — ~20 Ayurveda-relevant registered GIs, with registration numbers.
-
----
-
-## What "done" looks like for Priority 1
-
-Every box above ticked with a primary-source URL and a verbatim quote, or explicitly marked
-`not found` / `differs` / `superseded`. Items that come back anything other than `verified` get
-removed from the deck or rephrased — **not** softened and kept.
-
-Deliver the Priority 1 table before the deck is written, not alongside it. Vansh's script
-(`docs/briefs/vansh-deck.md`) cannot be finalised without it.
+`differs` and `superseded` are useful results. A claim retracted before submission costs nothing.
+One a judge catches costs the round.
