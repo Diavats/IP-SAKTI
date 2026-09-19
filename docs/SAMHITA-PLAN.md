@@ -223,7 +223,8 @@ Every row states purpose, cleanliness and volume. Nothing is listed that we do n
 | **BhashaBench-Ayur** — HuggingFace `bharatgenai/BhashaBench-Ayur` | **External benchmark.** Evaluation only — never training | **Clean.** 14,963 validated exam questions, English + Hindi | Sample **~300 questions** for the reported number |
 | **Bhashini / ULCA** | Translation and ASR | API, not a dataset | N/A |
 | **FSSAI Ayurveda Aahar Regulations 2022** | Food-category branch of the classifier | Single regulation PDF, reasonably clean | **~200 chunks** + profile fields |
-| **NBA / ABS materials** — `nbaindia.org` | ABS obligation profile fields | **Messy PDFs**, inconsistent | **Not ingested as a corpus.** Hand-curated into ~30 profile rows |
+| **Biological Diversity (Access and Benefit Sharing) Regulations, 2025** — notified 29 Apr 2025, replacing the 2014 ABS Guidelines | **The named legal basis for every ABS obligation and for the benefit-sharing liability figure.** Slab percentages of annual gross ex-factory sale price, keyed to annual turnover; DSI expressly in scope | Single gazette notification. **Slabs currently sourced from secondary (law-firm) summaries — MUST be verified against the gazette before any rupee figure is shown** | Profile fields + slab table, hand-curated |
+| **NBA / ABS supporting materials** — `nbaindia.org` | Procedural detail behind the Regulations | **Messy PDFs**, inconsistent | **Not ingested as a corpus.** Hand-curated into ~30 profile rows |
 | **GI Registry** | GI eligibility for the cultivator view | PDF journals, no API | **Hand-curated list of ~20 Ayurveda-relevant GIs.** Not scraped |
 | **Landmark case law** | Grounding the Sec 3(p)/3(e) Examiner View | Manual | **6 hand-picked cases** (turmeric, neem, Basmati, and three Indian 3(p)/3(e) decisions) |
 
