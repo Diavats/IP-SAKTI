@@ -26,7 +26,7 @@ Three hard rules that override taste:
 | Feedback | Where |
 |---|---|
 | Hindi text in a different colour from English | §Formatting |
-| One graph, signify what it shows | Slide 2, §The one graph |
+| "1 graph, 2 agents" was confusing | Already fixed. Heading now reads ONE DOSSIER, TWO AGENTS. No graph is added |
 | Title precise, no commas | Slide 1 |
 | Slide 6 IEEE format with name and direct link | Slide 6 |
 | Space for demo link, GitHub link separately | Slide 6 |
@@ -44,8 +44,9 @@ Keep the layout. Replace the text block.
 ```
 Problem Statement ID     26045
 
-Problem Statement Title  IP-SAKTI Sahayak: A Multilingual Source-Cited AI Assistant
-                         for Ayurvedic Intellectual Property and Regulatory Guidance
+Problem Statement Title  IP-SAKTI Sahayak a multilingual, RAG-based (source-cited) AI
+                         assistant for Intellectual Property and regulatory guidance in
+                         Ayurveda, across national and international regimes.
 
 Theme                    MedTech / BioTech / HealthTech
 
@@ -56,10 +57,11 @@ Team ID                  TH69
 Team Name                VedaNova
 ```
 
-Two fixes in there. The current slide reads "Al Assistant" with a lowercase L instead of a capital i,
-so it says "Al" not "AI". And the commas are gone, as asked. If the portal requires the PS title
-copied character for character from the official listing, use the official string and apply the
-no-commas version only to any place we write our own title.
+The title above is the official PS 26045 string, character for character, as confirmed. The current
+slide carries a shortened paraphrase that also contains a typo, "Al Assistant" with a lowercase L
+where a capital i belongs, so it reads "Al" rather than "AI". Replacing the whole string fixes both.
+
+Keep the commas. They are in the official title, and verbatim beats tidy on a portal submission.
 
 ---
 
@@ -81,16 +83,17 @@ Three bullets. These replace the current three.
 
 ```
 •  An Ayurvedic MSME cannot tell which of the seven IP regimes are open to its
-   formulation without legal counsel it cannot afford. Close to 9,000 licensed AYUSH
-   manufacturing units operate in India. Only 44 hold WHO-GMP certification.
+   formulation without legal counsel it cannot afford. India has close to 9,000
+   licensed AYUSH manufacturing units. As of December 2024, 44 hold WHO-GMP
+   certification from DCGI.  (Ministry of AYUSH / DCGI)
 
-•  Patent applications covering Indian traditional knowledge are published in the
-   Patent Office Journal every Friday. Almost nobody in India reads it, and the
-   objection window closes quietly.
+•  Patent applications covering Indian traditional knowledge publish in the Official
+   Journal of the Patent Office every Friday under Section 145. Almost nobody in
+   India reads it, and the objection window closes quietly.  (Patents Act, 1970)
 
-•  TKDL holds 418,885 codified formulations but is closed under agreement to 17 patent
-   offices. Community-held knowledge was never inside it, and has no defensive route
-   at all.
+•  TKDL holds 418,885 codified formulations, 119,269 of them Ayurveda, and is closed
+   under agreement to 17 patent offices. Community-held knowledge was never inside it
+   and has no defensive route at all.  (CSIR / PIB, March 2022)
 ```
 
 The second bullet is the one that sets up the whole deck. Do not shorten it.
@@ -102,24 +105,31 @@ One block. Sir asked for impact and numbers, so this is built entirely from veri
 ```
 India has won these fights before, and paid for the timing.
 
-The turmeric patent fell in about a year for roughly US$10,000, because CSIR already
-had 32 prior-art references ready to file.
+Turmeric fell in about a year for roughly US$10,000, because CSIR filed 32 prior-art
+references in Sanskrit, Urdu and Hindi that were already documented.  (CSIR)
 
-The neem patent took from 1995 to March 2005. Same country, same prior art, ten years
-instead of one, because that fight happened after the patent was granted.
+Neem ran from 1995 to 8 March 2005. Revoked by the EPO Opposition Division in May
+2000, then held on appeal five years later. Same country, same prior art, a decade
+instead of a year, because that fight happened after grant.  (European Patent Office)
 
-Rule 55(1A) guarantees that no Indian patent may be granted for six months after the
-application publishes. Inside that window, Section 25(1) lets any person object using
-Form 7A. Outside it, the only remedy left is litigation.
+Rule 55(1A) of the Patents Rules bars the grant of any Indian patent for six months
+after the application publishes. Inside that window Section 25(1) lets any person
+object on Form 7A. Outside it, the remaining remedy is litigation.
 
-Roughly 370 applications have been stopped worldwide on TKDL evidence in two decades.
-That is about 18 a year, and only patent offices can run the search.
+About 370 applications have been stopped worldwide on TKDL evidence across two
+decades, roughly 18 a year, and only patent offices can run that search.
+(CSIR TKDL Unit)
 ```
 
-## The one graph
+## Optional visual, for Vansh to decide
 
-Sir asked what the graph signifies. Use one graph in the deck and make it this, placed beside
-Why This Matters. A horizontal statutory timeline, not a bar chart and not an architecture box.
+Sir's note about "1 graph" was about the old heading reading "1 GRAPH, 2 AGENTS", which left people
+asking what the graph was. That is already solved by the current ONE DOSSIER, TWO AGENTS heading.
+No graph is being added to answer it.
+
+Separately, if there is room beside Why This Matters, a statutory timeline earns its place better
+than any chart would. It is a timeline, not a bar chart and not an architecture box. Build it only
+if the space is genuinely free. The text block matters more.
 
 ```
 Filing ──▶ Publication ──▶ [ OBJECTION WINDOW OPEN ] ──▶ Earliest ──▶ Grant
@@ -423,19 +433,22 @@ Sir asked for TAM, SAM and SOM with real numbers. Every figure here is published
 
 ```
 TAM
-Close to 9,000 licensed AYUSH manufacturing units in India, inside an AYUSH market
-valued at US$43.4 bn in 2024, of which manufacturing is about US$24 bn. Our market is
-the IP and regulatory advisory spend across those units, not the sector itself.
+Close to 9,000 licensed AYUSH manufacturing units, inside an AYUSH market valued at
+US$43.4 bn in 2024, of which manufacturing is about US$24 bn and services about
+US$26 bn. The addressable spend is IP and regulatory advisory across those units,
+which is a fraction of the sector figure.  (Ministry of AYUSH, 2024)
 
 SAM
-The MSME segment that needs protection guidance and cannot fund a legal retainer.
-Only 44 units hold WHO-GMP certification, about 0.5% of the total, so the export-ready
-tier is small and the unprotected tier is nearly all of it.
+The MSME tier that needs protection guidance and cannot fund a legal retainer.
+Of roughly 9,000 units, 44 hold WHO-GMP certification as of December 2024. That is
+about 0.5%. The export-ready tier is small and the unprotected tier is nearly all of
+it.  (DCGI, December 2024)
 
 SOM
 Institutional deployment first, measured in dossiers watched and windows caught rather
 than revenue. AIIA, CSIR, NMPB, State Biodiversity Boards and the AYUSH startup cohort.
-The national watchlist produces alerts with zero users signed up.
+A national watchlist seeded with about 50 priority dravya produces alerts whether or
+not a single user signs up.
 ```
 
 Say this in questions if it comes up: the buyer is the ministry, not the MSME. Pricing this per seat
@@ -614,6 +627,128 @@ named registry. Where a source is draft or unverified, the deck says so.
 
 ---
 
+# Diagrams and images — what to change, and why
+
+**Do not let me change any of these. They are listed here for Vansh to action.**
+Items are ordered by how much damage they do if left alone.
+
+## Devansh's architecture image (slide 3)
+
+### 1. Prahari is drawn inside the query path. This is the one that matters.
+
+In the image, Prahari sits in the "Agents & Tools (Activated as needed)" row, fed downward from the
+Query Triage and Depth Controller. Read literally, that says a user query activates Prahari.
+
+Our entire USP is the opposite. `SAMHITA-PLAN.md` §2.1 states that Prahari is a second entry point
+fired by a Friday scheduler and is "never in the query path". Slide 2 claims Prahari acts unprompted.
+A judge who compares slide 2 against slide 3 will find them contradicting each other, and the thing
+that breaks is the differentiator.
+
+What it needs: a second arrow entering the Agents row from the left, labelled something like
+"Scheduler, every Friday", going straight into Prahari and bypassing User Query, Orchestrator and
+the Depth Controller entirely.
+
+That is a redraw, so it depends on Devansh. If there is no time for a redraw, the cheap fallback is
+a caption under the image reading:
+
+```
+Sahayak answers queries. Prahari runs from a weekly scheduler and is never triggered
+by a user query.
+```
+
+A caption is weaker than fixing the arrow, but it closes the contradiction.
+
+### 2. "Attack Mode (examiner view)" should read "Examiner View"
+
+Two reasons. Our fixed terminology across `PRODUCT.md` and the deck is Examiner View, and a slide
+that uses two names for one feature looks unfinished. Separately, "attack mode" is combative
+language on a tool built for a ministry, where the whole legal posture is that we submit prior art
+rather than attack anybody.
+
+### 3. "Find similar patents globally" overstates the build
+
+Foreign filing search is the stretch stream. The primary stream is the domestic Journal. Suggested
+replacement text inside that box: "Find similar published applications". Small change, removes a
+claim we would have to qualify in questions.
+
+### 4. The multilingual chip claims four languages
+
+It reads `EN | HI | संस्कृत | अन्य`. The plan commits Hindi, with more only if we run ahead, and
+`CLAUDE.md` §9 says the multilingual metric stays marked as not yet measured. Showing Sanskrit and
+"others" on the architecture is more than we can defend.
+
+Either reduce to `EN | HI` with the rest described as roadmap, or keep it and be ready to say in
+questions that Hindi is committed and the others are planned. Vansh's call, but the second option
+needs rehearsing.
+
+### 5. The top-left callout reads as a pipeline stage
+
+The box saying "System gives the right depth answer, no unnecessary heavy research" is joined to the
+flow by a dashed connector, which makes it look like a processing step. `CLAUDE.md` §2 already flags
+that it is an annotation on the Depth Controller rather than a real data-flow edge.
+
+Restyle it as a plain floating note with no connector, or drop it. As drawn, a careful judge will ask
+what that stage does.
+
+### 6. Opportunity, not an error: the Verification Agent is underweighted
+
+It carries the same visual weight as every other box. It is the single strongest architectural claim
+in the deck, and it is the reason we can say the system never fabricates authority. Worth a heavier
+border or a stronger fill so the eye lands on it.
+
+### 7. Keep the example query exactly as it is
+
+"Can I patent my polyherbal formulation containing Ashwagandha, Guduchi and Turmeric?" is a good
+choice and should not be changed. Polyherbal is precisely the case Section 3(e) refuses as a mere
+admixture, so the example lines up with the worked example on slide 2.
+
+## UI screenshots (slide 6)
+
+Check these before they go in. Any one of them is a question we would rather not be asked.
+
+- No end-of-session evaluation report. It was deliberately deleted per `CLAUDE.md` §9, because
+  accuracy cannot be measured across a five-question session with no ground truth.
+- No accuracy figure visible anywhere in the screenshots.
+- If the `/evals` page appears, the "Illustrative values for this build" badge must be readable in
+  the screenshot. It is there on purpose and it is worth points.
+- Palette should be the current forest and emerald system. Any older cream or brown screenshot is
+  from a superseded design and should be retaken.
+
+## Watermark and background
+
+White background throughout. Watermark stays, kept light enough that nothing sits on it below 4.5:1
+contrast. Keep it off slide 6 entirely, where the reference list is dense text.
+
+---
+
+# Source table
+
+Every figure used on a slide, with where it comes from. Keep this out of the deck. It exists so any
+number can be traced if a judge asks.
+
+| Figure | Used on | Source |
+|---|---|---|
+| ~9,000 licensed AYUSH manufacturing units | Slides 2, 5 | Ministry of AYUSH, industry profile |
+| 44 units WHO-GMP (CoPP) certified, Dec 2024 | Slides 2, 5 | Drugs Controller General (India) |
+| AYUSH market US$43.4 bn, 2024 | Slide 5 | Ministry of AYUSH, reported Dec 2024 |
+| Manufacturing US$24 bn, services US$26 bn | Slide 5 | Same |
+| TKDL 418,885 formulations, 119,269 Ayurveda | Slide 2 | CSIR / PIB factsheet, 25 Mar 2022 |
+| ~370 applications stopped on TKDL evidence | Slide 2 | CSIR TKDL Unit |
+| TKDL access, 17 patent offices | Slide 2 | CSIR TKDL Unit |
+| Turmeric: ~1 year, ~US$10,000, 32 references | Slide 2 | CSIR, turmeric re-examination |
+| Neem: 1995 to 8 Mar 2005, revoked May 2000 | Slide 2 | European Patent Office |
+| Rule 55(1A), six-month bar on grant | Slides 2, 6 | Patents Rules, 2003 |
+| Section 25(1), "any person", Form 7A | Slides 2, 6 | Patents Act, 1970 |
+| Section 145, weekly Journal | Slides 2, 6 | Patents Act, 1970 |
+| ABS slabs, 2025 Regulations | Slide 5 | Biological Diversity (ABS) Regulations, 2025 |
+| ~11,500 corpus chunks, ~110 MB footprint | Slide 4 | Our own build plan, §4.3 |
+
+One caveat carried into questions. The ABS slabs are consistent across several independent legal
+summaries, but the gazette check is still open in `docs/briefs/himanshi-research.md` Part B item 1.
+Slide 5 therefore says "estimate". Keep that word.
+
+---
+
 # Formatting notes
 
 ## Hindi and Devanagari colour
@@ -643,7 +778,11 @@ instead.
 - [ ] Search the whole deck for biopiracy, misappropriation, stolen, theft. Zero hits.
       Slide 2 currently fails this.
 - [ ] Neo4j and Qdrant removed from slide 6
-- [ ] "Al Assistant" corrected to "AI Assistant" on slide 1
+- [ ] Slide 1 carries the official PS 26045 title verbatim, which also removes the "Al" typo
+- [ ] Prahari no longer reads as query-triggered on the architecture image, by redrawn arrow
+      or by caption
+- [ ] "Attack Mode" relabelled "Examiner View" on the architecture image
+- [ ] UI screenshots carry no accuracy figure and no end-of-session evaluation report
 - [ ] AYUSH guidelines labelled draft in reference [8]
 - [ ] Demo link and GitHub link both filled, and visually separate from the references
 - [ ] Devansh's architecture image on slide 3, full width
