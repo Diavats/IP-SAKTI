@@ -8,7 +8,12 @@ SAMHITĀ (संहिता) is the team's implementation of *IP-SAKTI Sahayak*
 
 ## 2. Architecture
 
-Source of truth: `docs/Ip_sakti_architecture.jpeg`. Described top to bottom as drawn:
+**Start with `ARCHITECTURE.md` at the repo root.** It is the canonical structural map: runtime
+flow, repo layout, and the invariants that must not be broken. This section describes the
+reference image in detail and stays here for that detail; where the two disagree,
+`ARCHITECTURE.md` wins.
+
+Reference image: `docs/Ip_sakti_architecture.jpeg`. Described top to bottom as drawn:
 
 1. **User Query** (text / voice / dossier, any language) enters the **Orchestrator Agent**, which extracts intent/entities and routes.
 2. **Query Triage & Depth Controller** picks one of three tiers automatically (never asked upfront): **Quick Answer** (direct, minimal retrieval), **Guided Analysis** (agents + more context, e.g. "show IP protection map"), **Deep Research** (full agentic RAG + external tools, e.g. "find similar patents globally").
@@ -44,7 +49,7 @@ From `SAMHITA-PLAN.md` §5 ("Tech stack" table) and the models table:
 ## 4. Design System & Skills
 
 - Use the `ui-ux-pro-max` skill for **all** UI work.
-- Before making UI changes, read `.impeccable/hook.cache.json` and stay consistent with prior findings. It currently records edits to `docs/samhita-lanes.html` with three unresolved low-contrast findings (text colors `#7c8a85`, `#a3b0ab`, `#e4ebe7` on white — all below 4.5:1) — don't reintroduce those contrast ratios in new UI.
+- Before making UI changes, read `.impeccable/hook.cache.json` and stay consistent with prior findings. Three text colours were previously flagged below the 4.5:1 WCAG AA minimum on white (`#7c8a85`, `#a3b0ab`, `#e4ebe7`). Treat 4.5:1 body-text contrast as a hard floor. The page those findings came from has been deleted as stale; the constraint stands.
 - Use the Figma MCP server for design context when building or syncing UI.
 - Use the Playwright MCP server to verify UI behavior after each feature is built (not just unit tests).
 

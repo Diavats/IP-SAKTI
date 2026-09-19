@@ -186,7 +186,7 @@ We ship a documented `PriorArtSource` interface with two implementations: the le
 
 ## 3. Ownership
 
-AI/ML split is **60% Devansh / 40% Dia**, divided by subsystem rather than by difficulty so both own something end to end and handoffs stay minimal.
+AI/ML split is between Devansh and Dia, divided by subsystem rather than by difficulty so both own something end to end and handoffs stay minimal.
 
 | Lane | Owner | Scope |
 |---|---|---|
@@ -199,7 +199,7 @@ AI/ML split is **60% Devansh / 40% Dia**, divided by subsystem rather than by di
 | **Research** | **Himanshi** | Source verification, regulatory-profile fields, gold-set sample verification (see separate brief) |
 | **Deck** | **Vansh** | Built from a written script, produced separately |
 
-**Dia keeps 40% by volume but 100% of the resume-bearing artifacts** — the calibration model, the eval methodology, and Prahari's matching logic.
+
 
 ---
 

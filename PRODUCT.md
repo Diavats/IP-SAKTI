@@ -43,11 +43,13 @@ Not a chatbot wrapper over statutes. Two differentiators a generic RAG-over-law 
 
 ## Brand Commitments
 
-Product and agent names are fixed and carry Devanagari alongside the Latin transliteration wherever first introduced in the UI (SAMHITĀ / संहिता, Sahayak / सहायक, Prahari / प्रहरी) — this is a stated legal-literacy/cultural-grounding detail in the source plan, not decorative. No logo, color system, or other visual identity exists yet; none is assumed here.
+Product and agent names are fixed and carry Devanagari alongside the Latin transliteration wherever first introduced in the UI (SAMHITĀ / संहिता, Sahayak / सहायक, Prahari / प्रहरी) — this is a stated legal-literacy/cultural-grounding detail in the source plan, not decorative. Devanagari renders in a different colour from the English beside it.
+
+The visual identity now exists and is settled in `CLAUDE.md` §9. Product is SAMHITĀ; VedaNova is the team and appears in the footer only. The palette gives every colour exactly one job: forest green chrome, emerald for primary actions and open verdicts, cobalt for statutes and citations only, violet for Prahari's identity only, amber for draft and unverified, red for barred and urgent windows. No tan or beige. Dark mode is deliberately unbuilt.
 
 ## Evidence on Hand
 
-No real screenshots, mockups, user data, or content exist yet. `docs/samhita-lanes.html` is an internal team task-lane page (member-wise work split), not a product UI reference, and carries known unresolved contrast issues (see Accessibility below) — it must not be treated as visual precedent. `docs/Ip_sakti_architecture.jpeg` is a system-architecture diagram, not a visual/UI reference. All formulation, dossier, patent, and eval-metric content in this build is placeholder/mock data, explicitly marked as such in code.
+The frontend is built and Playwright-verified against mocks, so real screenshots of the shipped UI now exist. `docs/Ip_sakti_architecture.jpeg` is a system-architecture diagram, not a visual reference, and is being replaced; see `docs/briefs/devansh-architecture.md`. All formulation, dossier, patent and eval-metric content is placeholder data, marked as such in code. Design rationale and revision history live in `.impeccable/surfaces/app.md`.
 
 ## Product Principles
 
@@ -59,4 +61,4 @@ No real screenshots, mockups, user data, or content exist yet. `docs/samhita-lan
 
 ## Accessibility & Inclusion
 
-No formal standard was specified for this project. Carry forward one concrete known constraint: prior Impeccable findings on this project (`.impeccable/hook.cache.json`) flagged three text/background pairs under WCAG AA's 4.5:1 contrast minimum on `docs/samhita-lanes.html` — treat 4.5:1 body-text contrast as a floor for all new UI rather than repeating that failure.
+No formal standard was specified for this project. Carry forward one concrete constraint: prior Impeccable findings (`.impeccable/hook.cache.json`) flagged three text colours below WCAG AA's 4.5:1 minimum on white (`#7c8a85`, `#a3b0ab`, `#e4ebe7`). Treat 4.5:1 body-text contrast as a hard floor for all new UI. Urgency is never encoded by colour alone; icon and text carry it too.

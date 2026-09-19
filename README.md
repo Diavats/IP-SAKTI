@@ -13,10 +13,10 @@ Two agents sit on top of one shared knowledge graph:
 - **Prahari** — an unprompted watcher that drafts pre-grant opposition
   dossiers from journal sweeps (`/prahari`).
 
-Full architecture and the phase-by-phase build plan live in
-[`docs/SAMHITA-PLAN.md`](docs/SAMHITA-PLAN.md) and
-[`docs/Ip_sakti_architecture.jpeg`](docs/Ip_sakti_architecture.jpeg) —
-this README only covers running what's here today.
+Structure, runtime flow and the rules that cannot be broken live in
+[`ARCHITECTURE.md`](ARCHITECTURE.md). The phase-by-phase build plan lives in
+[`docs/SAMHITA-PLAN.md`](docs/SAMHITA-PLAN.md). This README only covers
+running what's here today.
 
 ## Current status
 
@@ -97,7 +97,10 @@ public/
 docs/
   SAMHITA-PLAN.md         # authoritative build plan (phases, ownership, schedules)
   Ip_sakti_architecture.jpeg
+  briefs/                 # written briefs: deck content, architecture fixes, source verification
+ARCHITECTURE.md           # START HERE — structure, runtime flow, invariants
 CLAUDE.md                 # working agreement / conventions for AI-assisted dev on this repo
+PRODUCT.md                # product definition: users, purpose, principles
 ```
 
 ## Team: cloning and running this locally

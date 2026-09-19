@@ -44,3 +44,7 @@ next-env.d.ts
 /*.png
 .playwright-mcp/
 .claude/worktrees/
+
+# Source masters, kept locally, not shipped
+docs/Vedanova Awakening.mp4
+docs/vedanova logo.png

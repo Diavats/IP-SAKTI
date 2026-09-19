@@ -123,9 +123,7 @@ decades, roughly 18 a year, and only patent offices can run that search.
 
 ## Optional visual, for Vansh to decide
 
-Sir's note about "1 graph" was about the old heading reading "1 GRAPH, 2 AGENTS", which left people
-asking what the graph was. That is already solved by the current ONE DOSSIER, TWO AGENTS heading.
-No graph is being added to answer it.
+
 
 Separately, if there is room beside Why This Matters, a statutory timeline earns its place better
 than any chart would. It is a timeline, not a bar chart and not an architecture box. Build it only
