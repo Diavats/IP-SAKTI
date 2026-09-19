@@ -155,10 +155,17 @@ Heading stays. Replace the line under it.
 
 ```
 One knowledge graph. One agent advises. One agent watches.
+Orchestration, tools and verification are pipeline stages, not products.
 ```
 
-The current subtitle says "global vigilance", which overstates what we built. Our primary stream is
-the Indian Patent Office Journal. Foreign filings are a later stage.
+Two changes here. The current subtitle says "global vigilance", which overstates what we built,
+since our primary stream is the Indian Patent Office Journal and foreign filings come later.
+
+The second line is new and it prevents a counting problem. Devansh's architecture image labels five
+boxes "Agent": Orchestrator, Sahayak, Prahari, Tool Agents and Verification. A judge reading
+"TWO AGENTS" on this slide and then counting five on the next one will ask. Sahayak and Prahari are
+the two that produce user-facing output. The rest are pipeline stages, and that line says so before
+anyone has to ask. Keep it even if it looks like a small thing.
 
 ### FORMULATION DOSSIER (centre, with the document symbol)
 
@@ -236,9 +243,10 @@ Every generated sentence is entailment-checked against the span it cites. The sy
 abstains rather than guess.
 
 Box 4
-Multilingual, with citations left alone
-We translate the question and the answer. We never translate the statute, because a
-translated statute is not the statute.
+Four languages, with citations left alone
+English, Hindi, Malayalam and Tamil, chosen for where Ayurveda and Siddha
+manufacturing actually sits. We translate the question and the answer. We never
+translate the statute, because a translated statute is not the statute.
 ```
 
 ## HOW OUR SOLUTION ADDRESSES THE PROBLEM
@@ -671,15 +679,24 @@ Foreign filing search is the stretch stream. The primary stream is the domestic 
 replacement text inside that box: "Find similar published applications". Small change, removes a
 claim we would have to qualify in questions.
 
-### 4. The multilingual chip claims four languages
+### 4. The multilingual chip needs four named languages
 
-It reads `EN | HI | संस्कृत | अन्य`. The plan commits Hindi, with more only if we run ahead, and
-`CLAUDE.md` §9 says the multilingual metric stays marked as not yet measured. Showing Sanskrit and
-"others" on the architecture is more than we can defend.
+It reads `EN | HI | संस्कृत | अन्य`. "अन्य" is not a language, and nobody types a query in Sanskrit.
 
-Either reduce to `EN | HI` with the rest described as roadmap, or keep it and be ready to say in
-questions that Hindi is committed and the others are planned. Vansh's call, but the second option
-needs rehearsing.
+Replace with four named languages: `EN | हिन्दी | മലയാളം | தமிழ்`.
+
+The reasoning matters more than the list. Kerala and Tamil Nadu carry dense Ayurveda and Siddha
+manufacturing and practice, so Malayalam and Tamil reach real users. Hindi covers the northern
+manufacturing belt. English is the language the statutes are written in. Four languages with a
+stated reason beats a longer list with none.
+
+Sanskrit keeps a role, just a different one. Classical citations display in their authentic form
+rather than being translated, which is already our rule. That is worth a small note on the diagram
+if there is room, and it is a better use of Sanskrit than listing it as a UI language.
+
+Honesty position for questions: Hindi is the language we measure first, and the multilingual eval
+card on `/evals` says "Not yet measured, scheduled Week 4". Do not soften that. One competing repo
+claims 13 languages with nothing measured behind it.
 
 ### 5. The top-left callout reads as a pipeline stage
 
@@ -718,6 +735,61 @@ Check these before they go in. Any one of them is a question we would rather not
 
 White background throughout. Watermark stays, kept light enough that nothing sits on it below 4.5:1
 contrast. Keep it off slide 6 entirely, where the reference list is dense text.
+
+---
+
+# What the competing teams built
+
+Scanned the public GitHub repos on PS 26045. Around fifteen teams are building this. None of it
+needs to change the deck, but two things are worth knowing before Q&A.
+
+## The two closest
+
+**Root-Claim** is the most developed, with real code across roughly 126 commits. It has a "Deep
+Patent Collision Radar" that monitors newly published international applications and cross-references
+them against TKDL, plus blockchain timestamping on Polygon for proof of origin, and manuscript OCR.
+
+Three problems with it, all checkable. It cross-references TKDL, which is closed under agreement to
+17 patent offices, so that integration cannot exist as described. Its own documentation describes
+the surveillance as simulated and the ledger write as simulated. And it computes no opposition
+deadline, so an alert arrives with no action attached to it.
+
+**sathishssj3/IP-SAKTI-Sahayak** has an automated NBA ABS fee calculator, which is the same idea as
+our benefit-sharing estimate, and claims 13 Indian languages. It is README and slides with two
+commits and no working code. Its calculator cites "BD Rules 2024". The benefit-sharing slabs live in
+the Biological Diversity (Access and Benefit Sharing) Regulations 2025, notified 29 April 2025,
+replacing the 2014 guidelines. A calculator built on the superseded instrument returns the wrong
+number.
+
+## What this means for us
+
+Our three differentiators survived the scan intact.
+
+Nobody computes the window. Several teams watch filings. None of them computes days remaining under
+Rule 55(1A), and a watcher without a deadline is a notification rather than an instrument. This is
+the thing to lead with, and slide 2 already does.
+
+Most teams watch internationally. India can act on a domestic published application for the cost of
+a Form 7A. Acting on a foreign filing is far harder and far slower. Our domestic-first choice is the
+stronger one and it should not be blurred into "global".
+
+Several teams claim TKDL access. We ship an adapter interface and say plainly that nobody has
+access without an agreement. That is accurate, and it is also the answer that survives a judge who
+knows the field.
+
+## Three things competitors have that we deliberately do not
+
+Worth being able to answer, because someone may ask why we lack them.
+
+Thirteen languages against our four. We name a reason for each of ours and we measure Hindi first.
+A language count with no measurement behind it is a number on a slide.
+
+Blockchain timestamping. A permanent public archive with a DOI does the same job with an institution
+behind it. The competing implementation describes itself as simulated.
+
+Manuscript OCR. Sanskrit OCR on colonial-era scans is genuinely poor, and the Formulary already
+carries its source citation down to chapter and verse, so we render the reference without OCR-ing a
+single character. That is roughly 90% of the credibility at a fraction of the cost.
 
 ---
 
