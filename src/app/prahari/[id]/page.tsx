@@ -18,6 +18,7 @@ const statusLabel: Record<AlertStatus, string> = {
   reviewing: "Reviewing",
   drafted: "Dossier drafted",
   filed: "Filed",
+  lapsed: "Window closed",
 };
 
 export default function PrahariAlertPage() {

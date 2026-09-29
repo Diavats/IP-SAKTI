@@ -2,6 +2,10 @@
 // These shapes are the contract `lib/api.ts` promises to keep when the mock
 // service layer is swapped for the real FastAPI + LangGraph backend.
 
+import type { UrgencyBand } from "@/lib/opposition-window";
+
+export type { UrgencyBand };
+
 export type Jurisdiction = "IN" | "INTL";
 
 export type FormulationCategory =
@@ -87,23 +91,49 @@ export interface CultivatorAssessment {
   ppvfrRoute: string;
 }
 
-export type AlertStatus = "new" | "reviewing" | "drafted" | "filed";
+export type AlertStatus = "new" | "reviewing" | "drafted" | "filed" | "lapsed";
 
-export interface PrahariAlert {
+/**
+ * Which sweep found this. CLAUDE.md §9 fixes the domestic Patent Office Journal
+ * as the primary stream; foreign filings are the stretch stream, because India
+ * can act on a domestic application for the cost of a Form 7A and cannot act
+ * nearly as cheaply on a foreign one.
+ */
+export type AlertStream = "domestic" | "foreign";
+
+/**
+ * One record as it lands from a sweep, before window arithmetic.
+ *
+ * Deliberately carries no `earliestGrant`, `daysRemaining` or `urgencyScore`.
+ * Those are functions of today's date, so storing them would freeze a
+ * countdown that is supposed to tick. See lib/opposition-window.ts.
+ */
+export interface PrahariAlertSeed {
   id: string;
+  stream: AlertStream;
   applicationNo: string;
   title: string;
   ipc: string;
   applicant: string;
   applicantCountry: string;
   publishedOn: string;
-  earliestGrant: string;
-  daysRemaining: number;
-  urgencyScore: number; // 0-100
-  riskScore: number; // 0-100
+  riskScore: number; // 0-100, how closely the claim tracks known prior art
   matchedFormulationId: string | null;
   matchedSpecies: string[];
   status: AlertStatus;
+}
+
+/** A seed plus everything derived from the clock. What the UI renders. */
+export interface PrahariAlert extends PrahariAlertSeed {
+  /** Publication + 6 months, per Rule 55(1A). */
+  earliestGrant: string;
+  /** Negative once the bar has lifted and only s.25(2) remains. */
+  daysRemaining: number;
+  /** Red under 30 days, amber 30–90, green beyond, grey once closed (§9). */
+  band: UrgencyBand;
+  /** Plain-language countdown. Never relies on colour alone. */
+  windowLabel: string;
+  urgencyScore: number; // 0-100, derived from daysRemaining
 }
 
 export interface Form7ADossier {

@@ -15,27 +15,48 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { AlertStatus, PrahariAlert } from "@/lib/types";
+import type { AlertStatus, PrahariAlert, UrgencyBand } from "@/lib/types";
 
 const statusLabel: Record<AlertStatus, string> = {
   new: "New",
   reviewing: "Reviewing",
   drafted: "Dossier drafted",
   filed: "Filed",
+  lapsed: "Window closed",
 };
 
-function urgencyTone(days: number): "barred" | "draft" | "open" {
-  if (days <= 14) return "barred";
-  if (days <= 45) return "draft";
-  return "open";
+/**
+ * Map a window band to a chip tone.
+ *
+ * Bands come from lib/opposition-window.ts and follow the thresholds fixed in
+ * CLAUDE.md §9: red under 30 days, amber 30–90, green beyond. The previous
+ * version of this function used 14 and 45, which disagreed with the decision
+ * log and with the legend shown to the user.
+ */
+function bandTone(band: UrgencyBand): "barred" | "draft" | "open" {
+  switch (band) {
+    case "critical":
+      return "barred";
+    case "warning":
+      return "draft";
+    case "open":
+      return "open";
+    case "closed":
+      // Nothing left to file. Shown muted rather than urgent, because a lapsed
+      // window is not a deadline — it is a different, heavier route (s.25(2)).
+      return "draft";
+  }
 }
 
+// Ordered as the sweep actually runs. The domestic Journal is the primary
+// stream per CLAUDE.md §9; the foreign stream is labelled as the stretch it is,
+// so the animation never claims a capability the build does not have.
 const sweepSources = [
-  "Patent Office Journal (weekly PDF)",
-  "Google Patents BigQuery — CPC A61K36/*",
-  "POWO / IPNI / GBIF species resolution",
-  "NLI claim-vs-prior-art matching",
-  "Opposition-window computation",
+  "Patent Office Journal — weekly PDF, IPC A61K36/*",
+  "POWO / IPNI / GBIF species and synonym resolution",
+  "Claim-vs-prior-art entailment against the Formulary",
+  "Opposition-window computation — Rule 55(1A)",
+  "Foreign filings (stretch stream, not yet enabled)",
 ];
 
 export default function PrahariPage() {
@@ -130,7 +151,7 @@ export default function PrahariPage() {
                     {alert.publishedOn}
                   </TableCell>
                   <TableCell>
-                    <CountChip tone={urgencyTone(alert.daysRemaining)}>
+                    <CountChip tone={bandTone(alert.band)}>
                       {alert.daysRemaining} days
                     </CountChip>
                   </TableCell>

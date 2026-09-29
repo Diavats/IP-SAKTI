@@ -30,5 +30,9 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules"]
+  // Self-check files run under `node --experimental-strip-types`, which requires
+  // explicit .ts import specifiers that tsc's bundler resolution rejects. They
+  // are not part of the Next build, so they are excluded here rather than
+  // loosening module resolution for the whole app.
+  "exclude": ["node_modules", "**/*.test.ts"]
 }

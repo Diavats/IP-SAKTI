@@ -15,7 +15,7 @@ import {
 import { auditLog, consentGrants } from "@/lib/mock/consent-audit";
 import { evalMetrics, retrievalBakeOff } from "@/lib/mock/evals";
 import { graphEdges, graphNodes } from "@/lib/mock/graph";
-import { form7ADossiers, prahariAlerts } from "@/lib/mock/prahari";
+import { buildPrahariAlerts, form7ADossiers } from "@/lib/mock/prahari";
 import { buildQueryResponse } from "@/lib/mock/queries";
 import type {
   AuditLogEntry,
@@ -85,13 +85,21 @@ export function previewQuerySteps(query: string, depth: QueryDepth = "quick") {
 }
 
 export async function getPrahariAlerts(): Promise<PrahariAlert[]> {
-  return delay(
-    [...prahariAlerts].sort((a, b) => a.daysRemaining - b.daysRemaining)
-  );
+  // Rebuilt per call so the countdown reflects the moment it is read, not the
+  // moment the module loaded. Ranking is urgency-first: a window closing in
+  // six days outranks a better claim match with five months left (plan §2.3).
+  // Lapsed windows sink to the bottom — there is nothing left to file.
+  const alerts = buildPrahariAlerts().sort((a, b) => {
+    const aLapsed = a.daysRemaining < 0;
+    const bLapsed = b.daysRemaining < 0;
+    if (aLapsed !== bLapsed) return aLapsed ? 1 : -1;
+    return a.daysRemaining - b.daysRemaining;
+  });
+  return delay(alerts);
 }
 
 export async function getPrahariAlert(id: string): Promise<PrahariAlert | null> {
-  return delay(prahariAlerts.find((a) => a.id === id) ?? null);
+  return delay(buildPrahariAlerts().find((a) => a.id === id) ?? null);
 }
 
 export async function getForm7ADossier(alertId: string): Promise<Form7ADossier | null> {
@@ -111,7 +119,10 @@ export async function generateForm7ADossier(alert: PrahariAlert): Promise<Form7A
         "Ayurvedic Formulary of India, Part I — matching formulation entry",
         `Ayurvedic Pharmacopoeia of India — ${alert.matchedSpecies[0]} monograph`,
       ],
-      summary: `Prior art potentially relevant to this application: ${alert.matchedSpecies.join(", ")} ${alert.matchedSpecies.length > 1 ? "are" : "is"} documented in classical Ayurvedic literature predating the priority date. This submits that documentation for examination; it does not accuse the applicant of misappropriation.`,
+      // Framing is load-bearing, not tone. A s.25(1) representation submits
+      // prior art for examination; it makes no allegation against anyone.
+      // See CLAUDE.md §8 and plan §2.4 — this wording is not free to edit.
+      summary: `Prior art potentially relevant to this application: ${alert.matchedSpecies.join(", ")} ${alert.matchedSpecies.length > 1 ? "are" : "is"} documented in classical Ayurvedic literature predating the priority date. This submits that documentation for the examiner's consideration and makes no allegation against the applicant.`,
       draftText: `FORM 7A — REPRESENTATION FOR OPPOSITION TO GRANT OF PATENT\n(under Rule 55 of the Patents Rules 2003, in respect of Section 25(1))\n\nApplication opposed: ${alert.applicationNo}\n\nGrounds: The claimed use of ${alert.matchedSpecies.join(", ")} substantially overlaps with prior-published Ayurvedic literature. This representation submits the attached passages as prior art potentially relevant to examination of novelty and inventive step.\n\n[Draft — for human review before filing. No submission occurs automatically.]`,
     },
     800

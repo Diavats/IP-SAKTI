@@ -154,7 +154,10 @@ const canned: CannedResponse[] = [
     ],
   },
   {
-    keywords: ["prahari", "watch", "watchlist", "biopiracy", "misappropriation"],
+    // Intentionally does not list accusatory terms as match keywords. Plan §16
+    // requires zero occurrences of those words anywhere in the string set, and
+    // "prahari"/"watch"/"watchlist" already route this query correctly.
+    keywords: ["prahari", "watch", "watchlist", "monitoring", "prior art"],
     agents: ["prahari"],
     agentReason: "watchlist status requested — Prahari's domain, not Sahayak's",
     answer:
