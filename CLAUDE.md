@@ -68,9 +68,13 @@ The full phase-by-phase, member-by-member task breakdown lives in `docs/SAMHITA-
 
 **Frontend (mocked backend) is built.** Next.js (App Router) + TypeScript + Tailwind + shadcn/ui, at the project root, with a full mock data/service layer (`src/lib/api.ts` + `src/lib/mock/*`) standing in for `services/brain` and Supabase. No real backend, model calls, or data ingestion exist yet — this is a hackathon-demo frontend only, per explicit scope.
 
-Routes built and Playwright-verified (no console errors, no dead links, full-width responsive at 390/1440/3840 CSS px): `/` (Overview), `/ask`, `/dossiers` + `/dossiers/[id]`, `/prahari` + `/prahari/[id]`, `/graph`, `/evals`, `/settings`. Notable behaviors: New Dossier creation and dossier renaming (both localStorage-backed); the Ask tab is a two-agent chat (Sahayak/Prahari) with a live-updating dossier/search-progress panel, per-answer citations with a collapsed-by-default eval-score reveal, a deliberate abstention scenario, and an end-of-session evaluation report; Prahari has a "run watchlist sweep" live progress simulation naming the sources it checks; a global footer (About Us + contact) renders on every page.
+Routes built and Playwright-verified (no console errors, no dead links, full-width responsive at 390/1440/3840 CSS px): `/` (Overview), `/ask`, `/dossiers` + `/dossiers/[id]`, `/prahari` + `/prahari/[id]`, `/graph`, `/evals`, `/settings`. Notable behaviors: New Dossier creation and dossier renaming (both localStorage-backed); the Ask tab is a two-agent chat (Sahayak/Prahari) with a live-updating dossier/search-progress panel, per-answer citations with a collapsed-by-default eval-score reveal, and a deliberate abstention scenario; Prahari has a "run watchlist sweep" progress simulation naming the sources a real sweep would check; a global footer (About Us + contact) renders on every page.
 
-**Design system**: earthy Ayurvedic palette (warm cream ground, soil-brown + deep-red primary/agent colors, sage-green secondary agent color, ochre for draft/unverified), EB Garamond + Lato + IBM Plex Mono, `.glass` (frosted/translucent) treatment on the chat panel and a few key cards only — never on dense tables. Tokens live in `src/app/globals.css`; the design rationale and revision history are in `.impeccable/surfaces/app.md`. This superseded an earlier navy/paper "statute register" direction that user-tested as too cold/generic — kept here as a reminder not to re-introduce it.
+Per-answer verification stays, but there is no end-of-session evaluation report — §9 records why it was deleted, and system-level measurement lives only on `/evals` against the gold set.
+
+**Design system**: see **§9**, which is authoritative for the palette and the layout. Do not restate colour values here — two copies drift, and the copy that used to sit in this paragraph described a superseded cream/brown system that §9 explicitly replaced. Tokens live in `src/app/globals.css`; rationale and revision history are in `.impeccable/surfaces/app.md`.
+
+Two earlier directions were tried and rejected, recorded so they are not re-introduced: a navy/paper "statute register" system that user-tested as too cold and generic, and the cream/brown Ayurvedic system that followed it, which was dropped because `--secondary`, `--muted` and `--accent` had collapsed into effectively one colour.
 
 Per the plan's Week 1–4 schedule (§12), all real backend work is still pending:
 - **Week 1** (foundation + grounded retrieval): not started.
@@ -78,7 +82,9 @@ Per the plan's Week 1–4 schedule (§12), all real backend work is still pendin
 - **Week 3** (advisory product / IP Protection Map): not started — frontend shell for it exists, logic does not.
 - **Week 4** (automation, language, hardening): not started.
 
-Also outstanding: `docs/briefs/` is empty, but the plan (§1.2) requires explicit written briefs for Vansh (deck) and Himanshi (research) before their lanes can proceed — these haven't been produced yet.
+`docs/briefs/` now holds the written briefs the plan (§1.2) requires before the non-coding lanes can proceed: `vansh-deck.md` (slide-by-slide deck content), `devansh-architecture.md` (pending fixes to the architecture diagram) and `himanshi-research.md` (source verification; Part A is cleared, Part B is open and blocks build-stage work, not the deck).
+
+**One exception to "everything is mocked".** The opposition-window computation in `src/lib/opposition-window.ts` is real: it derives the earliest permissible grant date and the days remaining from `publishedOn`, using s.11A publication plus the Rule 55(1A) six-month grant bar, against today's date. It is month-end clamped, UTC, and covered by `src/lib/opposition-window.test.ts` (run with `node --experimental-strip-types src/lib/opposition-window.test.ts`). The Prahari records it runs over are still a representative sample, not a live Journal sweep, and the UI labels them as such. Do not re-hardcode `daysRemaining`.
 
 **Next for the frontend**: wire the mock service layer's functions in `src/lib/api.ts` to the real FastAPI backend once it exists (each function's signature is meant to stay stable across that swap); everything else in this section is otherwise demo-complete.
 
