@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { TopBar } from "@/components/top-bar";
 import { getPrahariAlerts } from "@/lib/api";
+import { useT } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 const ITEM_HEIGHT = 36;
@@ -38,6 +39,7 @@ function NavList({
   urgentPrahariCount: number | null;
 }) {
   const pathname = usePathname();
+  const t = useT();
   const activeIndex = navItems.findIndex((item) =>
     item.href === "/" ? pathname === "/" : pathname.startsWith(item.href)
   );
@@ -74,7 +76,10 @@ function NavList({
               )}
             >
               <Icon className="size-4 shrink-0" strokeWidth={1.75} />
-              <span className="flex-1">{item.label}</span>
+              {/* Nav labels translate. "Prahari" and "Sahayak" do not — they are
+                  product names, fixed by the brand commitments, and are passed
+                  through `t()` unchanged because no dictionary key exists. */}
+              <span className="flex-1">{t(item.label)}</span>
               {showBadge && (
                 <Badge
                   variant="destructive"
@@ -101,7 +106,7 @@ function NavList({
           )}
         >
           <settingsItem.icon className="size-4 shrink-0" strokeWidth={1.75} />
-          {settingsItem.label}
+          {t(settingsItem.label)}
         </Link>
       </div>
     </nav>
@@ -165,20 +170,23 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 }
 
 function SiteFooter() {
+  const t = useT();
   return (
     <footer className="-mx-4 mt-12 flex flex-col gap-3 bg-brand px-4 py-6 text-xs text-on-brand/80 md:-mx-8 md:px-8">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
           <a href="#" className="text-on-brand hover:underline">
-            About
+            {t("About")}
           </a>
           <a href="mailto:team@vedanova.dev" className="text-on-brand hover:underline">
-            Contact
+            {t("Contact")}
           </a>
         </div>
-        <span className="font-mono">Corpus 2026-09-10</span>
+        <span className="font-mono">{t("Corpus")} 2026-09-10</span>
       </div>
-      <p>Information, not legal advice.</p>
+      {/* The disclaimer translates. It has to be understood to do its job,
+          unlike a citation, which has to stay exact to do its job. */}
+      <p>{t("Information, not legal advice.")}</p>
       <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
         <p>Built for SIH 2026 · PS 26045 · Ministry of AYUSH / AIIA</p>
         <p>Built by Team VedaNova</p>

@@ -48,3 +48,5 @@ next-env.d.ts
 # Source masters, kept locally, not shipped
 docs/Vedanova Awakening.mp4
 docs/vedanova logo.png
+
+.vercel
