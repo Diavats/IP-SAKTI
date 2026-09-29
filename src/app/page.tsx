@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { LiquidMetalButton } from "@/components/ui/liquid-metal-button";
 import { ChatPanel, type ChatMode } from "@/components/ask/chat-panel";
 import { GraphBackdrop } from "@/components/graph-backdrop";
+import { Hero } from "@/components/hero";
 import { RingStat } from "@/components/ring-stat";
 import { MortarPestleIcon } from "@/components/mortar-pestle-icon";
 import { cn } from "@/lib/utils";
@@ -114,12 +115,18 @@ function HomeRoute() {
           isOpen && "pointer-events-none opacity-40"
         )}
       >
-        <Dashboard
-          dossiers={dossiers}
-          alerts={alerts}
-          onAskGeneral={openGeneral}
-          onAskDossier={openDossier}
-        />
+        {/* Full-viewport hero, then the working dashboard underneath. The hero
+            is the first and only thing on screen at load; everything below is
+            reached by scrolling, which is the point. */}
+        <Hero />
+        <div className="pt-12">
+          <Dashboard
+            dossiers={dossiers}
+            alerts={alerts}
+            onAskGeneral={openGeneral}
+            onAskDossier={openDossier}
+          />
+        </div>
       </div>
 
       <ChatPanel open={isOpen} mode={mode} dossierId={dossierParam} onClose={closePanel} />

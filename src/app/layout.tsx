@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { IBM_Plex_Sans, IBM_Plex_Serif, IBM_Plex_Mono } from "next/font/google";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AppShell } from "@/components/app-shell";
-import { IntroGate } from "@/components/intro-gate";
 import { LanguageProvider } from "@/lib/i18n";
 import "./globals.css";
 
@@ -37,7 +36,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${plexSans.variable} ${plexSerif.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <IntroGate />
+        {/* The intro video moved into the landing hero (components/hero.tsx).
+            It used to be a full-screen gate here; a modal you must dismiss
+            costs every visitor a beat before they see the product, and it had
+            to fail open after 2s anyway. As a hero background it needs no
+            dismissal and degrades to a poster frame. */}
         {/* LanguageProvider wraps everything so any component can translate.
             It restores the saved choice after mount rather than during render,
             which is why the server always emits lang="en" here and the client
