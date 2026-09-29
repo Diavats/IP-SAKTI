@@ -99,8 +99,12 @@ export default function PrahariPage() {
             here is a named accusation, only prior art potentially relevant to examination.
           </p>
         </div>
+        {/* "Replay", not "Run". The Journal parser is Week 2 work and does not
+            exist yet, so this animation walks through the steps a real sweep
+            performs against a fixed sample. Claiming a live sweep would be the
+            one thing on this page a judge could falsify. */}
         <Button size="sm" onClick={runSweep} disabled={sweep.kind === "prahari" && !sweepDone}>
-          <Radar className="size-4" /> Run watchlist sweep
+          <Radar className="size-4" /> Replay last sweep
         </Button>
       </div>
 
@@ -109,7 +113,12 @@ export default function PrahariPage() {
           <LivePanel state={sweep} />
           {sweepDone && (
             <p className="mt-2 text-xs text-muted-foreground">
-              Sweep complete — 3 candidates matched above threshold this week.
+              {/* Derived from the feed, not asserted. The previous copy claimed
+                  "3 candidates matched above threshold", which was a fabricated
+                  measurement and also wrong once the sample grew. */}
+              Replay complete. {alerts?.filter((a) => a.daysRemaining >= 0).length ?? 0} of{" "}
+              {alerts?.length ?? 0} applications in this sample still have an open
+              objection window.
             </p>
           )}
         </div>
