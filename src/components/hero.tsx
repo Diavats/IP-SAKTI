@@ -131,10 +131,7 @@ export function Hero() {
       {/* Scroll cue. Sits inside the hero so nothing below it is implied to be
           hidden — the point is that the hero is complete on its own. */}
       <div className="absolute inset-x-0 bottom-6 z-10 flex justify-center">
-        <ArrowDown
-          className="size-5 animate-bounce text-white/60 motion-reduce:animate-none"
-          aria-hidden
-        />
+        <ArrowDown className="animate-hero-cue size-5 text-white" aria-hidden />
       </div>
     </section>
   );

@@ -300,3 +300,29 @@
     animation: none;
   }
 }
+
+/* Scroll cue. A slow drift on ease-out-cubic, not Tailwind's `animate-bounce`:
+   bounce easing overshoots and settles, which reads as cheap on an otherwise
+   restrained page. Real objects decelerate, they do not spring. */
+@keyframes hero-cue {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translateY(7px);
+    opacity: 0.9;
+  }
+}
+
+.animate-hero-cue {
+  animation: hero-cue 2.6s cubic-bezier(0.33, 1, 0.68, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-cue {
+    animation: none;
+    opacity: 0.6;
+  }
+}
