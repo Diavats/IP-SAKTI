@@ -73,7 +73,10 @@ pair of binoculars.
 > SAMHITĀ reads the list. Every Friday. And it starts the countdown.
 >
 > Sahayak tells you what you can protect. Prahari watches what someone else is
-> trying to take.
+> trying to claim.
+
+"Claim", not "take": a s.25(1) representation accuses nobody (see Non-negotiables),
+and "claim" is the accurate patent term.
 
 ---
 

@@ -50,3 +50,6 @@ docs/Vedanova Awakening.mp4
 docs/vedanova logo.png
 
 .vercel
+
+# /brag renders (large media; the mp4 is shared directly, not versioned)
+brag-output*/
