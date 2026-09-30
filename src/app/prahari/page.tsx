@@ -16,6 +16,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { AlertStatus, PrahariAlert, UrgencyBand } from "@/lib/types";
+import { useT } from "@/lib/i18n";
 
 const statusLabel: Record<AlertStatus, string> = {
   new: "New",
@@ -60,6 +61,7 @@ const sweepSources = [
 ];
 
 export default function PrahariPage() {
+  const t = useT();
   const [alerts, setAlerts] = React.useState<PrahariAlert[] | null>(null);
   const [sweep, setSweep] = React.useState<LivePanelState>({ kind: "idle" });
   const [sweepDone, setSweepDone] = React.useState(false);
@@ -128,11 +130,11 @@ export default function PrahariPage() {
         <Table className="min-w-[720px]">
           <TableHeader>
             <TableRow>
-              <TableHead>Application</TableHead>
-              <TableHead>Matched species</TableHead>
-              <TableHead>Published</TableHead>
-              <TableHead>Days to earliest grant</TableHead>
-              <TableHead>Status</TableHead>
+              <TableHead>{t("Application")}</TableHead>
+              <TableHead>{t("Matched species")}</TableHead>
+              <TableHead>{t("Published")}</TableHead>
+              <TableHead>{t("Days to earliest grant")}</TableHead>
+              <TableHead>{t("Status")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

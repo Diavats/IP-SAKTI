@@ -28,36 +28,61 @@ export function Hero() {
     });
   }, []);
 
+  // The source is portrait (1280x1920). In a landscape hero, object-cover on a
+  // portrait file throws away most of the frame AND upscales the narrow width
+  // to fill, which is what made it look soft. So there are two encodes: a 16:9
+  // centre crop for landscape viewports, and the full portrait for phones,
+  // where portrait is the right shape anyway.
+  //
+  // Chosen in JS rather than <source media=...>, which browsers evaluate
+  // inconsistently inside <video>, so only the needed file is ever fetched.
+  const [wide, setWide] = React.useState<boolean | null>(null);
+  React.useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const sync = () => setWide(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
   React.useEffect(() => {
     // Chrome checks `muted` at attach time and React setting it as a JSX prop
     // can lose that race, so set it imperatively before asking to play. If the
     // browser still refuses, the poster frame is already visible underneath.
     const v = videoRef.current;
-    if (!v) return;
+    if (!v || wide === null) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     v.muted = true;
     v.play().catch(() => {});
-  }, []);
+  }, [wide]);
+
+  const videoSrc = wide ? "/video/awakening-wide.mp4" : "/video/awakening.mp4";
+  const posterSrc = wide ? "/video/poster-wide.jpg" : "/video/poster.jpg";
 
   return (
     <section className="relative -mx-4 flex min-h-[100svh] flex-col justify-center overflow-hidden md:-mx-8">
       {/* Background layer */}
-      <video
-        ref={videoRef}
-        src="/video/awakening.mp4"
-        poster="/video/poster.jpg"
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        aria-hidden
-        className="absolute inset-0 size-full object-cover motion-reduce:hidden"
-      />
+      {/* Rendered only once the breakpoint is known, so a phone never downloads
+          the 16:9 file and a desktop never downloads the portrait one. */}
+      {wide !== null && (
+        <video
+          key={videoSrc}
+          ref={videoRef}
+          src={videoSrc}
+          poster={posterSrc}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden
+          className="absolute inset-0 size-full object-cover motion-reduce:hidden"
+        />
+      )}
       {/* Poster stands in when motion is reduced, so the composition survives. */}
       <div
         aria-hidden
         className="absolute inset-0 hidden bg-cover bg-center motion-reduce:block"
-        style={{ backgroundImage: "url(/video/poster.jpg)" }}
+        style={{ backgroundImage: `url(${posterSrc})` }}
       />
 
       {/* Scrim. Two stops rather than a flat wash: the top stays legible for

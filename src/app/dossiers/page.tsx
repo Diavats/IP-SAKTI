@@ -17,6 +17,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { FormulationDossier } from "@/lib/types";
+import { useT } from "@/lib/i18n";
 
 function openCount(dossierId: string) {
   const verdicts = ipVerdictsByDossier[dossierId] ?? [];
@@ -24,6 +25,7 @@ function openCount(dossierId: string) {
 }
 
 export default function DossiersPage() {
+  const t = useT();
   const [dossiers, setDossiers] = React.useState<FormulationDossier[] | null>(null);
 
   React.useEffect(() => {
@@ -56,12 +58,12 @@ export default function DossiersPage() {
         <Table className="min-w-[760px]">
           <TableHeader>
             <TableRow>
-              <TableHead>Dossier</TableHead>
-              <TableHead>Dravya</TableHead>
-              <TableHead>Classification</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Open regimes</TableHead>
-              <TableHead>Jurisdiction</TableHead>
+              <TableHead>{t("Dossier")}</TableHead>
+              <TableHead>{t("Dravya")}</TableHead>
+              <TableHead>{t("Classification")}</TableHead>
+              <TableHead>{t("Status")}</TableHead>
+              <TableHead>{t("Open regimes")}</TableHead>
+              <TableHead>{t("Jurisdiction")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
