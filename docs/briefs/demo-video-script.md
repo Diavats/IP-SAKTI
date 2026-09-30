@@ -1,170 +1,227 @@
-# Demo Video Script — SAMHITĀ
+# SAMHITĀ — Motion Graphics Script
 
-**Runtime: 2:40.** Timings below add to 160 seconds with a little slack.
-**Record at 1600×900**, so stills drop straight into 16:9 slides.
-**Live URL:** https://samhita-indol.vercel.app
+**Runtime 2:40 (160s). VO ≈ 370 words at ~140 wpm.**
+Format: motion graphics, not a screen recording. Product shots appear as
+composited frames inside the animation, not as a cursor tour.
 
-Before recording: open in a **private window** so the intro plays (it runs once
-per session), browser at 100% zoom, no bookmarks bar, no extensions visible.
+Three columns per beat: **VISUAL** (what the animation does) · **ON-SCREEN**
+(kinetic type, sparse) · **VO** (what is spoken).
 
----
-
-## The one thing this has to achieve
-
-A judge should finish it able to say: **"they're the ones who catch bad patents
-during the objection window."**
-
-Not "an AI assistant for Ayurveda IP." Fifteen other teams are that. Every
-second below exists to land the window.
+Live build: https://samhita-indol.vercel.app
 
 ---
 
-## 0:00–0:22 · Over the intro video
+# 1 · HOOK — 0:00–0:15
 
-The brand video is your title sequence. Do not skip it, narrate across it. It
-ends on its own and the app irises in behind.
+**VISUAL**
+Black. A single line of a government journal page types itself on, monospace,
+one record. Then a second. Then twenty, cascading fast until the screen is a
+wall of application numbers. Everything drains away except one highlighted row.
 
-> India has fought these patents before, and paid for the timing.
+**ON-SCREEN**
+`FRIDAY.` → `EVERY FRIDAY.` → then the lone record, pulsing.
+
+**VO**
+> Every Friday, India publishes a list of new patent applications.
 >
-> Turmeric fell in about a year, for roughly ten thousand dollars, because CSIR
-> already had thirty-two prior-art references documented and ready to file.
+> Some of them claim knowledge this country has held for a thousand years.
 >
-> Neem took ten years. Nineteen ninety-five to March two thousand five. Same
-> country, same prior art. The difference was that neem was fought *after* the
-> patent was granted.
-
-Never say biopiracy, misappropriation, stolen or theft. Not once, not in
-passing. It is a liability question, not a style one.
+> There is a six-month window to object. Almost nobody is reading the list.
 
 ---
 
-## 0:22–0:38 · The window
+# 2 · PROBLEM — 0:15–0:35
 
-**On screen:** the landing page, video looping behind the hero. Let the red
-"windows closing within 30 days" pill be visible.
+**VISUAL**
+Split screen. Left: a calendar burning through twelve months, a small ₹ counter
+ticking gently. Right: the same calendar burning through **ten years**, the
+counter spiralling. Both land on a gavel.
 
-> An Indian application publishes at eighteen months under Section 11A. Rule
-> 55(1A) then bars any grant for six months. Inside that window, Section 25(1)
-> lets any person object, on Form 7A.
+**ON-SCREEN**
+Left `TURMERIC · ~1 YEAR · ~$10,000`
+Right `NEEM · 1995 → 2005`
+Then, centred: `SAME PRIOR ART. DIFFERENT TIMING.`
+
+**VO**
+> India has fought these before. Turmeric fell in about a year, for roughly ten
+> thousand dollars, because the prior art was already documented and ready to
+> file.
 >
-> Before grant, stopping a bad patent costs a form. After grant it costs a
-> lawsuit. That six-month gap is the entire product.
-
----
-
-## 0:38–1:32 · Prahari — give this the most time
-
-**On screen:** click through to `/prahari`. Hit **Replay last sweep**, let the
-steps run.
-
-> Prahari reads the Patent Office Journal, filtered to IPC A61K36. It runs on a
-> schedule. Nobody asks it to.
-
-**On screen:** the alert list. Pause on the top row.
-
-> These are ranked by how soon the window shuts, not by how good the match is,
-> because a closing window outranks a marginally better match. Lapsed ones sink
-> to the bottom — there is nothing left to file.
-
-**On screen:** point at the countdown on the top alert.
-
-> **This number is computed, not stored.** Publication date plus six months
-> under Rule 55(1A), measured against today. Open this tomorrow and it reads one
-> day less.
-
-**Say that line exactly. It is the most defensible sentence in the video.**
-
-**On screen:** open an alert, scroll to the drafted Form 7A.
-
-> And it drafts the representation, with the Formulary passages cited. A human
-> reviews it. Nothing is ever filed automatically.
-
----
-
-## 1:32–2:06 · Sahayak — what to do Monday
-
-**On screen:** a dossier, then the protection map.
-
-> The other half answers the question an MSME actually has. Not "is this
-> patentable" but "what do I do".
-
-**On screen:** the seven regimes, then the filing order.
-
-> Patent is barred here under Section 3(p), with the section cited. Six other
-> regimes are open, and the order matters. Trade secret costs nothing and closes
-> by itself the moment you disclose. The trademark has months of pendency, so
-> that clock starts now.
+> Neem took ten years. Same country. Same evidence. The difference was that neem
+> was fought *after* the patent was granted.
 >
-> Every line carries the provision it rests on. Where the system is not
-> confident, it abstains and routes to a human rather than guessing.
+> Before grant, you file a form. After grant, you file a lawsuit.
 
 ---
 
-## 2:06–2:20 · Language
+# 3 · THE TURN — 0:35–0:50
 
-**On screen:** the language control, top right. Switch to हिन्दी. Let the
-sidebar and table headers change. **Then point at a citation that did not.**
+**VISUAL**
+A clean horizontal timeline draws itself left to right. Three markers land with
+weight: **Publication**, a shaded six-month band, **Earliest grant**. The band
+glows. A counter inside it starts ticking *down*.
 
-> The interface speaks four languages. The statutes do not move.
+**ON-SCREEN**
+`s.11A — publishes` · `s.25(1) — any person may object` · `Rule 55(1A) — no
+grant for six months`
+
+**VO**
+> That gap has a name in law. An application publishes under Section 11A. Rule
+> 55(1A) blocks any grant for six months. Inside it, Section 25(1) lets *any
+> person* object.
 >
-> We translate the question and the answer. We never translate the citation,
-> because a translated statute is not the statute.
-
-That contrast — chrome changes, section numbers don't — is the whole point.
-Make sure a citation is on screen when you say it.
+> It is the cheapest moment in the entire system. And it is invisible unless
+> someone is counting.
 
 ---
 
-## 2:20–2:40 · Honesty, and close
+# 4 · SOLUTION — 0:50–1:05
 
-**On screen:** `/evals`.
+**VISUAL**
+The SAMHITĀ mark resolves out of the timeline's six-month band — the band
+literally becomes the logo. Two agent glyphs split from it: a leaf, and a pair
+of binoculars.
 
-> We report on the four axes the problem statement names. The multilingual card
-> says "not yet measured", because it is not measured yet.
+**ON-SCREEN**
+`SAMHITĀ · संहिता`
+`One knowledge graph. Two agents.`
 
-**Hold that card on screen for a full beat.** Do not rush past it.
-
-> We would rather show you what we have not measured than a number we cannot
-> defend.
-
-**On screen:** back to the Prahari countdown for the final shot.
-
-> Fifteen teams are building an assistant for this problem statement. The
-> deadline is the part nobody else is computing.
-
----
-
-## Do not show
-
-| Skip | Why |
-|---|---|
-| The knowledge graph page | Every team's node-link picture looks identical. Twenty seconds, nothing gained. |
-| Settings | Nobody cares. |
-| A tour of every route | A tour is not a demo. Four moments, done well. |
-| Any accuracy percentage | Not measured. Saying one undoes the `/evals` segment entirely. |
-| The sidebar collapse, the glass buttons, the gradient | Polish reads on camera by itself. Narrating it wastes seconds that belong to the window. |
+**VO**
+> SAMHITĀ reads the list. Every Friday. And it starts the countdown.
+>
+> Two agents on one knowledge graph. Sahayak tells you what you can protect.
+> Prahari watches what someone else is trying to take.
 
 ---
 
-## Honesty guardrails, non-negotiable
+# 5 · DEMO · PRAHARI — 1:05–1:40
 
-Say **"a representative sample in Journal format"** if you refer to where the
-alerts come from. The Journal parser is Week 2 work and does not exist. The
-window arithmetic on top of those records is genuinely real and unit-tested, and
-that distinction is exactly what makes the claim survive a follow-up question.
+Give this the most room. It is the only thing in the video no other team can
+show.
 
-Never say the system "monitors patents globally" or "searches TKDL". TKDL is
-closed under agreement to seventeen patent offices and nobody has access without
-one. Competing repos claim this. It is checkable.
+**VISUAL**
+Journal page → funnel labelled `IPC A61K36` → a handful of records fall
+through. Each card assembles: application number, species, and a **live
+countdown** that visibly decrements. Cards self-sort, most urgent rising.
+One card flips over into a filled Form 7A.
+
+**ON-SCREEN**
+`6 days` (red) · `23 days` (red) · `46 days` (amber) · `152 days` (green)
+then `DRAFT — HUMAN REVIEW REQUIRED`
+
+**VO**
+> Prahari sweeps the Patent Office Journal, filtered to the classification that
+> covers plant-based medicine.
+>
+> Every match gets a deadline. Not a risk score — a date. Publication plus six
+> months, measured against today. Open it tomorrow and every number is one lower.
+>
+> They sort by which door shuts first, because a closing window beats a slightly
+> better match.
+>
+> Then it drafts the objection, with the sources cited. A human signs it.
+> Nothing files itself.
 
 ---
 
-## Recording checklist
+# 6 · DEMO · SAHAYAK — 1:40–2:05
 
-- [ ] Private window, so the intro plays
-- [ ] 1600×900, 100% zoom, no bookmarks bar, no extensions
-- [ ] Load `/prahari` once beforehand so data is warm
-- [ ] Read the script aloud twice; if a sentence trips you, cut it
-- [ ] Record per segment and stitch, rather than one continuous take
-- [ ] Watch it once on mute. If the screen alone does not tell the story,
-      re-record rather than narrating harder
+**VISUAL**
+A formulation card drops in. Seven regime tiles fan out around it. Six turn
+emerald. One turns red and stamps `s.3(p)`. The six then **reorder themselves
+into a numbered queue**, each gaining a cost and a clock.
+
+**ON-SCREEN**
+`PATENT — BARRED s.3(p)`
+`1. Trade secret — today — ₹0`
+`2. Trademark — this week`
+`3. Design · GI · Copyright · Plant variety`
+
+**VO**
+> Sahayak answers the question a small manufacturer actually has. Not "is this
+> patentable" — "what do I do on Monday".
+>
+> Patent is barred here, and it names the section that bars it. Six other routes
+> are open, and the order is the advice: your trade secret costs nothing and
+> dies the moment you disclose. Your trademark has months of pendency, so that
+> clock starts now.
+
+---
+
+# 7 · PROOF — 2:05–2:25
+
+**VISUAL**
+Language toggle flips: sidebar labels morph through हिन्दी, മലയാളം, தமிழ் — while
+a citation chip in frame stays **completely still**. Hard cut to the evals
+board, where one card is deliberately greyed.
+
+**ON-SCREEN**
+`THE INTERFACE TRANSLATES.` / `THE STATUTE DOES NOT.`
+then `MULTILINGUAL — NOT YET MEASURED`
+
+**VO**
+> Four languages. But the citations never move — a translated statute is not the
+> statute.
+>
+> And we publish what we have not measured yet, in the same place we publish
+> what we have. You can check every number on this page. That is the point.
+
+---
+
+# 8 · WRAP + CTA — 2:25–2:40
+
+**VISUAL**
+Pull back to the timeline from beat 3, now populated with live counting cards.
+Everything else falls away. The countdown keeps running under the end card.
+
+**ON-SCREEN**
+`SAMHITĀ · संहिता`
+`samhita-indol.vercel.app`
+`SIH 2026 · PS 26045 · Ministry of AYUSH`
+
+**VO**
+> A patent office publishes a list every Friday. The window to answer it is six
+> months, and it has already started.
+>
+> SAMHITĀ is counting. Come and look.
+
+---
+
+# Non-negotiables
+
+**Banned words.** biopiracy · misappropriation · stolen · theft. Zero
+occurrences, including in on-screen text and file names. A Section 25(1)
+representation submits prior art; it accuses nobody. This is legal exposure,
+not tone.
+
+**No invented metrics.** Nothing claims an accuracy, precision or quality
+figure. Every number spoken is external and checkable: turmeric's cost and
+duration, neem's dates, the statutory periods. The greyed evals card is
+deliberate — do not "fix" it in the edit.
+
+**Sample, not sweep.** If the alert records are described at all, they are a
+representative sample in Journal format. The parser is future work. The window
+arithmetic on top of them is real and unit-tested, and keeping that line clean
+is what lets the claim survive a follow-up question.
+
+**No TKDL claim.** Never imply the system searches it. It is closed under
+agreement to seventeen patent offices. Other teams claim this; it is checkable.
+
+**One instance of the shader button** in any product shot (§9).
+
+---
+
+# Shot list for composited product frames
+
+Capture at **1600×900**, 100% zoom, private window. These are the only real UI
+frames the animation needs:
+
+1. Landing hero with the red "windows closing" pill visible
+2. Prahari list, sorted, showing 6d / 23d / 46d / 152d
+3. One alert open at the drafted Form 7A
+4. A dossier's seven-regime map with the patent tile barred
+5. Language switcher open, with a citation chip in the same frame
+6. `/evals` with the greyed multilingual card
+
+Shot 5 matters most: the animation is built on the contrast between chrome that
+changes and a citation that does not. Both must be in one frame.
