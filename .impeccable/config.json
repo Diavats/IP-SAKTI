@@ -20,6 +20,24 @@
         ],
         "createdAt": "2026-09-30T05:36:10.422Z",
         "reason": "Claude triage: video composition, not app UI. Scene/frame cropping is required (hyperframes-core minimal skeleton sets #root overflow:hidden) and the journal rows scroll inside the page by design; no tooltips, menus or popovers exist to be clipped."
+      },
+      {
+        "rule": "wide-tracking",
+        "value": "*",
+        "files": [
+          "brag-output/tools/index.src.html"
+        ],
+        "createdAt": "2026-09-30T08:48:01.274Z",
+        "reason": "Claude triage: motion-graphics video composition, not reading UI. Flagged runs are 3-6 word kinetic captions, timeline labels, the Form 7A title as printed, and a one-line end-card credit, each on screen for seconds at display size - the short-uppercase-label case the rule itself permits. Video already rendered and approved."
+      },
+      {
+        "rule": "all-caps-body",
+        "value": "*",
+        "files": [
+          "brag-output/tools/index.src.html"
+        ],
+        "createdAt": "2026-09-30T08:48:01.995Z",
+        "reason": "Claude triage: motion-graphics video composition, not reading UI. Flagged runs are 3-6 word kinetic captions, timeline labels, the Form 7A title as printed, and a one-line end-card credit, each on screen for seconds at display size - the short-uppercase-label case the rule itself permits. Video already rendered and approved."
       }
     ]
   }
