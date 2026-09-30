@@ -1,86 +1,69 @@
 # SAMHITĀ — Motion Graphics Script
 
-**Runtime 2:40 (160s). VO ≈ 370 words at ~140 wpm.**
-Format: motion graphics, not a screen recording. Product shots appear as
-composited frames inside the animation, not as a cursor tour.
+**Runtime 2:35 (155s). VO ≈ 355 words at ~140 wpm.**
+**Product on screen at 0:28.** The problem statement already exists and the
+judges wrote it — the setup earns attention, it does not explain the sector.
 
-Three columns per beat: **VISUAL** (what the animation does) · **ON-SCREEN**
-(kinetic type, sparse) · **VO** (what is spoken).
+Format: motion graphics. Product shots are composited frames inside the
+animation, never a cursor tour.
+
+Three columns per beat: **VISUAL** · **ON-SCREEN** (sparse kinetic type) · **VO**.
 
 Live build: https://samhita-indol.vercel.app
 
 ---
 
-# 1 · HOOK — 0:00–0:15
+# 1 · HOOK — 0:00–0:12
 
 **VISUAL**
-Black. A single line of a government journal page types itself on, monospace,
-one record. Then a second. Then twenty, cascading fast until the screen is a
-wall of application numbers. Everything drains away except one highlighted row.
+Black. One line of a patent journal types on in monospace. Then another. Then
+twenty, cascading until the frame is a wall of application numbers. All of it
+drains except a single highlighted row, pulsing.
 
 **ON-SCREEN**
-`FRIDAY.` → `EVERY FRIDAY.` → then the lone record, pulsing.
+`EVERY FRIDAY.` → then the lone record.
 
 **VO**
 > Every Friday, India publishes a list of new patent applications.
 >
 > Some of them claim knowledge this country has held for a thousand years.
->
-> There is a six-month window to object. Almost nobody is reading the list.
+> Almost nobody is reading the list.
 
 ---
 
-# 2 · PROBLEM — 0:15–0:35
+# 2 · THE STAKES — 0:12–0:28
+
+Problem and mechanism in one beat. The comparison does the persuading; the
+timeline does the explaining.
 
 **VISUAL**
-Split screen. Left: a calendar burning through twelve months, a small ₹ counter
-ticking gently. Right: the same calendar burning through **ten years**, the
-counter spiralling. Both land on a gavel.
+Two calendars burn in parallel — one through twelve months, one through ten
+years — and collide on a gavel. Hard cut: a timeline draws itself, three
+markers landing with weight. **Publication**, a shaded six-month band,
+**Earliest grant**. A counter inside the band starts ticking down.
 
 **ON-SCREEN**
-Left `TURMERIC · ~1 YEAR · ~$10,000`
-Right `NEEM · 1995 → 2005`
-Then, centred: `SAME PRIOR ART. DIFFERENT TIMING.`
+`TURMERIC · ~1 YEAR` | `NEEM · 1995 → 2005`
+then `s.11A publishes` · `Rule 55(1A) — no grant for six months` ·
+`s.25(1) — any person may object`
 
 **VO**
-> India has fought these before. Turmeric fell in about a year, for roughly ten
-> thousand dollars, because the prior art was already documented and ready to
-> file.
->
-> Neem took ten years. Same country. Same evidence. The difference was that neem
-> was fought *after* the patent was granted.
+> India has fought these before. Turmeric fell in about a year. Neem took ten —
+> same evidence, but neem was fought after the patent was granted.
 >
 > Before grant, you file a form. After grant, you file a lawsuit.
-
----
-
-# 3 · THE TURN — 0:35–0:50
-
-**VISUAL**
-A clean horizontal timeline draws itself left to right. Three markers land with
-weight: **Publication**, a shaded six-month band, **Earliest grant**. The band
-glows. A counter inside it starts ticking *down*.
-
-**ON-SCREEN**
-`s.11A — publishes` · `s.25(1) — any person may object` · `Rule 55(1A) — no
-grant for six months`
-
-**VO**
-> That gap has a name in law. An application publishes under Section 11A. Rule
-> 55(1A) blocks any grant for six months. Inside it, Section 25(1) lets *any
-> person* object.
 >
-> It is the cheapest moment in the entire system. And it is invisible unless
-> someone is counting.
+> The law leaves exactly one cheap moment: six months from publication, when any
+> person can object. It is invisible unless someone is counting.
 
 ---
 
-# 4 · SOLUTION — 0:50–1:05
+# 3 · SOLUTION — 0:28–0:38
 
 **VISUAL**
-The SAMHITĀ mark resolves out of the timeline's six-month band — the band
-literally becomes the logo. Two agent glyphs split from it: a leaf, and a pair
-of binoculars.
+The six-month band on the timeline contracts and resolves into the SAMHITĀ
+mark — the window literally becomes the logo. Two glyphs split out: a leaf, a
+pair of binoculars.
 
 **ON-SCREEN**
 `SAMHITĀ · संहिता`
@@ -89,21 +72,20 @@ of binoculars.
 **VO**
 > SAMHITĀ reads the list. Every Friday. And it starts the countdown.
 >
-> Two agents on one knowledge graph. Sahayak tells you what you can protect.
-> Prahari watches what someone else is trying to take.
+> Sahayak tells you what you can protect. Prahari watches what someone else is
+> trying to take.
 
 ---
 
-# 5 · DEMO · PRAHARI — 1:05–1:40
+# 4 · DEMO · PRAHARI — 0:38–1:25
 
-Give this the most room. It is the only thing in the video no other team can
-show.
+The largest block. It is the only thing here a competing team cannot reproduce.
 
 **VISUAL**
-Journal page → funnel labelled `IPC A61K36` → a handful of records fall
-through. Each card assembles: application number, species, and a **live
-countdown** that visibly decrements. Cards self-sort, most urgent rising.
-One card flips over into a filled Form 7A.
+Journal page → funnel labelled `IPC A61K36` → records drop through. Each card
+assembles: application number, species, and a countdown that visibly
+decrements. Cards self-sort, most urgent rising to the top. One card flips into
+a filled Form 7A.
 
 **ON-SCREEN**
 `6 days` (red) · `23 days` (red) · `46 days` (amber) · `152 days` (green)
@@ -119,17 +101,17 @@ then `DRAFT — HUMAN REVIEW REQUIRED`
 > They sort by which door shuts first, because a closing window beats a slightly
 > better match.
 >
-> Then it drafts the objection, with the sources cited. A human signs it.
-> Nothing files itself.
+> Then it drafts the objection, with the sources cited. A human signs it. Nothing
+> files itself.
 
 ---
 
-# 6 · DEMO · SAHAYAK — 1:40–2:05
+# 5 · DEMO · SAHAYAK — 1:25–1:55
 
 **VISUAL**
-A formulation card drops in. Seven regime tiles fan out around it. Six turn
-emerald. One turns red and stamps `s.3(p)`. The six then **reorder themselves
-into a numbered queue**, each gaining a cost and a clock.
+A formulation card drops in. Seven regime tiles fan out. Six turn emerald, one
+turns red and stamps `s.3(p)`. The six then reorder into a numbered queue, each
+gaining a cost and a clock.
 
 **ON-SCREEN**
 `PATENT — BARRED s.3(p)`
@@ -142,37 +124,37 @@ into a numbered queue**, each gaining a cost and a clock.
 > patentable" — "what do I do on Monday".
 >
 > Patent is barred here, and it names the section that bars it. Six other routes
-> are open, and the order is the advice: your trade secret costs nothing and
-> dies the moment you disclose. Your trademark has months of pendency, so that
-> clock starts now.
+> are open, and the order *is* the advice: a trade secret costs nothing and dies
+> the moment you disclose; a trademark has months of pendency, so that clock
+> starts now.
 
 ---
 
-# 7 · PROOF — 2:05–2:25
+# 6 · PROOF — 1:55–2:17
 
 **VISUAL**
-Language toggle flips: sidebar labels morph through हिन्दी, മലയാളം, தமிழ் — while
-a citation chip in frame stays **completely still**. Hard cut to the evals
-board, where one card is deliberately greyed.
+Language toggle flips: sidebar labels morph through हिन्दी, മലയാളം, தமிழ் while a
+citation chip in the same frame stays completely still. Hard cut to the evals
+board, one card deliberately greyed.
 
 **ON-SCREEN**
 `THE INTERFACE TRANSLATES.` / `THE STATUTE DOES NOT.`
 then `MULTILINGUAL — NOT YET MEASURED`
 
 **VO**
-> Four languages. But the citations never move — a translated statute is not the
+> Four languages. The citations never move — a translated statute is not the
 > statute.
 >
-> And we publish what we have not measured yet, in the same place we publish
-> what we have. You can check every number on this page. That is the point.
+> And we publish what we have not measured yet, in the same place we publish what
+> we have. Every number on that page can be checked. That is the point.
 
 ---
 
-# 8 · WRAP + CTA — 2:25–2:40
+# 7 · WRAP + CTA — 2:17–2:35
 
 **VISUAL**
-Pull back to the timeline from beat 3, now populated with live counting cards.
-Everything else falls away. The countdown keeps running under the end card.
+Pull back to the beat-2 timeline, now populated with live counting cards.
+Everything falls away except the countdown, still running under the end card.
 
 **ON-SCREEN**
 `SAMHITĀ · संहिता`
@@ -190,38 +172,36 @@ Everything else falls away. The countdown keeps running under the end card.
 # Non-negotiables
 
 **Banned words.** biopiracy · misappropriation · stolen · theft. Zero
-occurrences, including in on-screen text and file names. A Section 25(1)
-representation submits prior art; it accuses nobody. This is legal exposure,
-not tone.
+occurrences, including on-screen text and file names. A Section 25(1)
+representation submits prior art; it accuses nobody. Legal exposure, not tone.
 
 **No invented metrics.** Nothing claims an accuracy, precision or quality
-figure. Every number spoken is external and checkable: turmeric's cost and
-duration, neem's dates, the statutory periods. The greyed evals card is
-deliberate — do not "fix" it in the edit.
+figure. Every number spoken is external and checkable: turmeric and neem,
+the statutory periods. The greyed evals card is deliberate — do not "fix" it
+in the edit.
 
-**Sample, not sweep.** If the alert records are described at all, they are a
-representative sample in Journal format. The parser is future work. The window
-arithmetic on top of them is real and unit-tested, and keeping that line clean
-is what lets the claim survive a follow-up question.
+**Sample, not sweep.** If the alert records are described, they are a
+representative sample in Journal format. The parser is future work; the window
+arithmetic on top of it is real and unit-tested. Keeping that line clean is what
+lets the claim survive a follow-up.
 
 **No TKDL claim.** Never imply the system searches it. It is closed under
 agreement to seventeen patent offices. Other teams claim this; it is checkable.
 
-**One instance of the shader button** in any product shot (§9).
+**One shader button** per product frame (§9).
 
 ---
 
-# Shot list for composited product frames
+# Shot list — composited product frames
 
-Capture at **1600×900**, 100% zoom, private window. These are the only real UI
-frames the animation needs:
+Capture at **1600×900**, 100% zoom, private window.
 
-1. Landing hero with the red "windows closing" pill visible
-2. Prahari list, sorted, showing 6d / 23d / 46d / 152d
+1. Landing hero, red "windows closing" pill visible
+2. Prahari list sorted, showing 6d / 23d / 46d / 152d
 3. One alert open at the drafted Form 7A
-4. A dossier's seven-regime map with the patent tile barred
-5. Language switcher open, with a citation chip in the same frame
+4. A dossier's seven-regime map, patent tile barred
+5. Language switcher open **with a citation chip in the same frame**
 6. `/evals` with the greyed multilingual card
 
-Shot 5 matters most: the animation is built on the contrast between chrome that
-changes and a citation that does not. Both must be in one frame.
+Shot 5 carries beat 6 entirely. The contrast only works if the changing chrome
+and the unchanged citation are in one frame — two cuts will not sell it.
