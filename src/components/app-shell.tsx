@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu } from "lucide-react";
+import { Menu, PanelLeftClose } from "lucide-react";
 import { navItems, settingsItem } from "@/components/nav-config";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -16,12 +16,17 @@ import { cn } from "@/lib/utils";
 const ITEM_HEIGHT = 36;
 const ITEM_GAP = 2;
 
-function Wordmark() {
+function Wordmark({ collapsed = false }: { collapsed?: boolean }) {
   return (
-    <div className="flex items-center gap-2.5 px-5 py-5">
+    <div
+      className={cn(
+        "flex items-center gap-2.5 py-5",
+        collapsed ? "justify-center px-2" : "px-5",
+      )}
+    >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="/images/logo-mono.png" alt="" className="size-8 shrink-0 object-contain" />
-      <div className="flex flex-col gap-0.5">
+      <div className={cn("flex flex-col gap-0.5", collapsed && "hidden")}>
         <span className="font-heading text-lg font-semibold tracking-tight text-sidebar-foreground">
           SAMHITĀ <span className="text-sidebar-foreground/70">संहिता</span>
         </span>
@@ -34,9 +39,11 @@ function Wordmark() {
 function NavList({
   onNavigate,
   urgentPrahariCount,
+  collapsed = false,
 }: {
   onNavigate?: () => void;
   urgentPrahariCount: number | null;
+  collapsed?: boolean;
 }) {
   const pathname = usePathname();
   const t = useT();
@@ -69,7 +76,8 @@ function NavList({
               onClick={onNavigate}
               style={{ height: ITEM_HEIGHT }}
               className={cn(
-                "relative z-10 flex items-center gap-2.5 rounded-sm px-3 text-sm transition-colors",
+                "relative z-10 flex items-center gap-2.5 rounded-sm text-sm transition-colors",
+                collapsed ? "justify-center px-0" : "px-3",
                 active
                   ? "text-sidebar-primary-foreground"
                   : "text-sidebar-foreground hover:bg-sidebar-accent"
@@ -79,7 +87,7 @@ function NavList({
               {/* Nav labels translate. "Prahari" and "Sahayak" do not — they are
                   product names, fixed by the brand commitments, and are passed
                   through `t()` unchanged because no dictionary key exists. */}
-              <span className="flex-1">{t(item.label)}</span>
+              <span className={cn("flex-1", collapsed && "sr-only")}>{t(item.label)}</span>
               {showBadge && (
                 <Badge
                   variant="destructive"
@@ -99,14 +107,15 @@ function NavList({
           onClick={onNavigate}
           style={{ height: ITEM_HEIGHT }}
           className={cn(
-            "flex items-center gap-2.5 rounded-sm px-3 text-sm transition-colors",
+            "flex items-center gap-2.5 rounded-sm text-sm transition-colors",
+            collapsed ? "justify-center px-0" : "px-3",
             settingsActive
               ? "bg-sidebar-primary text-sidebar-primary-foreground"
               : "text-sidebar-foreground hover:bg-sidebar-accent"
           )}
         >
           <settingsItem.icon className="size-4 shrink-0" strokeWidth={1.75} />
-          {t(settingsItem.label)}
+          <span className={cn(collapsed && "sr-only")}>{t(settingsItem.label)}</span>
         </Link>
       </div>
     </nav>
@@ -114,6 +123,29 @@ function NavList({
 }
 
 export function AppShell({ children }: { children: React.ReactNode }) {
+  // Sidebar collapse. Persisted because a visitor who collapses it once means
+  // it for the session, not for one route.
+  const [collapsed, setCollapsed] = React.useState(false);
+  React.useEffect(() => {
+    try {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- client-only: localStorage is unreadable during SSR and in a lazy initializer.
+      setCollapsed(localStorage.getItem("samhita.nav.collapsed") === "1");
+    } catch {
+      // Storage blocked; expanded is a fine default.
+    }
+  }, []);
+  const toggleCollapsed = React.useCallback(() => {
+    setCollapsed((c) => {
+      const next = !c;
+      try {
+        localStorage.setItem("samhita.nav.collapsed", next ? "1" : "0");
+      } catch {
+        // Non-fatal: the choice just will not survive a reload.
+      }
+      return next;
+    });
+  }, []);
+
   const [open, setOpen] = React.useState(false);
   const [urgentPrahariCount, setUrgentPrahariCount] = React.useState<number | null>(null);
 
@@ -125,9 +157,28 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex min-h-screen w-full">
-      <aside className="hidden w-64 shrink-0 flex-col border-r border-sidebar-border bg-sidebar md:flex">
-        <Wordmark />
-        <NavList urgentPrahariCount={urgentPrahariCount} />
+      <aside
+        className={cn(
+          "hidden shrink-0 flex-col border-r border-sidebar-border bg-sidebar transition-[width] duration-300 ease-out motion-reduce:transition-none md:flex",
+          collapsed ? "w-16" : "w-64",
+        )}
+      >
+        <Wordmark collapsed={collapsed} />
+        <NavList urgentPrahariCount={urgentPrahariCount} collapsed={collapsed} />
+        <button
+          type="button"
+          onClick={toggleCollapsed}
+          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          aria-expanded={!collapsed}
+          className="m-2 flex h-9 items-center justify-center gap-2 rounded-sm text-sidebar-foreground/80 transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring"
+        >
+          <PanelLeftClose
+            className={cn("size-4 shrink-0 transition-transform duration-300", collapsed && "rotate-180")}
+            strokeWidth={1.75}
+            aria-hidden
+          />
+          <span className={cn("text-xs", collapsed && "sr-only")}>Collapse</span>
+        </button>
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">

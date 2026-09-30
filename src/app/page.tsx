@@ -13,6 +13,7 @@ import { ChatPanel, type ChatMode } from "@/components/ask/chat-panel";
 import { DitherGradient } from "@/components/dither-gradient";
 import { GraphBackdrop } from "@/components/graph-backdrop";
 import { Hero } from "@/components/hero";
+import { IntroOverlay, introAlreadySeen } from "@/components/intro-overlay";
 import { RingStat } from "@/components/ring-stat";
 import { MortarPestleIcon } from "@/components/mortar-pestle-icon";
 import { cn } from "@/lib/utils";
@@ -48,7 +49,7 @@ function PageBackdrop() {
       {/* Starts below the fold so the hero and the top of the dashboard keep
           the clean white the de-tinted neutrals bought, then the lower half
           gains a surface. */}
-      <DitherGradient from={52} />
+      <DitherGradient from={38} intensity={1.9} />
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/images/logo.png"
@@ -93,6 +94,15 @@ function HomeRoute() {
     router.push(`/?d=${id}`, { scroll: false });
   }
 
+  // Phase 1 owns the screen; phase 2 (this page, with the video looping behind
+  // the top of it) is already mounted underneath, so dismissing the overlay is
+  // instant rather than a second load.
+  const [introDone, setIntroDone] = React.useState(true);
+  React.useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- client-only gate: depends on sessionStorage and a media query, neither readable during SSR or in a lazy initializer.
+    setIntroDone(introAlreadySeen());
+  }, []);
+
   function closePanel() {
     if (openedByUsRef.current) {
       openedByUsRef.current = false;
@@ -105,6 +115,7 @@ function HomeRoute() {
   return (
     <div className="relative flex flex-1 flex-col gap-8">
       <PageBackdrop />
+      {!introDone && <IntroOverlay onDone={() => setIntroDone(true)} />}
 
       <div
         aria-hidden={isOpen || undefined}
@@ -118,7 +129,7 @@ function HomeRoute() {
             is the first and only thing on screen at load; everything below is
             reached by scrolling, which is the point. */}
         <Hero />
-        <div className="pt-12">
+        <div className="pt-10">
           <Dashboard
             dossiers={dossiers}
             alerts={alerts}
