@@ -67,26 +67,58 @@ export function IntroOverlay({ onDone }: { onDone: () => void }) {
 
   return (
     <div className="fixed inset-0 z-[100] bg-brand" role="dialog" aria-label="Introduction">
-      {/* FULL portrait source with object-CONTAIN, not the 16:9 crop with
-          object-cover.
-          The master is 1280x1920 and awakening-wide.mp4 is its centre band
-          (crop=1280:720:0:600), which throws away the top and bottom 600px —
-          precisely where the hand and the VedaNova mark are. Cover would crop
-          again on top of that. Contain guarantees the entire frame is on
-          screen, letterboxed against the brand colour, which is the whole
-          point of an intro: nothing of it is hidden and nothing needs
-          scrolling to reach. */}
+      {/* The letterbox. object-contain on a taller-than-wide source always
+          leaves bars; rather than flat brand green they carry the same dotted
+          gradient the page uses, so the intro reads as part of the product
+          instead of a video dropped on a colour field. Static CSS layers, no
+          canvas — §9 is explicit about not adding another running canvas. */}
+      <div className="absolute inset-0" aria-hidden>
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(120% 80% at 50% 40%, #14523c 0%, #0f3d2e 55%, #0a2a20 100%)",
+          }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            opacity: 0.5,
+            backgroundImage:
+              "radial-gradient(circle at 1px 1px, rgba(16,121,79,0.55) 1px, transparent 0)",
+            backgroundSize: "4px 4px",
+          }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            opacity: 0.32,
+            backgroundImage:
+              "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.35) 1px, transparent 0)",
+            backgroundSize: "9px 9px",
+            backgroundPosition: "2px 3px",
+          }}
+        />
+      </div>
+
+      {/* Cropped to 1280x1200 (crop=1280:1200:0:420), not the raw 1280x1920.
+          The master's dead space sits above the sun and below the hand, so
+          trimming it makes the video substantially wider on screen while every
+          element — hand, logo, wordmark, tagline — stays in frame. Verified by
+          inspecting frames at t=6 and t=16.
+          object-contain, never cover: cover would crop what this crop was
+          chosen to preserve. */}
       <video
         ref={videoRef}
-        src="/video/awakening.mp4"
-        poster="/video/poster.jpg"
+        src="/video/awakening-intro.mp4"
+        poster="/video/poster-intro.jpg"
         muted
         playsInline
         preload="auto"
         onEnded={finish}
         onError={finish}
         aria-hidden
-        className="size-full object-contain"
+        className="relative size-full object-contain"
       />
 
       {showSkip && (

@@ -50,8 +50,11 @@ export function Hero() {
     });
   }, []);
 
-  const videoSrc = wide ? "/video/awakening-wide.mp4" : "/video/awakening.mp4";
-  const posterSrc = wide ? "/video/poster-wide.jpg" : "/video/poster.jpg";
+  // Narrow viewports reuse the intro crop (1280x1200) rather than the raw
+  // portrait: it is already cached from phase 1, it is 2.1MB smaller, and on a
+  // phone-width background the extra height was being cropped away anyway.
+  const videoSrc = wide ? "/video/awakening-wide.mp4" : "/video/awakening-intro.mp4";
+  const posterSrc = wide ? "/video/poster-wide.jpg" : "/video/poster-intro.jpg";
 
   return (
     <section className="relative -mx-4 -mt-6 flex min-h-[58svh] items-center overflow-hidden md:-mx-8 md:-mt-8">
