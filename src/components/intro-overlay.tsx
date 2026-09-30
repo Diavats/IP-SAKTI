@@ -67,17 +67,26 @@ export function IntroOverlay({ onDone }: { onDone: () => void }) {
 
   return (
     <div className="fixed inset-0 z-[100] bg-brand" role="dialog" aria-label="Introduction">
+      {/* FULL portrait source with object-CONTAIN, not the 16:9 crop with
+          object-cover.
+          The master is 1280x1920 and awakening-wide.mp4 is its centre band
+          (crop=1280:720:0:600), which throws away the top and bottom 600px —
+          precisely where the hand and the VedaNova mark are. Cover would crop
+          again on top of that. Contain guarantees the entire frame is on
+          screen, letterboxed against the brand colour, which is the whole
+          point of an intro: nothing of it is hidden and nothing needs
+          scrolling to reach. */}
       <video
         ref={videoRef}
-        src="/video/awakening-wide.mp4"
-        poster="/video/poster-wide.jpg"
+        src="/video/awakening.mp4"
+        poster="/video/poster.jpg"
         muted
         playsInline
         preload="auto"
         onEnded={finish}
         onError={finish}
         aria-hidden
-        className="size-full object-cover"
+        className="size-full object-contain"
       />
 
       {showSkip && (
