@@ -71,24 +71,34 @@
      would only bit-rot. See Stage 5A notes. */
   --brand: #0f3d2e;
   --on-brand: #ffffff;
-  --background: #f7f8f7;
+  --background: #f7f7f7;
   --foreground: #111827;
   --card: #ffffff;
   --card-foreground: #111827;
   --popover: #ffffff;
   --popover-foreground: #111827;
 
+  /* NEUTRALS ARE TRUE GREY ON PURPOSE.
+     They were forest-tinted (#e4e9e6, #eef1ef, #dce3df, ...), which put a
+     green cast on every large surface and left cobalt, violet, amber and red
+     visible only in small chips. Greens still lead — --brand and --primary
+     own the chrome and the primary action — but the neutrals no longer
+     compete with the four colours that carry meaning.
+     Do not re-tint these. The tinted backgrounds BELOW are different: they
+     encode a verdict or an agent, so their colour is their job. */
   --primary: #10794f;
   --primary-foreground: #ffffff;
-  --secondary: #e4e9e6;
+  --secondary: #e8e8e8;
   --secondary-foreground: #111827;
-  --muted: #eef1ef;
-  --muted-foreground: #5b6660;
+  --muted: #f0f0f0;
+  --muted-foreground: #5f6368;
   --accent: #b45309;
   --accent-foreground: #ffffff;
   --destructive: #b42318;
-  --border: #dce3df;
-  --input: #dce3df;
+  --border: #e2e2e2;
+  /* Darker than --border on purpose: a divider can be a whisper, but an
+     input boundary signals something you can interact with. */
+  --input: #d4d4d4;
   --ring: #10794f;
   --radius: 0.75rem;
 
