@@ -10,6 +10,7 @@ import { classificationLabels, statusLabels } from "@/lib/labels";
 import { Button } from "@/components/ui/button";
 import { LiquidMetalButton } from "@/components/ui/liquid-metal-button";
 import { ChatPanel, type ChatMode } from "@/components/ask/chat-panel";
+import { DitherGradient } from "@/components/dither-gradient";
 import { GraphBackdrop } from "@/components/graph-backdrop";
 import { Hero } from "@/components/hero";
 import { RingStat } from "@/components/ring-stat";
@@ -42,14 +43,12 @@ function PageBackdrop() {
       <div
         className="pointer-events-none fixed inset-0 -z-20"
         aria-hidden
-        style={{
-          background:
-            "radial-gradient(70% 55% at 12% -5%, #0f3d2e1f, transparent 65%)," +
-            "radial-gradient(55% 50% at 88% 15%, #10794f1a, transparent 65%)," +
-            "radial-gradient(60% 60% at 50% 105%, #0f3d2e14, transparent 70%)," +
-            "var(--background)",
-        }}
+        style={{ background: "var(--background)" }}
       />
+      {/* Starts below the fold so the hero and the top of the dashboard keep
+          the clean white the de-tinted neutrals bought, then the lower half
+          gains a surface. */}
+      <DitherGradient from={52} />
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/images/logo.png"

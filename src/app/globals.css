@@ -287,27 +287,46 @@
 
 /* --- landing hero -------------------------------------------------------- */
 
-/* Staggered entrance for the hero copy. `both` so elements are invisible
-   before their delay elapses rather than flashing in at full opacity first.
-   Honoured only when the visitor has not asked for reduced motion. */
-@keyframes hero-rise {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+/* The iris open.
+   The brand video plays once unobstructed, then the landing content is pushed
+   open from the centre with an expanding clip-path circle, so it reads as
+   though the hand in the video pressed something rather than as a crossfade.
+
+   clip-path is used rather than scale because scale would blur the text
+   mid-transition and would also move the layout; clip-path only reveals.
+   `visibility` keeps the hidden content out of the accessibility tree and out
+   of tab order until it is genuinely on screen. */
+.hero-iris {
+  position: relative;
+  z-index: 10;
+  transition:
+    clip-path 1400ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 900ms ease-out,
+    visibility 0s linear 0s;
 }
 
-.animate-hero-rise {
-  animation: hero-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+.hero-iris-closed {
+  clip-path: circle(0% at 50% 50%);
+  opacity: 0;
+  visibility: hidden;
+  /* Delay the visibility flip to the END of the close, not the start. */
+  transition-delay: 0s, 0s, 1400ms;
+  pointer-events: none;
+}
+
+.hero-iris-open {
+  clip-path: circle(85% at 50% 50%);
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s, 120ms, 0s;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-hero-rise {
-    animation: none;
+  .hero-iris {
+    transition: none;
+  }
+  .hero-iris-closed {
+    clip-path: none;
   }
 }
 
